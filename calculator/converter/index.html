@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/calculator/manifest.json">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/calc.png?v=1682092867154"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/calc.png?v=1682092867154"
+    />
+
+    <title>Calculator</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="SC Games Official Website" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Calculator" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="SC Games Official Website" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/calculator/style.css" />
+    <script src="/calculator/converter/script.js"></script>
+  </head>
+  <body>
+    <button class="menubutton" onclick="openNav()">
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+    <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="javascript:setTimeout(()=>{window.location = '/calculator' },100);">Calculator</a>
+  <a href="#">Converter</a>
+</div>
+    <div id="main">
+      <select id="unit" name="unit" style="width: 100%;" onchange="unitChange(this.value)">
+        <option value="area">Area</option>
+        <option value="dtr">Data Transfer Rate</option>
+        <option value="ds">Digital Storage</option>
+        <option value="energy">Energy</option>
+        <option value="fqy">Frequency</option>
+        <option value="fe">Fuel Economy</option>
+        <option value="length">Length</option>
+        <option value="mass">Mass</option>
+        <option value="pa">Plane Angle</option>
+        <option value="pressure">Pressure</option>
+        <option value="speed">Speed</option>
+        <option value="temp">Temperature</option>
+        <option value="time">Time</option>
+        <option value="volume">Volume</option>
+      </select>
+      <br/>
+      <div style="display: flex; width: 100%;">
+        <div style="width:50%">
+          <input oninput="input1Change(this)" id="input1"/>
+          <select onchange="unit1Change()" id="unit1" name="unit1" style="width: 100%;"></select>
+        </div>
+        <div style="width:50%">
+          <input oninput="input2Change(this)" id="input2"/>
+          <select onchange="unit2Change()" id="unit2" name="unit2" style="width: 100%;"></select>
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,8 @@
+{
+  "name": "Calculator",
+  "scope": "/",
+  "display": "standalone",
+  "start_url": "/calculator",
+  "theme_color": "#222222",
+  "orientation": "portrait"
+}
