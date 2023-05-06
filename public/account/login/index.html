@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta charset="utf-8" />
+    <title>Login / Signup | SC Official Website</title>
+    <!-- Cool Google Fonts -->
+    <link rel="preconnect" href="https://fonts.gstatic.com" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="SC Official Website" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="SC Website" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="SC Official Website" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+    <link
+      rel="stylesheet"
+      type="text/css"
+      href="https://www.ferbgame.com/login.css"
+    />
+  </head>
+  <body>
+    <div id="content_container">
+      <div id="form_container">
+        <div id="form_header_container">
+          <h2 class="form_header">Login / Signup</h2>
+        </div>
+
+        <div id="form_content_container">
+          <div id="form_content_inner_container">
+            <input type="email" id="email" placeholder="Email" />
+            <input type="password" id="password" placeholder="Password" />
+            <input type="text" id="full_name" placeholder="Username" />
+
+            <button onclick="passreset()">Forgot Password?</button>
+            <div id="button_container">
+              <button onclick="login()">Login</button>
+              <button onclick="register()">Signup</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="https://www.ferbgame.com/login.js"></script>
+</html>

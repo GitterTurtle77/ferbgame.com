@@ -1,0 +1,68 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+    />
+
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+    />
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
+
+    <title>Chappium Online Beta</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Chappium Online Beta" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="https://www.ferbgame.com/chappiumonline/style.css"
+    />
+  </head>
+  <body style="display: flex; flex-direction: column; justify-content: flex-start;">
+    <div style="width: 100%;">
+      <a href="/chappiumonline/home/" style="-webkit-user-drag: none; float: left; height: 100%;" id="back"><span class="material-icons">arrow_back_ios_new</span></a>
+    </div>
+      <input type="text" id="groupname" placeholder="Group Name"/>
+    <button onclick="document.getElementById('upload').click()">Upload Icon</button>
+    <input type="file" id="upload" style="display: none;"/>
+    <button id="create" onclick="createGroup()">Create</button>
+    <p id="error" style="color: red;"></p>
+    <ul id="list">
+    </ul>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="https://www.ferbgame.com/chappiumonline/creategroup/script.js"></script>
+</html>

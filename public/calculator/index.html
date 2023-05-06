@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link rel="manifest" href="/calculator/manifest.json">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/calc.png?v=1682092867154"
+    />
+
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/calc.png?v=1682092867154"
+    />
+
+    <title>Calculator</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="SC Games Official Website" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Calculator" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="SC Games Official Website" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Rounded:opsz,wght,FILL,GRAD@48,400,0,0"
+    />
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/calculator/style.css" />
+    <script src="/calculator/script.js"></script>
+  </head>
+  <body>
+    <button class="menubutton" onclick="openNav()">
+      <span class="material-symbols-rounded">menu</span>
+    </button>
+    <div id="mySidenav" class="sidenav">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+  <a href="#">Calculator</a>
+  <a href="javascript:setTimeout(()=>{window.location = '/calculator/converter' },100);">Converter</a>
+</div>
+    <div id="main">
+    <div class="vertical-container">
+      <div class="button-container">
+        <span id="display">0</span>
+      </div>
+      <div class="button-container">
+        <button id="ac" onclick="clearDisplay()">AC</button>
+        <button id="divide" onclick="divide()">&divide</button>
+      </div>
+      <div class="button-container">
+        <button id="7" onclick="num7()">7</button>
+        <button id="8" onclick="num8()">8</button>
+        <button id="9" onclick="num9()">9</button>
+        <button id="multiply" onclick="multiply()">&times</button>
+      </div>
+      <div class="button-container">
+        <button id="4" onclick="num4()">4</button>
+        <button id="5" onclick="num5()">5</button>
+        <button id="6" onclick="num6()">6</button>
+        <button id="minus" onclick="minus()">-</button>
+      </div>
+      <div class="button-container">
+        <button id="1" onclick="num1()">1</button>
+        <button id="2" onclick="num2()">2</button>
+        <button id="3" onclick="num3()">3</button>
+        <button id="plus" onclick="plus()">+</button>
+      </div>
+      <div class="button-container">
+        <button id="point" onclick="point()">.</button>
+        <button id="0" onclick="num0()">0</button>
+        <button id="equals" onclick="equals()">=</button>
+      </div>
+    </div>
+  </div>
+      </body>
+</html>

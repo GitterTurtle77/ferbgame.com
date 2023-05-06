@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script>
+      if (location.protocol != "https:") {
+        location.href =
+          "https:" +
+          window.location.href.substring(window.location.protocol.length);
+      }
+    </script>
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    
+    <link rel="apple-touch-icon" href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"/>
+
+    <title>SC Games Official Website</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="SC Games Official Website" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="SC Website" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="SC Games Official Website" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="/style.css" />
+    
+  </head>
+  <body>
+    <div class="imagediv">
+        <div class="tag">
+          <div class="navbar">
+            <a class="active" href="">Home</a>
+            <a href="/store">Store</a>
+            <a href="/contactus">Contact Us</a>
+            <a href="/account/login" id="loginBtn">Login</a>
+          </div>
+        </div>
+      <img
+        src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/Banner.png?v=1682579297624"
+        class="imagehead"
+      />
+    </div>
+
+    <div class="content" role="main">
+      <!-- This is the start of content for our page -->
+      <div class="container"></div>
+      <div class="container">
+        <br>
+        <a href="/ferb" class="gameappbtn">
+          <img class="gameappimg"
+            src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/FerbPortraitText.png?v=1681640442252"
+          />
+        </a>
+
+        <a href="/chappium" class="gameappbtn">
+          <img class="gameappimg"
+            src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumBanner%20Portrait.png?v=1677612736323"
+          />
+        </a>
+      </div>
+      <!--  <h1>SC Portal</h1>
+      <a href="/portal" class="gameappbtn">
+        <img
+          height="150px"
+          width="150px"
+          src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Portal%20Icon.png?v=1666447645039"
+        />
+      </a>
+
+      <div class="container">
+        <a href="/portal" class="gameappbtn">
+          <img
+            height="100px"
+            width="100px"
+            src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Paper%20Icon.png?v=1666448321856"
+          />
+        </a>
+        <a href="/portal" class="gameappbtn">
+          <img
+            height="100px"
+            width="100px"
+            src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Grid%20Icon.png?v=1666593743080"
+          />
+        </a>
+        <a href="/portal" class="gameappbtn">
+          <img
+            height="100px"
+            width="100px"
+            src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Present%20Icon.png?v=1666594199931"
+          />
+        </a>
+      </div> -->
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="https://www.ferbgame.com/index.js"></script>
+</html>

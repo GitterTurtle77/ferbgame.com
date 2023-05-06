@@ -1,0 +1,8 @@
+{
+  "name": "Chappium",
+  "scope": "/",
+  "display": "standalone",
+  "start_url": "/chappiumonline",
+  "theme_color": "#111111",
+  "orientation": "portrait"
+}

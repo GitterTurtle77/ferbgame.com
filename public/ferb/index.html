@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/FerbA2%20Logo.png?v=1647621475643"
+    />
+
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
+
+    <title>Ferb Official Website</title>
+
+    <meta name="description" content="Official Website For Ferb" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Ferb Official Website" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://glitch-hello-website.glitch.me/" />
+    <meta property="og:description" content="Official Website For Ferb" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/FerbA2%20Logo.png?v=1647621475643"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="https://www.ferbgame.com/style.css" />
+
+    <!-- Import the webpage's javascript file -->
+    <script src="https://code.jquery.com/jquery-1.6.4.js"></script>
+    <script src="https://www.ferbgame.com/script.js" defer></script>
+  </head>
+  <body>
+    <div class="imagediv">
+        <div class="tag">
+          <div class="navbar">
+            <a href="./">Home</a>
+            <a class="active" href="/store">Store</a>
+            <a href="/contactus">Contact Us</a>
+            <a id="loginBtn" href="/account/login">Login</a>
+          </div>
+        </div>
+      <img
+        src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/FerbBannerBlank.png?v=1682579447202"
+        class="imagehead"
+      />
+    </div>
+    <div class="wrapper">
+      <div class="content" role="main">
+        <div class="container">
+          <br/>
+            <a href="https://www.ferbgame.com/ferb/get" class="getbutton">Get</a>
+          <br/>
+          <br/>
+          <div>
+            <h2>Ferb is a horror game.</h2>
+            <h3>
+              You are an explorer who ventures into a mysterious cave in search
+              of a mythical gem and awaken a half robotic beast! Play through five
+              new Chapters but watch out for Ferb! Play with your friends or dive into
+              the cave alone!
+            </h3>
+          </div>
+          <br>
+          <h2>NEWS</h2>
+          <div id="news">
+          
+        </div>
+        </div>
+          
+        </div>
+      </div>
+    <div class="footer">
+      <p>Ferb © SC Games 2021</p>
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="https://www.ferbgame.com/ferb/script.js"></script>
+</html>
