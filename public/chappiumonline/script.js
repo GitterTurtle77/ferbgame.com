@@ -43,15 +43,11 @@ if (isIos) {
 }
 
 function wait() {
-  if (auth.currentUser == null) {
     window.setTimeout(function() {wait()}, 1000);
-  } else {
       var user = auth.currentUser;
       if (user != null) {
         location.href = "/chappiumonline/home";
       } else {
         document.getElementById("Account").style.display = "block";
       }
-    }
-  
   }
