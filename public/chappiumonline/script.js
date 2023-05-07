@@ -38,10 +38,7 @@ if (isIos) {
     document.getElementById("iOS").style.display = "block";
 } else if (isAndroid) {
     document.getElementById("Android").style.display = "block";
-} else {
-  wait();
 }
-
 onAuthStateChanged(auth, (user) => {
       if (user) {
         location.href = "/chappiumonline/home";
