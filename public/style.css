@@ -217,7 +217,7 @@ H3 {
   margin: 20px;
 }
 
-.home404 {
+.homeerror {
   background-color: #000000cc;
   border-style: solid;
   border-color: white;
@@ -459,7 +459,7 @@ textarea {
   cursor: pointer;
 }
 
-.div404 {
+.diverror {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   width: 50%;
