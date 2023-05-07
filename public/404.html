@@ -1,19 +1,27 @@
 <!DOCTYPE html>
-<html>
+<html style="overflow: hidden; padding: 0px; margin: 0px;">
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>404 Not Found | SC Games Official Website</title>
 
-    <link rel="stylesheet" href="/style.css" />
+    <link rel="stylesheet" href="./style.css" />
   </head>
-  <body>
-    <div class="imagehead" style="background-image: url('https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/Banner.png?v=1682579297624'); width: 100vw; height: 100vh; background-size: cover;">
-    <div id="message" class="div404">
+  <body style="overflow: hidden; padding: 0px; margin: 0px;">
+    <div style="background-image: url('https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/Banner.png?v=1682579297624'); width: 100vw; height: 100vh; background-size: cover; overflow: hidden; display: flex; justify-content: center; align-items: center;">
+      <div class="tag">
+        <div class="navbar">
+          <a class="active" href="">Home</a>
+          <a href="store">Store</a>
+          <a href="contactus">Contact Us</a>
+          <a href="account/login" id="loginBtn">Login</a>
+        </div>
+      </div>
+      <div id="message" class="div404">
       <h2>404</h2>
       <h1>Page Not Found</h1>
       <p>The specified page was not found. Please check the URL for mistakes and try again.</p>
-      <button onclick="location.href = '/'">SC Games Home</button>
+      <button class="home404" onclick="location.href = '/'">Home</button>
     </div>
     </div>
   </body>

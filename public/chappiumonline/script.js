@@ -44,7 +44,7 @@ if (isIos) {
 
 function wait() {
   if (auth.currentUser == null) {
-    window.setTimeout(wait(), 1000);
+    window.setTimeout(function() {wait()}, 1000);
   } else {
       var user = auth.currentUser;
       if (user != null) {

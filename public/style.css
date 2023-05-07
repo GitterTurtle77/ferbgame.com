@@ -217,6 +217,26 @@ H3 {
   margin: 20px;
 }
 
+.home404 {
+  background-color: #000000cc;
+  border-style: solid;
+  border-color: white;
+  border-radius: 20px;
+  border-width: 10px;
+  padding: 10px;
+  color: white;
+  font-size: 30px;
+  font-family: HK Grotesk;
+  text-align: center;
+  align-items: center;
+  vertical-align: center;
+  text-decoration: none;
+  font-size: 50px;
+  cursor: pointer;
+  width: 75%;
+  
+}
+
 .gameappimg {
   height: 300px;
   width: 200px;
@@ -442,9 +462,13 @@ textarea {
 .div404 {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
-  width: 75%;
-  height: 75%;
+  width: 50%;
+  padding: 20px;
+  border-radius: 50px;
   display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
 }
 
 /* Smartphones (portrait and landscape) ----------- */
