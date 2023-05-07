@@ -38,16 +38,11 @@ if (isIos) {
     document.getElementById("iOS").style.display = "block";
 } else if (isAndroid) {
     document.getElementById("Android").style.display = "block";
-} else {
-  wait();
 }
-
-function wait() {
-      var user = auth.currentUser;
-      if (user != null) {
+onAuthStateChanged(auth, (user) => {
+      if (user) {
         location.href = "/chappiumonline/home";
       } else {
         document.getElementById("Account").style.display = "block";
       }
-    window.setTimeout(wait(), 500);
-  }
+}
