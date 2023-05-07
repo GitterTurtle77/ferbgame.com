@@ -459,7 +459,7 @@ textarea {
   cursor: pointer;
 }
 
-.diverror {
+.errordiv {
   background-color: rgba(0, 0, 0, 0.5);
   color: white;
   width: 50%;
