@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+    <!--
+      This is the page head - it contains info the browser uses to display the page
+      You won't see what's in the head in the page
+      Scroll down to the body element for the page content
+    -->
+
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    
+    <link rel="apple-touch-icon" href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"/>
+
+    <title>SC Games Official Website</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <meta name="description" content="SC Games Official Website" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="SC Website" />
+    <meta property="og:type" content="article" />
+
+    <meta property="og:description" content="SC Games Official Website" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <!-- Import the webpage's stylesheet -->
+    <link rel="stylesheet" href="style.css" />
+    
+  </head>
+  <body>
+    <input id="input" type="file" onchange="upload()"/>
+    <canvas id="demo" width="180" height="180"></canvas>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="script.js"></script>
+</html>
