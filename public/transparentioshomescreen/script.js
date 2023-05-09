@@ -53,20 +53,18 @@ function btnclick(btn) {
   
   let canvas = document.getElementById("demo"),
   ctx = canvas.getContext("2d");
+  ctx.fillStyle = "#000";
+  ctx.fillRect(0,0,canvas.width,canvas.height);
   ctx.drawImage(img,
     // SOURCE X, Y, WIDTH, HEIGHT
     x, y, 180, 180,
     // DESTINATION X, Y, WIDTH, HEIGHT
     0, 0, 180, 180
   );
-  canvas.width = 180;
-  canvas.height = 180;
   
   ctx.drawImage(img2,
     // SOURCE X, Y, WIDTH, HEIGHT
-    0, 0, 180, 180,
-    // DESTINATION X, Y, WIDTH, HEIGHT
-    0, 0, 180, 180
+    0, 0, canvas.width, canvas.height
   );
 }
 
