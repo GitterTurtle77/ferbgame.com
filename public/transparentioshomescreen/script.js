@@ -45,6 +45,12 @@ function upload() {
     div.style.display = "grid"
 };
 
+function upload2() {
+  var file2 = document.getElementById("input2").files[0]
+  img2.src = URL.createObjectURL(file2);
+  console.log(URL.createObjectURL(file2))
+};
+
 function btnclick(btn) {
   selectedArea = btn.id;
   x = list[selectedArea - 1].split(",")[0]
@@ -67,9 +73,3 @@ function btnclick(btn) {
     0, 0, canvas.width, canvas.height
   );
 }
-
-function upload2() {
-  var file2 = document.getElementById("input2").files[0]
-  img2.src = URL.createObjectURL(file2);
-  console.log(URL.createObjectURL(file2))
-};
