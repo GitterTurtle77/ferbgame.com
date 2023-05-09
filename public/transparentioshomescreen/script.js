@@ -29,7 +29,8 @@ const list = [
 var selectedArea = 1;
 
 var img = new Image();
-var img2 = document.getElementById("grid");
+var img2 = new Image();
+var background = document.getElementById("grid");
 var div = document.getElementById("grid-container");
 
 var x;
@@ -39,7 +40,7 @@ var y;
 function upload() {
     var file = document.getElementById("input").files[0]
     img.src = URL.createObjectURL(file);
-    img2.style.backgroundImage = "url( " + URL.createObjectURL(file) + ")"
+    background.style.backgroundImage = "url( " + URL.createObjectURL(file) + ")"
     console.log(URL.createObjectURL(file))
     div.style.display = "grid"
 };
@@ -58,4 +59,16 @@ function btnclick(btn) {
     // DESTINATION X, Y, WIDTH, HEIGHT
     0, 0, 180, 180
   );
+  ctx.drawImage(img2,
+    // SOURCE X, Y, WIDTH, HEIGHT
+    0, 0, 180, 180,
+    // DESTINATION X, Y, WIDTH, HEIGHT
+    0, 0, 180, 180
+  );
 }
+
+function upload2() {
+  var file2 = document.getElementById("input2").files[0]
+  img2.src = URL.createObjectURL(file2);
+  console.log(URL.createObjectURL(file2))
+};
