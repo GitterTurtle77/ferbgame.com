@@ -65,8 +65,10 @@ function btnclick(btn) {
     // DESTINATION X, Y, WIDTH, HEIGHT
     0, 0, 180, 180
   );
+  canvas.width = 180;
+  canvas.height = 180;
 
   ctx.drawImage(img2,
-    0, 0, canvas.width, canvas.height
+    0, canvas.width
   );
 }
