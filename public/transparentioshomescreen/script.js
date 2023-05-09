@@ -29,34 +29,33 @@ const list = [
 var selectedArea = 1;
 
 var img = new Image();
+var img2 = document.getElementById("grid");
+var div = document.getElementById("grid-container");
 
 var x;
 var y;
- 
-// (C) CROP ON LOAD
-img.onload = () => {
-  // (C1) GET CANVAS + 2D CONTEXT
-  let canvas = document.getElementById("demo"),
-  ctx = canvas.getContext("2d");
- 
-  // (C2) CROP BY COPYING PART OF SOURCE IMAGE TO CANVAS
-  ctx.drawImage(img,
-    // SOURCE X, Y, WIDTH, HEIGHT
-    x, y, 180, 180,
-    // DESTINATION X, Y, WIDTH, HEIGHT
-    0, 0, 180, 180
-  );
-};
 
 
 function upload() {
     var file = document.getElementById("input").files[0]
     img.src = URL.createObjectURL(file);
-    console.log(file)
+    img2.style.backgroundImage = "url( " + URL.createObjectURL(file) + ")"
+    console.log(URL.createObjectURL(file))
+    div.style.display = "grid"
 };
 
 function btnclick(btn) {
   selectedArea = btn.id;
   x = list[selectedArea - 1].split(",")[0]
   y = list[selectedArea - 1].split(",")[1]
+  console.log(x,y)
+  
+  let canvas = document.getElementById("demo"),
+  ctx = canvas.getContext("2d");
+  ctx.drawImage(img,
+    // SOURCE X, Y, WIDTH, HEIGHT
+    x, y, 180, 180,
+    // DESTINATION X, Y, WIDTH, HEIGHT
+    0, 0, 180, 180
+  );
 }

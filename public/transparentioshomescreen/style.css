@@ -57,11 +57,15 @@
   }
 
   .grid-container {
-    display: grid;
+    display: none;
     grid-template-columns: 50px 50px 50px 50px;
     grid-template-rows: 50px 50px 50px 50px 50px 50px;
-    width: 200px;
-    background-color: blue;
+    background-size: contain;
+    background-repeat: no-repeat;
+    padding: 18px;
+    padding-top: 50px;
+    column-gap: 14px;
+    row-gap: 20px;
   }
   .gridbutton {
     background-color: rgba(255, 255, 255, 0.8);
@@ -69,4 +73,13 @@
     padding: 20px;
     font-size: 30px;
     text-align: center;
+  }
+
+  #grid {
+    display: grid;
+    grid-template-columns: 100px 100px 100px 100px;
+    grid-template-rows: 100px 100px 100px 100px 100px 100px;
+    width: 400px;
+    background-size: contain;
+    background-repeat: no-repeat;
   }

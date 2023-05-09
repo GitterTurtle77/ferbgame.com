@@ -37,7 +37,9 @@
   </head>
   <body>
     <input id="input" type="file" onchange="upload()"/>
-    <div class="grid-container">
+    <div style="width: 100%; display: flex; align-items: center;">
+    <div id="grid">
+    <div id="grid-container" class="grid-container">
       <button id="1" class="gridbutton" onclick="btnclick(this)"></button>
       <button id="2" class="gridbutton" onclick="btnclick(this)"></button>
       <button id="3" class="gridbutton" onclick="btnclick(this)"></button>
@@ -63,7 +65,9 @@
       <button id="23" class="gridbutton" onclick="btnclick(this)"></button>
       <button id="24" class="gridbutton" onclick="btnclick(this)"></button>
     </div>
+  </div>
     <canvas id="demo" width="180" height="180"></canvas>
+  </div>
   </body>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
