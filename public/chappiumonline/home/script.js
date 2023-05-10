@@ -106,4 +106,4 @@ OneSignal.push(function() {
           console.log(userId)
      });
  }
-});
+})
