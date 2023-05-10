@@ -98,11 +98,6 @@ function loadDoc(site) {
   }
 }
 
-window.OneSignal = window.OneSignal || [];
-
-  OneSignal.init({
-      appId: '3b37e3a3-814d-4919-a9d2-8c24f5270fe4',
-  });
 console.log(OneSignal)
 OneSignal.push(function() {
  if(localStorage.getItem('os-user') === null) {
