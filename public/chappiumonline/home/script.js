@@ -92,7 +92,6 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
     }
     });
   })
-wait();
 
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
