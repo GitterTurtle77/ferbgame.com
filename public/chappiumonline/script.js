@@ -47,4 +47,4 @@ firebase.auth().onAuthStateChanged((user) => {
       } else {
         document.getElementById("Account").style.display = "block";
       }
-});
+})
