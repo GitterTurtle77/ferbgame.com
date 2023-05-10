@@ -35,11 +35,7 @@ window.OneSignal = window.OneSignal || [];
         });
    })
 
-function wait() {
-  if (auth.currentUser == null) {
-    window.setTimeout(wait, 500);
-  } else {
-    var user = auth.currentUser;
+   firebase.auth().onAuthStateChanged((user) => {
 
     var postsref8 = database.ref(
       "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
@@ -95,8 +91,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       location.href = "/chappiumonline/createprofile/";
     }
     });
-  }
-}
+  })
 wait();
 
 function loadDoc(site) {
