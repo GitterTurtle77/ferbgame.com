@@ -105,13 +105,7 @@ window.OneSignal = window.OneSignal || [];
       });
 
 OneSignal.push(function() {
- if(localStorage.getItem('os-user') === null) {
      OneSignal.getUserId(function(userId) {
-          localStorage.setItem('os-user', userId);
           console.log(userId)
      });
- } else {
-  localStorage.setItem('os-user', userId);
-  console.log(userId)
- }
 })
