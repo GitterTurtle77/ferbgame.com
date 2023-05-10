@@ -97,3 +97,20 @@ function loadDoc(site) {
   }, 150)
   }
 }
+
+window.OneSignal = window.OneSignal || [];
+OneSignal.push(function() {
+  OneSignal.init({
+      appId: '3b37e3a3-814d-4919-a9d2-8c24f5270fe4',
+  });
+
+});
+console.log(OneSignal)
+OneSignal.push(function() {
+ if(localStorage.getItem('os-user') === null) {
+     OneSignal.getUserId(function(userId) {
+          localStorage.setItem('os-user', userId);
+          console.log(userId)
+     });
+ }
+});
