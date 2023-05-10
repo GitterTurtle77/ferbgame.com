@@ -57,8 +57,10 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       data7 = snapshot.val();
     });
 
-    if (data7.includes(OSid)) {
+    if (!data7.includes(OSid)) {
       console.log(OSid)
+    } else {
+      console.log(OSid, "true")
     }
       
       var postsref = database.ref("ChappFriends/" + user.uid);
