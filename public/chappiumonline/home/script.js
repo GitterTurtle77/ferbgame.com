@@ -20,6 +20,21 @@ var data8;
 
 var run = false;
 
+var OSid;
+
+window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function() {
+        OneSignal.init({
+          appId: "3b37e3a3-814d-4919-a9d2-8c24f5270fe4",
+        });
+      });
+
+      OneSignal.push(function() {
+        OneSignal.getUserId(function(id) {
+          OSid = id;
+        });
+   })
+
 function wait() {
   if (auth.currentUser == null) {
     window.setTimeout(wait, 500);
@@ -35,11 +50,16 @@ function wait() {
       document.getElementById("profileicon").src = data8[3]
 
     if (data8.length > 2) {
+   
       
 var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
     postsref7.on("value", (snapshot) => {
       data7 = snapshot.val();
     });
+
+    if (data7.includes(OSid)) {
+      console.log(OSid)
+    }
       
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
@@ -97,15 +117,3 @@ function loadDoc(site) {
   }, 150)
   }
 }
-window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "3b37e3a3-814d-4919-a9d2-8c24f5270fe4",
-        });
-      });
-
-OneSignal.push(function() {
-     OneSignal.getUserId(function(userId) {
-          console.log(userId)
-     });
-})
