@@ -97,8 +97,6 @@ function loadDoc(site) {
   }, 150)
   }
 }
-
-console.log(OneSignal)
 OneSignal.push(function() {
  if(localStorage.getItem('os-user') === null) {
      OneSignal.getUserId(function(userId) {
