@@ -56,7 +56,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
     postsref7.on("value", (snapshot) => {
       data7 = snapshot.val();
     });
-
+    console.log(data7)
     if (!data7.includes(OSid)) {
       console.log(OSid)
     } else {
