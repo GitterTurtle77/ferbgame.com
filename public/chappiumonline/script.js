@@ -41,7 +41,6 @@ var run = false;
 // }
 
 firebase.auth().onAuthStateChanged((user) => {
-  console.log(user)
       if (user) {
         location.href = "/chappiumonline/home";
       } else {
