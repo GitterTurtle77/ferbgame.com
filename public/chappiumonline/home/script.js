@@ -110,5 +110,8 @@ OneSignal.push(function() {
           localStorage.setItem('os-user', userId);
           console.log(userId)
      });
+ } else {
+  localStorage.setItem('os-user', userId);
+  console.log(userId)
  }
 })
