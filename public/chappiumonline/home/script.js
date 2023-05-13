@@ -20,22 +20,32 @@ var data8;
 
 var run = false;
 
-var OSid;
+function loadDoc(site) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.open("GET", site);
+  xhttp.send();
+  xhttp.onload = function() {
+    document.getElementById("chatdiv").innerHTML =
+    this.responseText;
+    
+    document.getElementById("chatdiv").style.width = "100%";
+    console.log(document.getElementById("content").getElementsByTagName("button"))
+    var collection = document.getElementById("content").getElementsByTagName("button");
+    for (let i = 0; i < collection.length; i++) {
+      console.log(collection[i]);
+      collection[i].style.border = "2px solid #111111"
+    }
+    window.setTimeout(function() {
+    location.href = site;
+  }, 150)
+  }
+}
 
-window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
-        OneSignal.init({
-          appId: "3b37e3a3-814d-4919-a9d2-8c24f5270fe4",
-        });
-      });
-
-      OneSignal.push(function() {
-        OneSignal.getUserId(function(id) {
-          OSid = id;
-        });
-   })
-
-   firebase.auth().onAuthStateChanged((user) => {
+firebase.auth().onAuthStateChanged((user) => {
+  if (auth.currentUser == null) {
+    window.setTimeout(wait, 500);
+  } else {
+    var user = auth.currentUser;
 
     var postsref8 = database.ref(
       "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
@@ -46,22 +56,16 @@ window.OneSignal = window.OneSignal || [];
       document.getElementById("profileicon").src = data8[3]
 
     if (data8.length > 2) {
-   
       
 var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
     postsref7.on("value", (snapshot) => {
       data7 = snapshot.val();
     });
-    console.log(data7)
-    if (!data7.includes(OSid)) {
-      console.log(OSid)
-    } else {
-      console.log(OSid, "true")
-    }
       
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
         const data = snapshot.val();
+        console.log(data)
         if (data != undefined && data.length != 0) {
 
         const datashown = [];
@@ -91,25 +95,5 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       location.href = "/chappiumonline/createprofile/";
     }
     });
-  })
-
-function loadDoc(site) {
-  const xhttp = new XMLHttpRequest();
-  xhttp.open("GET", site);
-  xhttp.send();
-  xhttp.onload = function() {
-    document.getElementById("chatdiv").innerHTML =
-    this.responseText;
-    
-    document.getElementById("chatdiv").style.width = "100%";
-    console.log(document.getElementById("content").getElementsByTagName("button"))
-    var collection = document.getElementById("content").getElementsByTagName("button");
-    for (let i = 0; i < collection.length; i++) {
-      console.log(collection[i]);
-      collection[i].style.border = "2px solid #111111"
-    }
-    window.setTimeout(function() {
-    location.href = site;
-  }, 150)
   }
-}
+})
