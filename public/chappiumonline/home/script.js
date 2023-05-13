@@ -29,10 +29,8 @@ function loadDoc(site) {
     this.responseText;
     
     document.getElementById("chatdiv").style.width = "100%";
-    console.log(document.getElementById("content").getElementsByTagName("button"))
     var collection = document.getElementById("content").getElementsByTagName("button");
     for (let i = 0; i < collection.length; i++) {
-      console.log(collection[i]);
       collection[i].style.border = "2px solid #111111"
     }
     window.setTimeout(function() {
@@ -41,10 +39,7 @@ function loadDoc(site) {
   }
 }
 
-firebase.auth().onAuthStateChanged((user) => {
-  if (auth.currentUser == null) {
-    window.setTimeout(wait, 500);
-  } else {
+auth.onAuthStateChanged((user) => {
     var user = auth.currentUser;
 
     var postsref8 = database.ref(
@@ -65,7 +60,6 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
         const data = snapshot.val();
-        console.log(data)
         if (data != undefined && data.length != 0) {
 
         const datashown = [];
@@ -78,7 +72,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
         });
 
         let list = document.getElementById("list");
-          list.innerHTML = "";
+          list.innerHTML = '<li onclick="loadDoc(`/chappiumonline/ai`)"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
         datashown.forEach((item, index) => {
           let li = document.createElement("li");
           li.innerHTML = '<img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' + dataimage[index] + '"/><p style="user-select: none;">' + item + '</p>'
@@ -87,7 +81,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
         });
         } else {
           let list = document.getElementById("list");
-          list.innerHTML = "";
+          list.innerHTML = '<li><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           list.innerHTML = "<li>There's no one here! Get started by adding friends.</li>"
         }
       });
@@ -95,5 +89,4 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       location.href = "/chappiumonline/createprofile/";
     }
     });
-  }
 })
