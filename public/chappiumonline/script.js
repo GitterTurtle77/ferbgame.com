@@ -17,33 +17,33 @@ const database = firebase.database();
 
 var run = false;
 
-// var isIos;
-// if (
-//   navigator.userAgent.match(/iPhone/i) ||
-//   navigator.userAgent.match(/iPad/i) ||
-//   navigator.userAgent.match(/iPod/i)
-// ) {
-//   if ("standalone" in window.navigator && window.navigator.standalone) {
-//     isIos = false;
-//   } else {
-//     isIos = true
-//   }
-// } else {
-//   isIos = false;
-// }
+var isIos;
+if (
+  navigator.userAgent.match(/iPhone/i) ||
+  navigator.userAgent.match(/iPad/i) ||
+  navigator.userAgent.match(/iPod/i)
+) {
+  if ("standalone" in window.navigator && window.navigator.standalone) {
+    isIos = false;
+  } else {
+    isIos = true
+  }
+} else {
+  isIos = false;
+}
 
-// var isAndroid = false;
+var isAndroid = false;
 
-// if (isIos) {
-//     document.getElementById("iOS").style.display = "block";
-// } else if (isAndroid) {
-//     document.getElementById("Android").style.display = "block";
-// }
-
-firebase.auth().onAuthStateChanged((user) => {
-      if (user) {
-        location.href = "/chappiumonline/home";
-      } else {
-        document.getElementById("Account").style.display = "block";
-      }
-});
+if (isIos) {
+    document.getElementById("iOS").style.display = "block";
+} else if (isAndroid) {
+    document.getElementById("Android").style.display = "block";
+} else {
+  auth.onAuthStateChanged((user) => {
+  if (user) {
+    location.href = "/chappiumonline/home";
+  } else {
+    document.getElementById("Account").style.display = "block";
+  }
+})
+}
