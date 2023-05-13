@@ -17,6 +17,7 @@ const database = firebase.database();
 
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
+var name = urlParams.get("name");
 
 var run = true;
 
@@ -35,6 +36,8 @@ function wait() {
         data = []
       }
       data = data.reverse();
+      
+      document.getElementById("name").innerText = name
       
       document.getElementById("list").innerHTML = '';
 

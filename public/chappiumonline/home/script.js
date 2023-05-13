@@ -76,7 +76,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
           datashown.forEach((item, index) => {
           let li = document.createElement("li");
           li.innerHTML = '<img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' + dataimage[index] + '"/><p style="user-select: none;">' + item + '</p>'
-          li.onclick = function() {loadDoc("/chappiumonline/chat/?chat=" + datahidden[index])}
+          li.onclick = function() {loadDoc("/chappiumonline/chat/?chat=" + datahidden[index] + "&name=" + datashown[index])}
           list.appendChild(li);
         });
         } else {
