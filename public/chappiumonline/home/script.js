@@ -73,7 +73,7 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
 
         let list = document.getElementById("list");
           list.innerHTML = '<li onclick="loadDoc(`/chappiumonline/ai`)"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
-        datashown.forEach((item, index) => {
+          datashown.forEach((item, index) => {
           let li = document.createElement("li");
           li.innerHTML = '<img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' + dataimage[index] + '"/><p style="user-select: none;">' + item + '</p>'
           li.onclick = function() {loadDoc("/chappiumonline/chat/?chat=" + datahidden[index])}
@@ -89,4 +89,4 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       location.href = "/chappiumonline/createprofile/";
     }
     });
-})
+});
