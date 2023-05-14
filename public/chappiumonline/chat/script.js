@@ -69,21 +69,22 @@ function wait() {
           data.reverse().push(user.displayName + '-->' + document.getElementById('chat').value + '-->' + user.uid + '-->' + data2[3])
           database.ref().child("Chapp/" + chat).set(data);
           })
-          options = {
-            method: 'POST',
-            headers: {
-              accept: 'application/json',
-              Authorization: 'Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk',
-              'content-type': 'application/json'
-            },
-            body: JSON.stringify({
-              app_id: '62886539-65fb-497a-9377-a74d6316df99',
-              include_player_ids: ['bb65125c-f754-47bb-acd9-5ad3a271dbbc'],
-              contents: {en: document.getElementById("chat").value},
-              name: 'message'
-            })
-          }
           setTimeout(function() {
+            options = {
+              method: 'POST',
+              headers: {
+                accept: 'application/json',
+                Authorization: 'Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk',
+                'content-type': 'application/json'
+              },
+              body: JSON.stringify({
+                app_id: '62886539-65fb-497a-9377-a74d6316df99',
+                include_player_ids: ['bb65125c-f754-47bb-acd9-5ad3a271dbbc'],
+                contents: {en: document.getElementById("chat").value},
+                name: 'message'
+              })
+            }
+            console.log(options);
             fetch('https://onesignal.com/api/v1/notifications', options)
               .then(response => response.json())
               .then(response => console.log(response))
