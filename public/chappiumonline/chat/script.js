@@ -15,6 +15,21 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
+const options = {
+  method: 'POST',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk',
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    app_id: '62886539-65fb-497a-9377-a74d6316df99',
+    included_segments: ['Subscribed Users'],
+    contents: {en: 'English or Any Language Message', es: 'Spanish Message'},
+    name: 'message'
+  })
+};
+
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
 var name = urlParams.get("name");
@@ -68,6 +83,10 @@ function wait() {
           database.ref().child("Chapp/" + chat).set(data);
           })
           setTimeout(function() {
+            fetch('https://onesignal.com/api/v1/notifications', options)
+              .then(response => response.json())
+              .then(response => console.log(response))
+              .catch(err => console.error(err));
             document.getElementById("chat").value = '';
           }, 200);
         }
