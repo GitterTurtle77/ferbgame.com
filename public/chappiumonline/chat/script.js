@@ -15,7 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
-const options = {};
+var options = {};
 
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
