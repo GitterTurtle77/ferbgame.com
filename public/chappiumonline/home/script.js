@@ -1,6 +1,6 @@
 // Your web app's Firebase configuration
 var firebaseConfig = {
-  apiKey: process.env.FBAPI,
+  apiKey: "AIzaSyBfeywEPS4TMjovDiADBTg1alVUMsdzPTI",
   authDomain: "sclauncher-6c284.firebaseapp.com",
   databaseURL: "https://sclauncher-6c284-default-rtdb.firebaseio.com",
   projectId: "sclauncher-6c284",
@@ -19,8 +19,6 @@ var data7;
 var data8;
 
 var run = false;
-
-console.log(process.env.FBAPI)
 
 OneSignal.isPushNotificationsEnabled(function(isEnabled) {
   if (isEnabled) {
