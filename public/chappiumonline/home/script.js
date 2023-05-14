@@ -20,16 +20,6 @@ var data8;
 
 var run = false;
 
-OneSignal.isPushNotificationsEnabled(function(isEnabled) {
-  if (isEnabled) {
-      // user has subscribed
-      OneSignal.getUserId( function(userId) {
-          console.log('player_id of the subscribed user is : ' + userId);
-          // Make a POST call to your server with the user ID        
-      });
-  }
-});
-
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", site);
