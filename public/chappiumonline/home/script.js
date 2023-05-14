@@ -15,6 +15,25 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
+const options = {
+  method: 'POST',
+  headers: {
+    accept: 'application/json',
+    Authorization: 'Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk',
+    'content-type': 'application/json'
+  },
+  body: JSON.stringify({
+    included_segments: ['Subscribed Users'],
+    contents: {en: 'English or Any Language Message', es: 'Spanish Message'},
+    name: 'INTERNAL_CAMPAIGN_NAME'
+  })
+};
+
+fetch('https://onesignal.com/api/v1/notifications', options)
+  .then(response => response.json())
+  .then(response => console.log(response))
+  .catch(err => console.error(err));
+
 var data7;
 var data8;
 
