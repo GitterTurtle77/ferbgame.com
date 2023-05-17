@@ -1,46 +1,113 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"/>
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
     <link
       rel="icon"
       href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
     />
-    <link rel="manifest" href="/manifest.json">
+    <link rel="manifest" href="/manifest.json" />
     <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
     <!-- 
       This is an HTML comment
       You can write text in a comment and the content won't be visible in the page
     -->
-    
-    
-    <script src="https://cdn.onesignal.com/sdks/OneSignalSDK.js" async></script>
+
+    <script
+      src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+      async
+      defer
+    ></script>
     <script>
       window.OneSignal = window.OneSignal || [];
-      OneSignal.push(function() {
+      OneSignal.push(function () {
         OneSignal.init({
-          appId: "62886539-65fb-497a-9377-a74d6316df99",
+          appId: "abd561c7-2718-469c-a4bc-80c81bd33454",
         });
       });
     </script>
+    <style>
+    *,
+    *::before,
+    *::after {
+      box-sizing: border-box;
+    }
+    /* tasks */
+
+    .tasks {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: solid 1px #dfdfdf;
+    }
+
+    .task:last-child {
+      border-bottom: none;
+    }
+    .context-menu {
+      display: none;
+      position: absolute;
+      z-index: 10;
+      background-color: white;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      margin: 0px;
+      padding: 0px;
+    }
+
+    .context-menu--active {
+      display: block;
+      margin: 0px;
+      padding: 5px;
+      border-radius: 20px;
+    }
+    
+    .context-menu__items {
+      list-style: none;
+      margin: 0px;
+      padding: 0px;
+      border: none;
+    }
+    
+    .context-menu__item {
+      list-style: none;
+      margin: 0px;
+      padding: 25px;
+      border-radius: 20px;
+      border: none;
+    }
+    
+    .context-menu__item:hover {
+      list-style: none;
+      background-color: #DDDDDD;
+    }
+    
+    .context-menu__link {
+      text-decoration: none;
+      color: black;
+      font-weight: bold;
+      margin: 0px;
+      padding: 0px;
+      font-family: sans-serif;
+    }
+    </style>
     <link
       rel="apple-touch-icon"
       href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
     />
-    <title>Chappium</title>
-
-<!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
-       https://firebase.google.com/docs/web/setup#available-libraries -->
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
-<script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-
-<!-- Our script must be loaded after firebase references -->
-<script src="https://www.ferbgame.com/chappiumonline/home/script.js"></script>
-
+    <title>Chappium Online Beta</title>
 
     <!-- Meta tags for SEO and social sharing -->
     <link rel="canonical" href="https://www.ferbgame.com/" />
@@ -55,27 +122,80 @@
       content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
     />
     <meta name="twitter:card" content="summary" />
-    
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    <link rel="stylesheet" href="https://www.ferbgame.com/chappiumonline/style.css" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://www.ferbgame.com/chappiumonline/style.css"
+    />
   </head>
   <body>
     <div id="content">
-    <div class="homebuttons">
-      <div style="width: 50%; display: flex; justify-content: flex-start;">
-        <a style="-webkit-user-drag: none;" onclick="loadDoc('/chappiumonline/editprofile')"><img id="profileicon" style="width: 50px; height: 50px; object-fit: cover; border-radius: 10px; pointer-events: none;"/></a>      
+      <div class="homebuttons">
+        <div style="width: 50%; display: flex; justify-content: flex-start">
+          <a
+            style="-webkit-user-drag: none"
+            onclick="loadDoc('/chappiumonline/editprofile')"
+            ><img
+              id="profileicon"
+              style="
+                width: 50px;
+                height: 50px;
+                object-fit: cover;
+                border-radius: 10px;
+                pointer-events: none;
+              "
+          /></a>
+        </div>
+        <div style="width: 50%; display: flex; justify-content: flex-end">
+          <a
+            style="-webkit-user-drag: none"
+            class="material-icons"
+            onclick="loadDoc('/chappiumonline/addfriend/')"
+            >person_add</a
+          >
+          <a
+            style="-webkit-user-drag: none"
+            class="material-icons"
+            onclick="loadDoc('/chappiumonline/creategroup/')"
+            >group_add</a
+          >
+        </div>
       </div>
-      <div style="width: 50%; display: flex; justify-content: flex-end;">
-        <a style="-webkit-user-drag: none;" class="material-icons" onclick="loadDoc('/chappiumonline/addfriend/')">person_add</a>
-        <a style="-webkit-user-drag: none;" class="material-icons" onclick="loadDoc('/chappiumonline/creategroup/')">group_add</a>
-      </div>
+      <ul id="list"></ul>
     </div>
-    <ul id="list">
-      <li onclick="loadDoc('/chappiumonline/ai')"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>
-    </ul>
-    </div>
-    <div id="chatdiv">
-      
-    </div>
+    <div id="chatdiv"></div>
+    <nav id="context-menu" class="context-menu">
+    <ol class="context-menu__items">
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link" data-action="remove">
+          <i class="fa fa-eye"></i> <span style="color: red;">Remove Friend</span>
+        </a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link" data-action="block">
+          <i class="fa fa-edit"></i> <span style="color: red;">Block</span>
+        </a>
+      </li>
+      <li class="context-menu__item">
+        <a href="#" class="context-menu__link" data-action="view">
+          <i class="fa fa-times"></i> View Profile
+        </a>
+      </li>
+    </ol>
+  </nav>
   </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="/chappiumonline/home/script.js"></script>
 </html>
