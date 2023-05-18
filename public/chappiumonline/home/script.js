@@ -91,26 +91,19 @@ auth.onAuthStateChanged((user) => {
           });
 
           let list = document.getElementById("list");
+          let enable = true;
           list.innerHTML =
             '<li data-id="0" class="chatElement" onclick="loadDoc(`/chappiumonline/ai`)"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="function () { loadDoc("/chappiumonline/chat/?chat=" + datahidden[index] +"&name=" +datashown[index]);};" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
-              "</p>";
+              '</p></div><button class="material-icons" onclick="showMenu(this.parentElement)">more_vert</button>';
             li.setAttribute("data-id", list.children.length)
             li.className = "chatElement";
-            li.onclick = function () {
-              loadDoc(
-                "/chappiumonline/chat/?chat=" +
-                  datahidden[index] +
-                  "&name=" +
-                  datashown[index]
-              );
-            };
             list.appendChild(li);
           });
         } else {
@@ -127,16 +120,6 @@ auth.onAuthStateChanged((user) => {
   });
 });
 
-(function () {
-  "use strict";
-
-  ///////////////////////////////////////
-  ///////////////////////////////////////
-  //
-  // H E L P E R F U N C T I O N S
-  //
-  ///////////////////////////////////////
-  ///////////////////////////////////////
 
   function clickInsideElement(e, className) {
     var el = e.srcElement || e.target;
@@ -154,17 +137,7 @@ auth.onAuthStateChanged((user) => {
     return false;
   }
 
-  ///////////////////////////////////////
-  ///////////////////////////////////////
-  //
-  // C O R E F U N C T I O N S
-  //
-  ///////////////////////////////////////
-  ///////////////////////////////////////
-
-  /**
-   * Variables.
-   */
+  
   var contextMenuClassName = "context-menu";
   var contextMenuItemClassName = "context-menu__item";
   var contextMenuLinkClassName = "context-menu__link";
@@ -189,149 +162,25 @@ auth.onAuthStateChanged((user) => {
   var windowWidth;
   var windowHeight;
 
-  function getPosition(e) {
-    var posx = 0;
-    var posy = 0;
-
-    if (!e) var e = window.event;
-
-    if (e.pageX || e.pageY) {
-      posx = e.pageX;
-      posy = e.pageY;
-    } else if (e.clientX || e.clientY) {
-      posx =
-        e.clientX +
-        document.body.scrollLeft +
-        document.documentElement.scrollLeft;
-      posy =
-        e.clientY +
-        document.body.scrollTop +
-        document.documentElement.scrollTop;
-    }
-
-    return {
-      x: posx,
-      y: posy,
-    };
-  }
-
-  // updated positionMenu function
-  function positionMenu(e) {
-    clickCoords = getPosition(e);
-    clickCoordsX = clickCoords.x;
-    clickCoordsY = clickCoords.y;
-
-    menuWidth = menu.offsetWidth + 4;
-    menuHeight = menu.offsetHeight + 4;
-
-    windowWidth = window.innerWidth;
-    windowHeight = window.innerHeight;
-
-    if (windowWidth - clickCoordsX < menuWidth) {
-      menu.style.left = windowWidth - menuWidth + "px";
-    } else {
-      menu.style.left = clickCoordsX + "px";
-    }
-
-    if (windowHeight - clickCoordsY < menuHeight) {
-      menu.style.top = windowHeight - menuHeight + "px";
-    } else {
-      menu.style.top = clickCoordsY + "px";
-    }
-  }
-
-  function init() {
-    contextListener();
-    clickListener();
-    keyupListener();
-    resizeListener();
-  }
-  /**
-   * Listens for contextmenu events.
-   */
-  function contextListener() {
+  
     document.addEventListener("contextmenu", function (e) {
+      e.preventDefault();
       taskItemInContext = clickInsideElement(e, taskItemClassName);
+      showMenu(taskItemInContext)
+    });
 
-      if (taskItemInContext) {
-        e.preventDefault();
-        toggleMenuOn();
-        positionMenu(e);
+function showMenu(taskItem) {
+      if (taskItem) {
+        console.log("on")
+        menu.style.display = "flex"
+        document.getElementById("bg").style.display = "flex"
+        document.getElementById("item-container").innerHTML = taskItem.innerHTML
       } else {
         taskItemInContext = null;
-        toggleMenuOff();
+        console.log("off")
+      //  toggleMenuOff();
       }
-    });
-  }
-
-  function resizeListener() {
-    window.onresize = function (e) {
-      toggleMenuOff();
-    };
-  }
-
-  function menuItemListener(link) {
-    if (link.getAttribute("data-action") == "remove") {
-      removeFriend(taskItemInContext.getAttribute("data-id"))
-    } else if (link.getAttribute("data-action") == "block") {
-    } else if (link.getAttribute("data-action") == "view") {
-    }
-    toggleMenuOff();
-  }
-
-  /**
-   * Listens for click events.
-   */
-  function clickListener() {
-    document.addEventListener("click", function (e) {
-      var clickeElIsLink = clickInsideElement(e, contextMenuLinkClassName);
-
-      if (clickeElIsLink) {
-        e.preventDefault();
-        menuItemListener(clickeElIsLink);
-      } else {
-        var button = e.which || e.button;
-        if (button === 1) {
-          toggleMenuOff();
-        }
-      }
-    });
-  }
-
-  /**
-   * Listens for keyup events.
-   */
-  function keyupListener() {
-    window.onkeyup = function (e) {
-      if (e.keyCode === 27) {
-        toggleMenuOff();
-      }
-    };
-  }
-
-  /**
-   * Turns the custom context menu on.
-   */
-  function toggleMenuOn() {
-    if (menuState !== 1) {
-      menuState = 1;
-      menu.classList.add(contextMenuActive);
-    }
-  }
-
-  function toggleMenuOff() {
-    if (menuState !== 0) {
-      menuState = 0;
-      menu.classList.remove(contextMenuActive);
-    }
-  }
-
-  /**
-   * Run the app.
-   */
-
-  init();
-})();
+}
 
 function removeFriend(id) {
   var user = auth.currentUser;
@@ -359,4 +208,9 @@ function removeFriend(id) {
       database.ref().child("ChappFriends/" + user.uid).set(data2);
     }
   });
+}
+
+function hideMenu() {
+  menu.style.display = 'none';
+  document.getElementById('bg').style.display = 'none';
 }
