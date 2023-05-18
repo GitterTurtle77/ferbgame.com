@@ -164,9 +164,11 @@ auth.onAuthStateChanged((user) => {
 
   
     document.addEventListener("contextmenu", function (e) {
-      e.preventDefault();
       taskItemInContext = clickInsideElement(e, taskItemClassName);
-      showMenu(taskItemInContext)
+      if (taskItemInContext) {
+        e.preventDefault();
+        showMenu(taskItemInContext)
+      }
     });
 
 function showMenu(taskItem) {
