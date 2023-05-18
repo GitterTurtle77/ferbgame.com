@@ -23,10 +23,6 @@ var datashown = [];
 var datahidden = [];
 var dataimage = [];
 
-OneSignal.getUserId(function (userId) {
-  OSid = userId;
-});
-
 var run = false;
 
 function loadDoc(site) {
@@ -51,6 +47,9 @@ function loadDoc(site) {
 
 auth.onAuthStateChanged((user) => {
   var user = auth.currentUser;
+  OneSignal.getUserId(function (userId) {
+  OSid = userId;
+});
 
   var postsref8 = database.ref(
     "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
