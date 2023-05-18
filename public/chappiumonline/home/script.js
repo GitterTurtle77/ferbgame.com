@@ -97,7 +97,7 @@ auth.onAuthStateChanged((user) => {
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=` + datahidden[index] +`&name=` +datashown[index]);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= ;'+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
