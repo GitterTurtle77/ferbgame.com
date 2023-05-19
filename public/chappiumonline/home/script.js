@@ -18,6 +18,7 @@ const database = firebase.database();
 var data7;
 var data8;
 var OSid;
+var el;
 
 var datashown = [];
 var datahidden = [];
@@ -121,7 +122,7 @@ auth.onAuthStateChanged((user) => {
 
 
   function clickInsideElement(e, className) {
-    var el = e.srcElement || e.target;
+    el = e.srcElement || e.target;
 
     if (el.classList.contains(className)) {
       return el;
@@ -183,7 +184,7 @@ function showMenu(taskItem) {
       }
 }
 
-function removeFriend(el) {
+function removeFriend() {
   taskItemInContext = el
   console.log(taskItemInContext)
   var id = taskItemInContext.getAttribute("data-id")
