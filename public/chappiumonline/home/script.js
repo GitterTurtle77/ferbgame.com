@@ -183,7 +183,10 @@ function showMenu(taskItem) {
       }
 }
 
-function removeFriend(id) {
+function removeFriend(el) {
+  taskItemInContext = el
+  console.log(taskItemInContext)
+  var id = taskItemInContext.getAttribute("data-id")
   var user = auth.currentUser;
   var postsref = database.ref(
     "ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")
