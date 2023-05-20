@@ -173,20 +173,18 @@ auth.onAuthStateChanged((user) => {
 
 function showMenu(taskItem) {
       if (taskItem) {
-        taskItemInContext = taskItem
-        console.log("on")
+        taskItemInContext = taskItem;
         menu.style.display = "flex"
         document.getElementById("bg").style.display = "flex"
         document.getElementById("item-container").innerHTML = taskItem.innerHTML
       } else {
         taskItemInContext = null;
-        console.log("off")
       //  toggleMenuOff();
       }
 }
 
 function removeFriend() {
-  taskItemInContext = el;
+  taskItemInContext;
   console.log(taskItemInContext)
   var id = taskItemInContext.getAttribute("data-id")
   var user = auth.currentUser;
