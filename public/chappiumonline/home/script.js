@@ -26,13 +26,6 @@ var dataimage = [];
 
 var run = false;
 
-const urlParams = new URLSearchParams(window.location.search);
-var chat = urlParams.get("chat");
-
-
-
-
-
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", site);
@@ -54,7 +47,7 @@ function loadDoc(site) {
 }
 
 auth.onAuthStateChanged((user) => {
-  const urlParams = new URLSearchParams(window.location.search);
+  var urlParams = new URLSearchParams(window.location.search);
   var androidID = urlParams.get("OSid");
   console.log(androidID)
   if (androidID == null) {
@@ -62,6 +55,8 @@ auth.onAuthStateChanged((user) => {
       OSid = userId;
       console.log(OSid)
     });
+  } else {
+    OSid = androidID;
   }
 
   var postsref8 = database.ref(
