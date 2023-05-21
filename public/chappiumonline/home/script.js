@@ -70,21 +70,21 @@ auth.onAuthStateChanged((user) => {
       var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       postsref7.on("value", (snapshot) => {
         data7 = snapshot.val();
-        if (!data7.includes(OSid)) {
-          data7.push(OSid);
-          database
-            .ref()
-            .child("ChappiumUsers/" + data8[2])
-            .set(data7);
-        } else if (data7.length == 4 && !data7.includes(OSid)) {
+        if (data7.length == 4 && !data7.includes(OSid)) {
           data7.splice(3, 1);
           data7.push(OSid);
           database
             .ref()
             .child("ChappiumUsers/" + data8[2])
             .set(data7);
-        }
-      });
+        } else if (!data7.includes(OSid)) {
+          data7.push(OSid);
+          database
+            .ref()
+            .child("ChappiumUsers/" + data8[2])
+            .set(data7);
+      }
+    });
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
