@@ -26,6 +26,13 @@ var dataimage = [];
 
 var run = false;
 
+const urlParams = new URLSearchParams(window.location.search);
+var chat = urlParams.get("chat");
+
+
+
+
+
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", site);
@@ -53,9 +60,13 @@ auth.onAuthStateChanged((user) => {
   if (androidID == null) {
     OneSignal.getUserId(function (userId) {
       OSid = userId;
+      var newh1 = document.createElement("h1");
+      newh1.innerHTML = "Web " + OSid
     });
   } else {
     OSid = androidID;
+    var newh1 = document.createElement("h1");
+    newh1.innerHTML = "Android " + OSid
   }
 
   var postsref8 = database.ref(
@@ -70,21 +81,21 @@ auth.onAuthStateChanged((user) => {
       var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       postsref7.on("value", (snapshot) => {
         data7 = snapshot.val();
-        if (data7.length == 4 && !data7.includes(OSid)) {
+        if (!data7.includes(OSid)) {
+          data7.push(OSid);
+          database
+            .ref()
+            .child("ChappiumUsers/" + data8[2])
+            .set(data7);
+        } else if (data7.length == 4 && !data7.includes(OSid)) {
           data7.splice(3, 1);
           data7.push(OSid);
           database
             .ref()
             .child("ChappiumUsers/" + data8[2])
             .set(data7);
-        } else if (!data7.includes(OSid)) {
-          data7.push(OSid);
-          database
-            .ref()
-            .child("ChappiumUsers/" + data8[2])
-            .set(data7);
-      }
-    });
+        }
+      });
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
@@ -103,7 +114,7 @@ auth.onAuthStateChanged((user) => {
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= ;'+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name='+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
@@ -115,9 +126,9 @@ auth.onAuthStateChanged((user) => {
         } else {
           let list = document.getElementById("list");
           list.innerHTML =
-            '<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
+            '<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           list.innerHTML =
-            `<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li>There's no one here! Get started by adding friends.</li>`;
+            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li class="chatElement">There's no one here! Get started by adding friends.</li>`;
         }
       });
     } else {
