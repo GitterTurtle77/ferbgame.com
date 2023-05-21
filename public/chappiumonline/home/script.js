@@ -53,10 +53,13 @@ auth.onAuthStateChanged((user) => {
   if (androidID == null) {
     OneSignal.getUserId(function (userId) {
       OSid = userId;
-      console.log(OSid)
+      var newh1 = document.createElement("h1");
+      newh1.innerHTML = "Web " + OSid
     });
   } else {
     OSid = androidID;
+    var newh1 = document.createElement("h1");
+    newh1.innerHTML = "Android " + OSid
   }
 
   var postsref8 = database.ref(
