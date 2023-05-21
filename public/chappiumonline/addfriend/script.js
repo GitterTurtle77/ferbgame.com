@@ -46,7 +46,6 @@ function addBtnClicked() {
           var postsref3 = database.ref("ChappiumUsers/" + data2[2]);
           postsref3.on("value", (snapshot) => {
             data3 = snapshot.val();
-            console.log(data2)
 
             var postsref4 = database.ref("ChappReceived/" + data3[1]);
             postsref4.on("value", (snapshot) => {
@@ -78,6 +77,13 @@ function addBtnClicked() {
                   data4.push(
                     data[0] + "--" + data3[1] + "->" + data[1] + "--" + data[2] + "--" + data[3]
                   );
+                  
+                  if (data[3] == undefined) {
+                    data.splice(3,1)
+                  }
+                  console.log(data3)
+                  console.log(data[3])
+                  
                   data5.push(
                     data3[0] +
                       "--" +
