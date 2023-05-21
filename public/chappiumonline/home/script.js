@@ -26,6 +26,13 @@ var dataimage = [];
 
 var run = false;
 
+const urlParams = new URLSearchParams(window.location.search);
+var chat = urlParams.get("chat");
+
+
+
+
+
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", site);
@@ -47,10 +54,15 @@ function loadDoc(site) {
 }
 
 auth.onAuthStateChanged((user) => {
-  var user = auth.currentUser;
-  OneSignal.getUserId(function (userId) {
-  OSid = userId;
-});
+  const urlParams = new URLSearchParams(window.location.search);
+  var androidID = urlParams.get("OSid");
+  console.log(androidID)
+  if (androidID == null) {
+    OneSignal.getUserId(function (userId) {
+      OSid = userId;
+      console.log(OSid)
+    });
+  }
 
   var postsref8 = database.ref(
     "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
@@ -97,7 +109,7 @@ auth.onAuthStateChanged((user) => {
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= '+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= ;'+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
