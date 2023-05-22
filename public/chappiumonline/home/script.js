@@ -88,7 +88,7 @@ auth.onAuthStateChanged((user) => {
           data.forEach((element) => {
             datashown.push(element.split("--").at(0));
             datahidden.push(element.split("--").at(1));
-            dataid.push(element.split("--").at(1));
+            dataid.push(element.split("--").at(3));
             dataimage.push(element.split("--").at(2));
           });
 
