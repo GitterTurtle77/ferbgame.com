@@ -23,6 +23,7 @@ var el;
 var datashown = [];
 var datahidden = [];
 var dataimage = [];
+var dataid = [];
 
 var run = false;
 
