@@ -26,13 +26,6 @@ var dataimage = [];
 
 var run = false;
 
-const urlParams = new URLSearchParams(window.location.search);
-var chat = urlParams.get("chat");
-
-
-
-
-
 function loadDoc(site) {
   const xhttp = new XMLHttpRequest();
   xhttp.open("GET", site);
@@ -54,20 +47,10 @@ function loadDoc(site) {
 }
 
 auth.onAuthStateChanged((user) => {
-  var urlParams = new URLSearchParams(window.location.search);
-  var androidID = urlParams.get("OSid");
-  console.log(androidID)
-  if (androidID == null) {
-    OneSignal.getUserId(function (userId) {
-      OSid = userId;
-      var newh1 = document.createElement("h1");
-      newh1.innerHTML = "Web " + OSid
-    });
-  } else {
-    OSid = androidID;
-    var newh1 = document.createElement("h1");
-    newh1.innerHTML = "Android " + OSid
-  }
+  var user = auth.currentUser;
+  OneSignal.getUserId(function (userId) {
+  OSid = userId;
+});
 
   var postsref8 = database.ref(
     "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
@@ -114,7 +97,7 @@ auth.onAuthStateChanged((user) => {
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name='+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= ;'+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
@@ -126,9 +109,9 @@ auth.onAuthStateChanged((user) => {
         } else {
           let list = document.getElementById("list");
           list.innerHTML =
-            '<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
+            '<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           list.innerHTML =
-            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li class="chatElement">There's no one here! Get started by adding friends.</li>`;
+            `<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li>There's no one here! Get started by adding friends.</li>`;
         }
       });
     } else {
@@ -190,18 +173,20 @@ auth.onAuthStateChanged((user) => {
 
 function showMenu(taskItem) {
       if (taskItem) {
-        taskItemInContext = taskItem;
+        taskItemInContext = taskItem
+        console.log("on")
         menu.style.display = "flex"
         document.getElementById("bg").style.display = "flex"
         document.getElementById("item-container").innerHTML = taskItem.innerHTML
       } else {
         taskItemInContext = null;
+        console.log("off")
       //  toggleMenuOff();
       }
 }
 
 function removeFriend() {
-  taskItemInContext;
+  taskItemInContext = el;
   console.log(taskItemInContext)
   var id = taskItemInContext.getAttribute("data-id")
   var user = auth.currentUser;
