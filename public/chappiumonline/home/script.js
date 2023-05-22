@@ -178,7 +178,7 @@ function showMenu(taskItem) {
         console.log("on")
         menu.style.display = "flex"
         document.getElementById("bg").style.display = "flex"
-        document.getElementById("item-container").innerHTML = taskItem.innerHTML
+        document.getElementById("item-container").innerHTML = taskItem.firstChild.innerHTML
       } else {
         taskItemInContext = null;
         console.log("off")
