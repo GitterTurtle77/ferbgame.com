@@ -88,9 +88,9 @@ function wait() {
             fetch('https://onesignal.com/api/v1/notifications', options)
               .then(response => response.json())
               .then(response => console.log(response))
-              .catch(err => console.error(err));
-            document.getElementById("chat").value = '';
-          }, 200);
+              .catch(err => console.error(err))
+              document.getElementById("chat").value = '';
+          }, 500);
         }
       }
       document.getElementById("send").addEventListener("click", sndBtnClicked);
