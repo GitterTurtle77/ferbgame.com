@@ -87,6 +87,7 @@ auth.onAuthStateChanged((user) => {
           data.forEach((element) => {
             datashown.push(element.split("--").at(0));
             datahidden.push(element.split("--").at(1));
+            dataid.push(element.split("--").at(1));
             dataimage.push(element.split("--").at(2));
           });
 
@@ -97,7 +98,7 @@ auth.onAuthStateChanged((user) => {
           datashown.forEach((item, index) => {
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name= ;'+datashown[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name='+datashown[index]+'&id='+dataid[index]`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
