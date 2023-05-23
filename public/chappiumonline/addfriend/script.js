@@ -142,6 +142,7 @@ function openTab(tabName, tab) {
       let li = document.createElement("li");
       list.innerHTML = "";
       data6.forEach((item, index) => {
+        li.className = "chatElement";
         li.innerHTML =
           '<img style="height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
           item.split("--")[2] +
@@ -179,6 +180,7 @@ function openTab(tabName, tab) {
           '"/><p>' +
           item.split("--")[0] +
           "</p>";
+        li.className = "chatElement";
         list.appendChild(li);
       });
       function getEventTarget(e) {
