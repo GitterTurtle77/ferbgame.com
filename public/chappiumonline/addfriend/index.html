@@ -1,324 +1,86 @@
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyBfeywEPS4TMjovDiADBTg1alVUMsdzPTI",
-  authDomain: "sclauncher-6c284.firebaseapp.com",
-  databaseURL: "https://sclauncher-6c284-default-rtdb.firebaseio.com",
-  projectId: "sclauncher-6c284",
-  storageBucket: "sclauncher-6c284.appspot.com",
-  messagingSenderId: "794326267495",
-  appId: "1:794326267495:web:f2e628326b0d30215686c2",
-  measurementId: "G-CG0S6KTREB",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// Initialize variables
-const auth = firebase.auth();
-const database = firebase.database();
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+    />
 
-var data;
-var data2;
-var data3;
-var data4 = [];
-var data5 = [];
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+    />
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
 
-var executed = false;
+    <title>Chappium Online Beta</title>
 
-function addBtnClicked() {
-  if (executed == false) {
-    var user = auth.currentUser;
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Chappium Online Beta" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
 
-    if (document.getElementById("friendname").value != "") {
-      var postsref = database.ref(
-        "ChappiumUsers/" + document.getElementById("friendname").value
-      );
-      postsref.on("value", (snapshot) => {
-        data = snapshot.val();
-        if (data == null) {
-          document.getElementById("error").innerText = "This user does not exist"
-        } else {
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link
+      rel="stylesheet"
+      href="/chappiumonline/style.css"
+    />
+  </head>
+  <body>
+    <div style="width: 100%;">
+      <a href="/chappiumonline/home/" style="-webkit-user-drag: none; float: left; height: 100%; width: 50px;" id="back"><span class="material-icons">arrow_back_ios_new</span></a>
+      <div class="tabbar">
+      <button class="tabbutton" style="background-color: black;" onclick="openTab('AddFriend', this)">
+        Add
+      </button>
+      <button class="tabbutton" onclick="openTab('SentRequests', this)">
+        Sent
+      </button>
+      <button class="tabbutton" onclick="openTab('ReceivedRequests', this)">
+        Received
+      </button>
+    </div>
+    </div>
+    <div id="AddFriend" class="tab">
+      <input type="text" id="friendname" placeholder="Username" style="width: 50%"/>
+      <button id="addfriend"><span class="material-icons">add</span></button>
+      <p id="error" style="color: red;"></p>
+    </div>
 
-        var postsref2 = database.ref(
-          "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
-        );
-        postsref2.on("value", (snapshot) => {
-          data2 = snapshot.val();
+    <div id="SentRequests" class="tab" style="display: none; width: 100vw; height: 100vh;">
+      <h2>Sent Requests</h2>
+      <ul id="sent"></ul>
+    </div>
 
-          var postsref3 = database.ref("ChappiumUsers/" + data2[2]);
-          postsref3.on("value", (snapshot) => {
-            data3 = snapshot.val();
+    <div id="ReceivedRequests" class="tab" style="display: none; width: 100vw; height: 100vh;">
+      <h2>Received Requests</h2>
+      <ul id="received"></ul>
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
 
-            var postsref4 = database.ref("ChappReceived/" + data3[1]);
-            postsref4.on("value", (snapshot) => {
-              data4 = snapshot.val();
-              if (data4 == null) {
-                data4 = [];
-              }
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
-              var postsref5 = database.ref("ChappSent/" + data[1]);
-              postsref5.on("value", (snapshot) => {
-                data5 = snapshot.val();
-                if (data5 == null) {
-                  data5 = [];
-                }
-
-                if (
-                  !data5.includes(
-                    data3[0] +
-                      "--" +
-                      data3[1] +
-                      "->" +
-                      data[1] +
-                      "--" +
-                      data3[2] +
-                      "--" +
-                      data3[3]
-                  )
-                ) {
-                  data4.push(
-                    data[0] + "--" + data3[1] + "->" + data[1] + "--" + data[2] + "--" + data[3]
-                  );
-                  
-                  data5.push(
-                    data3[0] +
-                      "--" +
-                      data3[1] +
-                      "->" +
-                      data[1] +
-                      "--" +
-                      data3[2] +
-                      "--" +
-                      data3[3]
-                  );
-
-                  database
-                    .ref()
-                    .child("ChappReceived/" + data[1])
-                    .set(data5);
-                }
-
-                database
-                  .ref()
-                  .child("ChappSent/" + user.uid)
-                  .set(data4);
-
-                location.href = "/chappiumonline/home";
-              });
-            });
-          });
-        });
-        }
-      });
-    }
-    executed = true;
-  }
-}
-
-document.getElementById("addfriend").addEventListener("click", addBtnClicked);
-
-function openTab(tabName, tab) {
-  var i;
-  var x = document.getElementsByClassName("tab");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  var y = document.getElementsByClassName("tabbutton");
-  for (i = 0; i < y.length; i++) {
-    y[i].style.backgroundColor = "#111111";
-  }
-  document.getElementById(tabName).style.display = "block";
-  tab.style.backgroundColor = "black";
-  if (tabName == "ReceivedRequests") {
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappReceived/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("received");
-      let li = document.createElement("li");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        li.className = "chatElement";
-        li.innerHTML =
-          '<img style="height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p style="text-align: left; width: 100%;">' +
-          item.split("--")[0] +
-          '</p><div style="display: flex; justify-content: flex-end;"><button id="accept" onclick="acceptBtnClick(`' +
-          item +
-          '`)"><span class="material-icons">done</span></button><button id="decline" onclick="declineBtnClick(`'+ item +'`)"><span class="material-icons">close</span></button></div>';
-        list.appendChild(li);
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("received");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-  } else {
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappSent/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("sent");
-      let li = document.createElement("li");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        console.log(item.split("--")[0],item.split("--")[1],item.split("--")[2],item.split("--")[3])
-        li.innerHTML =
-          '<img style="height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p>' +
-          item.split("--")[0] +
-          "</p>";
-        li.className = "chatElement";
-        list.appendChild(li);
-        console.log(list.firstChild)
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("sent");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-  }
-}
-
-function acceptBtnClick(data) {
-  var user = auth.currentUser;
-  var postsref6 = database.ref("ChappFriends/" + user.uid);
-  postsref6.on("value", (snapshot) => {
-    var data6 = snapshot.val();
-    if (data6 == null || data6 == undefined) {
-      data6 = [];
-    }
-    var postsref7 = database.ref("ChappReceived/" + user.uid);
-    postsref7.on("value", (snapshot) => {
-      var data7 = snapshot.val();
-
-      if (!data6.includes(data)) {
-        data6.push(data);
-
-        data7.splice(data);
-
-        database
-          .ref()
-          .child("ChappReceived/" + user.uid)
-          .set(data7);
-        database
-          .ref()
-          .child("ChappFriends/" + user.uid)
-          .set(data6);
-      }
-    });
-  });
-  
-  var postsref8 = database.ref(
-    "ChappFriends/" + data.split("--")[1].split("->")[0]
-  );
-  postsref8.on("value", (snapshot) => {
-    var data8 = snapshot.val();
-    if (data8 == null || data8 == undefined) {
-      data8 = [];
-    }
-    var postsref9 = database.ref(
-      "ChappSent/" + data.split("--")[1].split("->")[0]
-    );
-    postsref9.on("value", (snapshot) => {
-      var data9 = snapshot.val();
-      console.log(data9)
-      
-      data9.forEach((item, index) => {
-        if (item.includes(user.uid)) {
-          data = item;
-        }
-      })
-      
-      if (!data8.includes(data)) {
-        data8.push(data);
-
-        data9.splice(data);
-        console.log(data8);
-        console.log(data9);
-
-        database
-          .ref()
-          .child("ChappSent/" + data.split("--")[1].split("->")[0])
-          .set(data9);
-        database
-          .ref()
-          .child("ChappFriends/" + data.split("--")[1].split("->")[0])
-          .set(data8);
-        location.href = "/chappiumonline/home"
-      }
-    });
-  });
-}
-
-function declineBtnClick(data) {
-  var user = auth.currentUser;
-  var postsref6 = database.ref("ChappFriends/" + user.uid);
-  postsref6.on("value", (snapshot) => {
-    var data6 = snapshot.val();
-    if (data6 == null || data6 == undefined) {
-      data6 = [];
-    }
-    var postsref7 = database.ref("ChappReceived/" + user.uid);
-    postsref7.on("value", (snapshot) => {
-      var data7 = snapshot.val();
-
-      if (!data6.includes(data)) {
-        data7.splice(data);
-
-        database
-          .ref()
-          .child("ChappReceived/" + user.uid)
-          .set(data7);
-      }
-    });
-  });
-  
-  var postsref8 = database.ref(
-    "ChappFriends/" + data.split("--")[1].split("->")[0]
-  );
-  postsref8.on("value", (snapshot) => {
-    var data8 = snapshot.val();
-    if (data8 == null || data8 == undefined) {
-      data8 = [];
-    }
-    var postsref9 = database.ref(
-      "ChappSent/" + data.split("--")[1].split("->")[0]
-    );
-    postsref9.on("value", (snapshot) => {
-      var data9 = snapshot.val();
-      console.log(data9)
-      
-      data9.forEach((item, index) => {
-        if (item.includes(user.uid)) {
-          data = item;
-        }
-      })
-      
-      if (!data8.includes(data)) {
-        data9.splice(data);
-
-        database
-          .ref()
-          .child("ChappSent/" + data.split("--")[1].split("->")[0])
-          .set(data9);
-        location.href = "/chappiumonline/home"
-      }
-    });
-  });
-}
-
+  <!-- Our script must be loaded after firebase references -->
+  <script src="/chappiumonline/addfriend/script.js"></script>
+</html>
