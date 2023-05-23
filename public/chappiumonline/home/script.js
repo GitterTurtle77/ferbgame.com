@@ -113,7 +113,7 @@ auth.onAuthStateChanged((user) => {
           list.innerHTML =
             '<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           list.innerHTML =
-            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li>There's no one here! Get started by adding friends.</li>`;
+            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li class="chatElement">There's no one here! Get started by adding friends.</li>`;
         }
       });
     } else {
