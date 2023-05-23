@@ -101,11 +101,11 @@ setTimeout(function () {
                 headers: {
                   accept: "application/json",
                   Authorization:
-                    "Basic YTY0MDM1MzktNjgyNy00ZTgxLWExZDEtNGJjZWEwZTg2NTk4",
+                    "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
                   "content-type": "application/json",
                 },
                 body: JSON.stringify({
-                  app_id: "abd561c7-2718-469c-a4bc-80c81bd33454",
+                  app_id: "62886539-65fb-497a-9377-a74d6316df99",
                   include_player_ids: [OSid],
                   contents: {en: document.getElementById("chat").value},
                   headings: {en: user.displayName},
