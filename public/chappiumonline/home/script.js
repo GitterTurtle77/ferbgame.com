@@ -65,21 +65,21 @@ auth.onAuthStateChanged((user) => {
       var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
       postsref7.on("value", (snapshot) => {
         data7 = snapshot.val();
-        if (!data7.includes(OSid)) {
-          data7.push(OSid);
-          database
-            .ref()
-            .child("ChappiumUsers/" + data8[2])
-            .set(data7);
-        } else if (data7.length == 4 && !data7.includes(OSid)) {
+        if (data7.length == 4 && !data7.includes(OSid)) {
           data7.splice(3, 1);
           data7.push(OSid);
           database
             .ref()
             .child("ChappiumUsers/" + data8[2])
+            .set(data7); 
+        } else if (!data7.includes(OSid)) {
+          data7.push(OSid);
+          database
+            .ref()
+            .child("ChappiumUsers/" + data8[2])
             .set(data7);
-        }
-      });
+      }
+    })
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
@@ -111,9 +111,9 @@ auth.onAuthStateChanged((user) => {
         } else {
           let list = document.getElementById("list");
           list.innerHTML =
-            '<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
+            '<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
           list.innerHTML =
-            `<li data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li>There's no one here! Get started by adding friends.</li>`;
+            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li>There's no one here! Get started by adding friends.</li>`;
         }
       });
     } else {
