@@ -116,6 +116,20 @@ auth.onAuthStateChanged((user) => {
             `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li class="chatElement">There's no one here! Get started by adding friends.</li>`;
         }
       });
+      var data4;
+      var postsref4 = database.ref("ChappReceived/" + data8[1]);
+            postsref4.on("value", (snapshot) => {
+              data4 = snapshot.val();
+              if (data4 == null) {
+                data4 = [];
+              }
+              if (data4.length != 0) {
+                document.getElementById("notificationCount").style.display = "inline";
+              } else {
+                document.getElementById("notificationCount").style.display = "none";
+              }
+            })
+      
     } else {
       location.href = "/chappiumonline/createprofile/";
     }

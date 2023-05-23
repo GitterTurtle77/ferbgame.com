@@ -118,6 +118,16 @@
           display: flex;
           flex-direction: row;
         }
+        .notification-badge {
+          display: none;
+          background-color: white;
+          border-radius: 50%;
+          padding: 7px;
+          font-size: 0px;
+          position: absolute;
+          top: 20px;       
+        }
+  
       </style>
       <link
         rel="apple-touch-icon"
@@ -171,7 +181,7 @@
               style="-webkit-user-drag: none"
               class="material-icons"
               onclick="loadDoc('/chappiumonline/addfriend/')"
-              >person_add</a
+              >person_add <span class="notification-badge" id="notificationCount"></span></a
             >
             <a
               style="-webkit-user-drag: none"
@@ -221,3 +231,4 @@
     <!-- Our script must be loaded after firebase references -->
     <script src="/chappiumonline/home/script.js"></script>
   </html>
+  
