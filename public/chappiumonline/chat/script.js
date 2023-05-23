@@ -95,17 +95,16 @@ setTimeout(function () {
                 .child("Chapp/" + chat)
                 .set(data);
             });
-            setTimeout(function () {
-              options = {
+            options = {
                 method: "POST",
                 headers: {
                   accept: "application/json",
                   Authorization:
-                    "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
+                    "Basic YTY0MDM1MzktNjgyNy00ZTgxLWExZDEtNGJjZWEwZTg2NTk4",
                   "content-type": "application/json",
                 },
                 body: JSON.stringify({
-                  app_id: "62886539-65fb-497a-9377-a74d6316df99",
+                  app_id: "abd561c7-2718-469c-a4bc-80c81bd33454",
                   include_player_ids: [OSid],
                   contents: {en: document.getElementById("chat").value},
                   headings: {en: user.displayName},
@@ -118,6 +117,7 @@ setTimeout(function () {
                 .then((response) => response.json())
                 .then((response) => console.log(response))
                 .catch((err) => console.error(err));
+            setTimeout(function () {
               document.getElementById("chat").value = "";
             }, 200);
           }
