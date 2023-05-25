@@ -112,7 +112,7 @@ function addBtnClicked() {
                 body: JSON.stringify({
                   app_id: "62886539-65fb-497a-9377-a74d6316df99",
                   include_player_ids: [data[3]],
-                  contents: {en: user.displayName + "wants to be your friend"},
+                  contents: {en: user.displayName + " wants to be your friend"},
                   headings: {en: "Friend Request"},
                   name: "message",
                 }),
