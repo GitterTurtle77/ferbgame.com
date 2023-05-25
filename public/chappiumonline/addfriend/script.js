@@ -123,9 +123,9 @@ function addBtnClicked() {
                 .then((response) => response.json())
                 .then((response) => console.log(response))
                 .catch((err) => console.error(err));
-            setTimeout(function () {
-              location.href = "/chappiumonline/home";
-            }, 200);
+              setTimeout(function () {
+                location.href = "/chappiumonline/home";
+              }, 200);
 
               });
             });
