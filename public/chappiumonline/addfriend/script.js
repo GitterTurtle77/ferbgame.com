@@ -119,11 +119,11 @@ function addBtnClicked() {
               };
               console.log(options);
               console.log("hello world");
-            setTimeout(function () {
               fetch("https://onesignal.com/api/v1/notifications", options)
                 .then((response) => response.json())
                 .then((response) => console.log(response))
                 .catch((err) => console.error(err));
+            setTimeout(function () {
               location.href = "/chappiumonline/home";
             }, 200);
 
