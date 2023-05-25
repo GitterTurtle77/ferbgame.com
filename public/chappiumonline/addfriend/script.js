@@ -74,10 +74,6 @@ function addBtnClicked() {
                       data3[3]
                   )
                 ) {
-                  
-                  if (data[3] == undefined) {
-                    data.splice(3,1)
-                  }
                   data4.push(
                     data[0] + "--" + data3[1] + "->" + data[1] + "--" + data[2] + "--" + data[3]
                   );
@@ -104,8 +100,33 @@ function addBtnClicked() {
                   .ref()
                   .child("ChappSent/" + user.uid)
                   .set(data4);
+                
+                var options = {
+                method: "POST",
+                headers: {
+                  accept: "application/json",
+                  Authorization:
+                    "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
+                  "content-type": "application/json",
+                },
+                body: JSON.stringify({
+                  app_id: "62886539-65fb-497a-9377-a74d6316df99",
+                  include_player_ids: [data[3]],
+                  contents: {en: user.displayName + "wants to be your friend"},
+                  headings: {en: "Friend Request"},
+                  name: "message",
+                }),
+              };
+              console.log(options);
+              console.log("hello world");
+            setTimeout(function () {
+              fetch("https://onesignal.com/api/v1/notifications", options)
+                .then((response) => response.json())
+                .then((response) => console.log(response))
+                .catch((err) => console.error(err));
+              location.href = "/chappiumonline/home";
+            }, 200);
 
-                location.href = "/chappiumonline/home";
               });
             });
           });
