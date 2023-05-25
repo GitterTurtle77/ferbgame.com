@@ -109,7 +109,8 @@ setTimeout(function () {
                   contents: {en: document.getElementById("chat").value},
                   headings: {en: user.displayName},
                   name: "message",
-                  small_icon: "message_icon.png"
+                  small_icon: "message_icon.png",
+                  url: location.href
                 }),
               };
               console.log(options);
