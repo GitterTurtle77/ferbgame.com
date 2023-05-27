@@ -18,6 +18,8 @@ const database = firebase.database();
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
 var OSid = urlParams.get("id");
+var name = urlParams.get("name");
+document.getElementById("name").innerText = name
 
 var run = true;
 var options = {};
