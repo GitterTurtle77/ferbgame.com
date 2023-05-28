@@ -295,9 +295,9 @@ auth.onAuthStateChanged((user) => {
       data6.forEach((item, index) => {
         li.className = "listElement";
         li.innerHTML =
-          '<div style="float: left; width: 75%;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+          '<div style="float: left; width: 65%;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
           item.split("--")[2] +
-          '"/><p style="text-align: left; width: 100%;">' +
+          '"/><p style="text-align: left; width: 100%; font-size: 20px;">' +
           item.split("--")[0] +
           '</p></div><div style="display: flex;"><button id="accept" onclick="acceptBtnClick(`' +
           item +
