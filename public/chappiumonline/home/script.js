@@ -190,7 +190,8 @@ auth.onAuthStateChanged((user) => {
 function showMenu(taskItem) {
       if (taskItem) {
         taskItemInContext = taskItem
-        console.log("on")
+        el = taskItem
+        console.log(taskItemInContext)
         menu.style.display = "flex"
         document.getElementById("bg").style.display = "flex"
         document.getElementById("item-container").innerHTML = taskItem.firstChild.innerHTML
@@ -203,7 +204,7 @@ function showMenu(taskItem) {
 
 function removeFriend() {
   taskItemInContext = el;
-  console.log(taskItemInContext)
+  console.log(el)
   var id = taskItemInContext.getAttribute("data-id")
   var user = auth.currentUser;
   var postsref = database.ref(
