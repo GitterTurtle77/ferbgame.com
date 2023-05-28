@@ -43,11 +43,13 @@
     />
   </head>
   <body>
-    <div style="width: 100%;">
+    <div style="display: flex; flex-direction: column;">
+      <div style="width: 100%;">
       <a href="/chappiumonline/home/" style="-webkit-user-drag: none; float: left; height: 100%; width: 50px;" id="back"><span class="material-icons">arrow_back_ios_new</span></a>
-      <div class="tabbar">
     </div>
-    <button class="tabbutton" style="background-color: black;" onclick="openTab('AddFriend', this)">
+    <div style="width: 100%;">
+      <div class="tabbar">
+      <button class="tabbutton" style="background-color: black;" onclick="openTab('AddFriend', this)">
         Add
       </button>
       <button class="tabbutton" onclick="openTab('SentRequests', this)">
@@ -57,6 +59,8 @@
         Received
       </button>
     </div>
+    </div>
+    </div>
     <div id="AddFriend" class="tab">
       <input type="text" id="friendname" placeholder="Username" style="width: 50%"/>
       <button id="addfriend"><span class="material-icons">add</span></button>
@@ -65,7 +69,7 @@
 
     <div id="SentRequests" class="tab" style="display: none;">
       <h2>Sent Requests</h2>
-      <div id="sent"></div>
+      <ul id="sent"></ul>
     </div>
 
     <div id="ReceivedRequests" class="tab" style="display: none;">
