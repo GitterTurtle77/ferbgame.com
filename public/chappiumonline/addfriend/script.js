@@ -112,20 +112,20 @@ function addBtnClicked() {
                 body: JSON.stringify({
                   app_id: "62886539-65fb-497a-9377-a74d6316df99",
                   include_player_ids: [data[3]],
-                  contents: {en: user.displayName + " wants to be your friend"},
+                  contents: {en: user.displayName + "wants to be your friend"},
                   headings: {en: "Friend Request"},
                   name: "message",
                 }),
               };
               console.log(options);
               console.log("hello world");
+            setTimeout(function () {
               fetch("https://onesignal.com/api/v1/notifications", options)
                 .then((response) => response.json())
                 .then((response) => console.log(response))
                 .catch((err) => console.error(err));
-              setTimeout(function () {
-                location.href = "/chappiumonline/home";
-              }, 200);
+              location.href = "/chappiumonline/home";
+            }, 200);
 
               });
             });
@@ -152,71 +152,6 @@ function openTab(tabName, tab) {
   }
   document.getElementById(tabName).style.display = "block";
   tab.style.backgroundColor = "black";
-  if (tabName == "ReceivedRequests") {
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappReceived/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("received");
-      let li = document.createElement("li");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        li.className = "chatElement";
-        li.innerHTML =
-          '<img style="height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p style="text-align: left; width: 100%;">' +
-          item.split("--")[0] +
-          '</p><div style="display: flex; justify-content: flex-end;"><button id="accept" onclick="acceptBtnClick(`' +
-          item +
-          '`)"><span class="material-icons">done</span></button><button id="decline" onclick="declineBtnClick(`'+ item +'`)"><span class="material-icons">close</span></button></div>';
-        list.appendChild(li);
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("received");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-  } else {
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappSent/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("sent");
-      let li = document.createElement("li");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        console.log(item.split("--")[0],item.split("--")[1],item.split("--")[2],item.split("--")[3])
-        li.innerHTML =
-          '<img style="height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p>' +
-          item.split("--")[0] +
-          "</p>";
-        li.className = "chatElement";
-        list.appendChild(li);
-        console.log(list.firstChild)
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("sent");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-  }
 }
 
 function acceptBtnClick(data) {
@@ -347,3 +282,68 @@ function declineBtnClick(data) {
   });
 }
 
+auth.onAuthStateChanged((user) => {
+    var user = auth.currentUser;
+
+    var postsref6 = database.ref("ChappReceived/" + user.uid);
+    postsref6.on("value", (snapshot) => {
+      var data6 = snapshot.val();
+
+      let list = document.getElementById("received");
+      let li = document.createElement("div");
+      list.innerHTML = "";
+      data6.forEach((item, index) => {
+        li.className = "listElement";
+        li.innerHTML =
+          '<div style="float: left; width: 75%;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+          item.split("--")[2] +
+          '"/><p style="text-align: left; width: 100%;">' +
+          item.split("--")[0] +
+          '</p></div><div style="display: flex;"><button id="accept" onclick="acceptBtnClick(`' +
+          item +
+          '`)"><span class="material-icons">done</span></button><button id="decline" onclick="declineBtnClick(`'+ item +'`)"><span class="material-icons">close</span></button></div>';
+        list.appendChild(li);
+      });
+      function getEventTarget(e) {
+        e = e || window.event;
+        return e.target || e.srcElement;
+      }
+
+      var ul = document.getElementById("received");
+      ul.onclick = function (event) {
+        var target = getEventTarget(event);
+      };
+    });
+
+    var user = auth.currentUser;
+
+    var postsref6 = database.ref("ChappSent/" + user.uid);
+    postsref6.on("value", (snapshot) => {
+      var data6 = snapshot.val();
+
+      let list = document.getElementById("sent");
+      let li = document.createElement("div");
+      list.innerHTML = "";
+      data6.forEach((item, index) => {
+        console.log(item.split("--")[0],item.split("--")[1],item.split("--")[2],item.split("--")[3])
+        li.innerHTML =
+          '<div style="float: left; width: 50%; display: flex; flex-direction: row;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+          item.split("--")[2] +
+          '"/><p>' +
+          item.split("--")[0] +
+          "</p></div>";
+        li.className = "listElement";
+        list.appendChild(li);
+        console.log(list.firstChild)
+      });
+      function getEventTarget(e) {
+        e = e || window.event;
+        return e.target || e.srcElement;
+      }
+
+      var ul = document.getElementById("sent");
+      ul.onclick = function (event) {
+        var target = getEventTarget(event);
+      };
+    });
+  })
