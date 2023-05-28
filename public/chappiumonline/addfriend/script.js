@@ -15,335 +15,225 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
-var data;
-var data2;
-var data3;
-var data4 = [];
-var data5 = [];
+var data7;
+var data8;
+var OSid;
+var el;
 
-var executed = false;
+var datashown = [];
+var datahidden = [];
+var dataimage = [];
+var dataid = [];
 
-function addBtnClicked() {
-  if (executed == false) {
-    var user = auth.currentUser;
+var run = false;
 
-    if (document.getElementById("friendname").value != "") {
-      var postsref = database.ref(
-        "ChappiumUsers/" + document.getElementById("friendname").value
-      );
+function loadDoc(site) {
+  const xhttp = new XMLHttpRequest();
+  xhttp.open("GET", site);
+  xhttp.send();
+  xhttp.onload = function () {
+    document.getElementById("chatdiv").innerHTML = this.responseText;
+
+    document.getElementById("chatdiv").style.width = "100%";
+    var collection = document
+      .getElementById("content")
+      .getElementsByTagName("button");
+    for (let i = 0; i < collection.length; i++) {
+      collection[i].style.border = "2px solid #111111";
+    }
+    window.setTimeout(function () {
+      location.href = site;
+    }, 150);
+  };
+}
+
+auth.onAuthStateChanged((user) => {
+  var user = auth.currentUser;
+  OneSignal.getUserId(function (userId) {
+  OSid = userId;
+});
+
+  var postsref8 = database.ref(
+    "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
+  );
+  postsref8.on("value", (snapshot) => {
+    data8 = snapshot.val();
+
+    document.getElementById("profileicon").src = data8[3];
+
+    if (data8.length > 2) {
+      var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
+      postsref7.on("value", (snapshot) => {
+        data7 = snapshot.val();
+        if (data7.length == 4 && !data7.includes(OSid)) {
+          data7.splice(3, 1);
+          data7.push(OSid);
+          database
+            .ref()
+            .child("ChappiumUsers/" + data8[2])
+            .set(data7); 
+        } else if (!data7.includes(OSid)) {
+          data7.push(OSid);
+          database
+            .ref()
+            .child("ChappiumUsers/" + data8[2])
+            .set(data7);
+      }
+    })
+
+      var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
-        data = snapshot.val();
-        if (data == null) {
-          document.getElementById("error").innerText = "This user does not exist"
+        const data = snapshot.val();
+        if (data != undefined && data.length != 0) {
+          data.forEach((element) => {
+            datashown.push(element.split("--").at(0));
+            datahidden.push(element.split("--").at(1));
+            dataid.push(element.split("--").at(3));
+            dataimage.push(element.split("--").at(2));
+          });
+
+          let list = document.getElementById("list");
+          let enable = true;
+          list.innerHTML =
+            '<li data-id="0" class="chatElement" onclick="loadDoc(`/chappiumonline/ai`)"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
+          datashown.forEach((item, index) => {
+            let li = document.createElement("li");
+            li.innerHTML =
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name='+datashown[index]+'&id='+dataid[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              dataimage[index] +
+              '"/><p style="user-select: none;">' +
+              item +
+              '</p></div><button class="material-icons" onclick="showMenu(this.parentElement)">more_vert</button>';
+            li.setAttribute("data-id", list.children.length)
+            li.className = "chatElement";
+            list.appendChild(li);
+          });
         } else {
-
-        var postsref2 = database.ref(
-          "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
-        );
-        postsref2.on("value", (snapshot) => {
-          data2 = snapshot.val();
-
-          var postsref3 = database.ref("ChappiumUsers/" + data2[2]);
-          postsref3.on("value", (snapshot) => {
-            data3 = snapshot.val();
-
-            var postsref4 = database.ref("ChappReceived/" + data3[1]);
+          let list = document.getElementById("list");
+          list.innerHTML =
+            '<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li>';
+          list.innerHTML =
+            `<li class="chatElement" data-id="0"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/AI.png?v=1683918064900"/><p style="user-select: none;">Chappium AI</p></li><li class="chatElement">There's no one here! Get started by adding friends.</li>`;
+        }
+      });
+      var data4;
+      var postsref4 = database.ref("ChappReceived/" + data8[1]);
             postsref4.on("value", (snapshot) => {
               data4 = snapshot.val();
               if (data4 == null) {
                 data4 = [];
               }
-
-              var postsref5 = database.ref("ChappSent/" + data[1]);
-              postsref5.on("value", (snapshot) => {
-                data5 = snapshot.val();
-                if (data5 == null) {
-                  data5 = [];
-                }
-
-                if (
-                  !data5.includes(
-                    data3[0] +
-                      "--" +
-                      data3[1] +
-                      "->" +
-                      data[1] +
-                      "--" +
-                      data3[2] +
-                      "--" +
-                      data3[3]
-                  )
-                ) {
-                  data4.push(
-                    data[0] + "--" + data3[1] + "->" + data[1] + "--" + data[2] + "--" + data[3]
-                  );
-                  
-                  data5.push(
-                    data3[0] +
-                      "--" +
-                      data3[1] +
-                      "->" +
-                      data[1] +
-                      "--" +
-                      data3[2] +
-                      "--" +
-                      data3[3]
-                  );
-
-                  database
-                    .ref()
-                    .child("ChappReceived/" + data[1])
-                    .set(data5);
-                }
-
-                database
-                  .ref()
-                  .child("ChappSent/" + user.uid)
-                  .set(data4);
-                
-                var options = {
-                method: "POST",
-                headers: {
-                  accept: "application/json",
-                  Authorization:
-                    "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                  app_id: "62886539-65fb-497a-9377-a74d6316df99",
-                  include_player_ids: [data[3]],
-                  contents: {en: user.displayName + "wants to be your friend"},
-                  headings: {en: "Friend Request"},
-                  name: "message",
-                }),
-              };
-              console.log(options);
-              console.log("hello world");
-            setTimeout(function () {
-              fetch("https://onesignal.com/api/v1/notifications", options)
-                .then((response) => response.json())
-                .then((response) => console.log(response))
-                .catch((err) => console.error(err));
-              location.href = "/chappiumonline/home";
-            }, 200);
-
-              });
-            });
-          });
-        });
-        }
-      });
+              if (data4.length != 0) {
+                document.getElementById("notificationCount").style.display = "inline";
+              } else {
+                document.getElementById("notificationCount").style.display = "none";
+              }
+            })
+      
+    } else {
+      location.href = "/chappiumonline/createprofile/";
     }
-    executed = true;
-  }
-}
-
-document.getElementById("addfriend").addEventListener("click", addBtnClicked);
-
-function openTab(tabName, tab) {
-  var i;
-  var x = document.getElementsByClassName("tab");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
-  }
-  var y = document.getElementsByClassName("tabbutton");
-  for (i = 0; i < y.length; i++) {
-    y[i].style.backgroundColor = "#111111";
-  }
-  document.getElementById(tabName).style.display = "block";
-  tab.style.backgroundColor = "black";
-}
-
-function acceptBtnClick(data) {
-  var user = auth.currentUser;
-  var postsref6 = database.ref("ChappFriends/" + user.uid);
-  postsref6.on("value", (snapshot) => {
-    var data6 = snapshot.val();
-    if (data6 == null || data6 == undefined) {
-      data6 = [];
-    }
-    var postsref7 = database.ref("ChappReceived/" + user.uid);
-    postsref7.on("value", (snapshot) => {
-      var data7 = snapshot.val();
-
-      if (!data6.includes(data)) {
-        data6.push(data);
-
-        data7.splice(data);
-
-        database
-          .ref()
-          .child("ChappReceived/" + user.uid)
-          .set(data7);
-        database
-          .ref()
-          .child("ChappFriends/" + user.uid)
-          .set(data6);
-      }
-    });
   });
+});
+
+
+  function clickInsideElement(e, className) {
+    el = e.srcElement || e.target;
+
+    if (el.classList.contains(className)) {
+      return el;
+    } else {
+      while ((el = el.parentNode)) {
+        if (el.classList && el.classList.contains(className)) {
+          return el;
+        }
+      }
+    }
+
+    return false;
+  }
+
   
-  var postsref8 = database.ref(
-    "ChappFriends/" + data.split("--")[1].split("->")[0]
-  );
-  postsref8.on("value", (snapshot) => {
-    var data8 = snapshot.val();
-    if (data8 == null || data8 == undefined) {
-      data8 = [];
-    }
-    var postsref9 = database.ref(
-      "ChappSent/" + data.split("--")[1].split("->")[0]
-    );
-    postsref9.on("value", (snapshot) => {
-      var data9 = snapshot.val();
-      console.log(data9)
-      
-      data9.forEach((item, index) => {
-        if (item.includes(user.uid)) {
-          data = item;
-        }
-      })
-      
-      if (!data8.includes(data)) {
-        data8.push(data);
+  var contextMenuClassName = "context-menu";
+  var contextMenuItemClassName = "context-menu__item";
+  var contextMenuLinkClassName = "context-menu__link";
+  var contextMenuActive = "context-menu--active";
 
-        data9.splice(data);
-        console.log(data8);
-        console.log(data9);
+  var taskItemClassName = "chatElement";
+  var taskItemInContext;
 
-        database
-          .ref()
-          .child("ChappSent/" + data.split("--")[1].split("->")[0])
-          .set(data9);
-        database
-          .ref()
-          .child("ChappFriends/" + data.split("--")[1].split("->")[0])
-          .set(data8);
-        location.href = "/chappiumonline/home"
-      }
-    });
-  });
-}
+  var clickCoords;
+  var clickCoordsX;
+  var clickCoordsY;
 
-function declineBtnClick(data) {
-  var user = auth.currentUser;
-  var postsref6 = database.ref("ChappFriends/" + user.uid);
-  postsref6.on("value", (snapshot) => {
-    var data6 = snapshot.val();
-    if (data6 == null || data6 == undefined) {
-      data6 = [];
-    }
-    var postsref7 = database.ref("ChappReceived/" + user.uid);
-    postsref7.on("value", (snapshot) => {
-      var data7 = snapshot.val();
+  var menu = document.querySelector("#context-menu");
+  var menuItems = menu.querySelectorAll(".context-menu__item");
+  var menuState = 0;
+  var menuWidth;
+  var menuHeight;
+  var menuPosition;
+  var menuPositionX;
+  var menuPositionY;
 
-      if (!data6.includes(data)) {
-        data7.splice(data);
+  var windowWidth;
+  var windowHeight;
 
-        database
-          .ref()
-          .child("ChappReceived/" + user.uid)
-          .set(data7);
-      }
-    });
-  });
   
-  var postsref8 = database.ref(
-    "ChappFriends/" + data.split("--")[1].split("->")[0]
-  );
-  postsref8.on("value", (snapshot) => {
-    var data8 = snapshot.val();
-    if (data8 == null || data8 == undefined) {
-      data8 = [];
-    }
-    var postsref9 = database.ref(
-      "ChappSent/" + data.split("--")[1].split("->")[0]
-    );
-    postsref9.on("value", (snapshot) => {
-      var data9 = snapshot.val();
-      console.log(data9)
-      
-      data9.forEach((item, index) => {
-        if (item.includes(user.uid)) {
-          data = item;
-        }
-      })
-      
-      if (!data8.includes(data)) {
-        data9.splice(data);
-
-        database
-          .ref()
-          .child("ChappSent/" + data.split("--")[1].split("->")[0])
-          .set(data9);
-        location.href = "/chappiumonline/home"
+    document.addEventListener("contextmenu", function (e) {
+      taskItemInContext = clickInsideElement(e, taskItemClassName);
+      if (taskItemInContext) {
+        e.preventDefault();
+        showMenu(taskItemInContext)
       }
     });
+
+function showMenu(taskItem) {
+      if (taskItem) {
+        taskItemInContext = taskItem
+        el = taskItem
+        console.log(taskItemInContext)
+        menu.style.display = "flex"
+        document.getElementById("bg").style.display = "flex"
+        document.getElementById("item-container").innerHTML = taskItem.firstChild.innerHTML
+      } else {
+        taskItemInContext = null;
+        console.log("off")
+      //  toggleMenuOff();
+      }
+}
+
+function removeFriend() {
+  taskItemInContext = el;
+  console.log(el)
+  var id = taskItemInContext.getAttribute("data-id")
+  var user = auth.currentUser;
+  var postsref = database.ref(
+    "ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")
+  );
+  var data;
+  postsref.on("value", (snapshot) => {
+    data = snapshot.val();
+    console.log(data.findIndex(element => element.includes(datahidden[id - 1])) != -1)
+    if (data.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
+      data.splice(data.findIndex(element => element.includes(datahidden[id - 1])), 1)
+      database.ref("ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")).set(data);
+    }
+    console.log(data)
+  });
+  var postsref2 = database.ref(
+    "ChappFriends/" + user.uid
+  );
+  var data2;
+  postsref2.on("value", (snapshot) => {
+    data2 = snapshot.val();
+    if (data2.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
+      data2.splice(data2.findIndex(element => element.includes(datahidden[id - 1])), 1)
+      database.ref().child("ChappFriends/" + user.uid).set(data2);
+    }
   });
 }
 
-auth.onAuthStateChanged((user) => {
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappReceived/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("received");
-      let li = document.createElement("div");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        li.className = "listElement";
-        li.innerHTML =
-          '<div style="float: left; width: 65%;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p style="text-align: left; width: 100%; font-size: 20px;">' +
-          item.split("--")[0] +
-          '</p></div><div style="display: flex;"><button id="accept" onclick="acceptBtnClick(`' +
-          item +
-          '`)"><span class="material-icons">done</span></button><button id="decline" onclick="declineBtnClick(`'+ item +'`)"><span class="material-icons">close</span></button></div>';
-        list.appendChild(li);
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("received");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-
-    var user = auth.currentUser;
-
-    var postsref6 = database.ref("ChappSent/" + user.uid);
-    postsref6.on("value", (snapshot) => {
-      var data6 = snapshot.val();
-
-      let list = document.getElementById("sent");
-      let li = document.createElement("div");
-      list.innerHTML = "";
-      data6.forEach((item, index) => {
-        console.log(item.split("--")[0],item.split("--")[1],item.split("--")[2],item.split("--")[3])
-        li.innerHTML =
-          '<div style="float: left; width: 50%; display: flex; flex-direction: row;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-          item.split("--")[2] +
-          '"/><p>' +
-          item.split("--")[0] +
-          "</p></div>";
-        li.className = "listElement";
-        list.appendChild(li);
-        console.log(list.firstChild)
-      });
-      function getEventTarget(e) {
-        e = e || window.event;
-        return e.target || e.srcElement;
-      }
-
-      var ul = document.getElementById("sent");
-      ul.onclick = function (event) {
-        var target = getEventTarget(event);
-      };
-    });
-  })
+function hideMenu() {
+  menu.style.display = 'none';
+  document.getElementById('bg').style.display = 'none';
+}
