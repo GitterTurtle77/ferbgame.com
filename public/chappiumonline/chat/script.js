@@ -52,7 +52,7 @@ setTimeout(function () {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               li.innerHTML =
-                '<div onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '<div ontouchstart="down(this.parentElement)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div><div class="message"><p>' +
                 item.split("-->").at(1) +
@@ -60,7 +60,7 @@ setTimeout(function () {
                 "</span></div></div>";
             } else {
               li.innerHTML =
-                '<div onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
+                '<div ontouchstart="down(this.parentElement)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
                 '</span></div><div class="imagediv"><img class="right" src="' +
