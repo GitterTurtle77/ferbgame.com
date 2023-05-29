@@ -52,7 +52,7 @@ setTimeout(function () {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               li.innerHTML =
-                '<div onmousedown="down()" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '<div onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div><div class="message"><p>' +
                 item.split("-->").at(1) +
@@ -60,7 +60,7 @@ setTimeout(function () {
                 "</span></div></div>";
             } else {
               li.innerHTML =
-                '<div onmousedown="down()" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
+                '<div onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
                 '</span></div><div class="imagediv"><img class="right" src="' +
@@ -272,8 +272,8 @@ function menu_toggle() {
   
 }
 var timeout_id
-function down() {
-  timeout_id = setTimeout(function() {console.log("hello")}, 1000);
+function down(e) {
+  timeout_id = setTimeout(function() {showMenu(e)}, 1000);
 }
 
 function up() {
