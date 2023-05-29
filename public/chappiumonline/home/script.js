@@ -83,7 +83,7 @@ auth.onAuthStateChanged((user) => {
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
-        if (data != postsref) {
+        if (data != snapshot.val()) {
           document.getElementById("list").innerHTML = "";
         }
         const data = snapshot.val();
