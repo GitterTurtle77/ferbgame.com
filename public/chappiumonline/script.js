@@ -21,7 +21,8 @@ var isIos;
 if (
   navigator.userAgent.match(/iPhone/i) ||
   navigator.userAgent.match(/iPad/i) ||
-  navigator.userAgent.match(/iPod/i)
+  navigator.userAgent.match(/iPod/i) ||
+  navigator.userAgent.includes("Mac") && "ontouchend" in document
 ) {
   if ("standalone" in window.navigator && window.navigator.standalone) {
     isIos = false;
