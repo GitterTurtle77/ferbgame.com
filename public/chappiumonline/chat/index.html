@@ -1,64 +1,199 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta http-equiv="Page-Enter" content="revealTrans(Duration=2.0,Transition=12)">
+    <meta
+      http-equiv="Page-Enter"
+      content="revealTrans(Duration=2.0,Transition=12)"
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
     />
     <link
       rel="icon"
-      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link
       rel="apple-touch-icon"
-      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
     />
     <!-- 
       This is an HTML comment
       You can write text in a comment and the content won't be visible in the page
     -->
 
-    <title>Chappium</title>
+    <title>Chappium Online Beta</title>
 
     <!-- Meta tags for SEO and social sharing -->
-    <meta name="description" content="Chappium" />
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
     <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="Chappium" />
+    <meta property="og:title" content="Chappium Online Beta" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="Chappium" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
     <meta
       property="og:image"
       content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
     />
     <meta name="twitter:card" content="summary" />
-    
-     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
     <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
       rel="stylesheet"
-      href="https://www.ferbgame.com/chappiumonline/style.css"
     />
+    <link rel="stylesheet" href="/chappiumonline/style.css" />
+    <style>
+    
+    /* tasks */
+
+    .tasks {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+    }
+
+    .task {
+      display: flex;
+      justify-content: space-between;
+      padding: 12px 0;
+      border-bottom: solid 1px #dfdfdf;
+    }
+
+    .task:last-child {
+      border-bottom: none;
+    }
+      
+    .context-menu {
+      display: none;
+      position: absolute;
+      z-index: 10;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+      margin: 0px;
+      padding: 0px;
+      width: 85%;
+      height: 60%;
+      bottom: 0px;
+      left:50%;
+      transform:translate(-50%, 0px);
+      flex-direction: column;
+      justify-content: flex-end;
+    }
+    
+    .context-menu__items {
+      width: 100%;
+      list-style: none;
+      padding: 0px;
+      border: none;
+    }
+    
+    .context-menu__item {
+      list-style: none;
+      margin: 5px 0px;
+      padding: 25px;
+      border-radius: 20px;
+      border: none;
+      background-color: #222222;
+    }
+    
+    .context-menu__item:hover {
+      list-style: none;
+      background-color: #111111;
+    }
+    
+    .context-menu__link {
+      text-decoration: none;
+      color: white;
+      font-weight: bold;
+      margin: 0px;
+      padding: 0px;
+      font-family: sans-serif;
+      font-size: 20px;
+    }
+      
+    .background {
+      display: none;
+      position: absolute;
+      margin: 0px;
+      padding: 0px;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      background-color: rgba(0,0,0,0.7)
+    }
+      
+      #item-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+      }
+      .notification-badge {
+        display: none;
+        background-color: white;
+        border-radius: 50%;
+        padding: 7px;
+        font-size: 0px;
+        position: absolute;
+        top: 20px;       
+      }
+
+    </style>
   </head>
   <body>
     <div id="content">
-    <div class="topbar">
-      <a onclick="loadDoc()" style="-webkit-user-drag: none; float: left; height: 100%;" id="back"><span class="material-icons">arrow_back_ios_new</span></a>
-      <div style="width:100%;"></div>
-      <h3 id="name"></h3>
-      <div style="width:100%;"></div>
-      <a href="" style="-webkit-user-drag: none; float: right; height: 100%;" id="call"><span class="material-icons">call</span></a>
+      <div class="topbar">
+        <a
+          onclick="loadDoc()"
+          style="-webkit-user-drag: none; float: left; height: 100%"
+          id="back"
+          ><span class="material-icons">arrow_back_ios_new</span></a
+        >
+        <div style="width: 100%">
+          <h2 id="name"></h2>
+        </div>
+        <a
+          href=""
+          style="-webkit-user-drag: none; float: right; height: 100%"
+          id="call"
+          ><span class="material-icons">call</span></a
+        >
+      </div>
+      <div id="list" class="chatList"></div>
+      <div class="input">
+        <input
+          style="float: left; height: 100%"
+          type="text"
+          id="chat"
+          placeholder="Chat"
+        />
+        <button style="float: right; height: 100%" id="send">
+          <span class="material-icons">send</span>
+        </button>
+      </div>
     </div>
-    <div id="list" class="chatList">
+    <div id="chatdiv"></div>
+    <div class="background"  id="bg" onclick="hideMenu()">
       
     </div>
-    <div class="input">
-      <input style="float:left; height: 100%;" type="text" id="chat" placeholder="Chat" />
-      <button style="float:right; height: 100%;" id="send"><span class="material-icons">send</span></button>
-    </div>
-  </div>
-  <div id="chatdiv">
-  </div>
+    <nav id="context-menu" onclick="hideMenu()" class="context-menu">
+      <div id="item-container">
+        
+      </div>
+    <ol class="context-menu__items">
+      <li class="context-menu__item" onclick="deleteMessage(this)">
+        <a href="#" class="context-menu__link" data-action="delete">
+          <i class="fa fa-eye"></i> <span style="color: red;">Delete</span>
+        </a>
+      </li>
+      <li class="context-menu__item" onclick="copyMessage(this)">
+        <a href="#" class="context-menu__link" data-action="copy">
+          <i class="fa fa-edit"></i> Copy
+        </a>
+      </li>
+    </ol>
+    </nav>
   </body>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -68,12 +203,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
-  <script
-    src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/3.1.2/rollups/aes.js"
-    integrity="sha256-/H4YS+7aYb9kJ5OKhFYPUjSJdrtV6AeyJOtTkw6X72o="
-    crossorigin="anonymous"
-  ></script>
-
   <!-- Our script must be loaded after firebase references -->
-  <script src="https://www.ferbgame.com/chappiumonline/chat/script.js"></script>
+  <script src="script.js"></script>
 </html>
