@@ -84,11 +84,13 @@ auth.onAuthStateChanged((user) => {
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
-        if (data != snapshot.val()) {
-          document.getElementById("list").innerHTML = "";
-        }
         data = snapshot.val();
         if (data != undefined && data.length != 0) {
+          document.getElementById("list").innerHTML = "";
+          datashown = []
+          datahidden = []
+          dataid = []
+          dataimage = []
           data.forEach((element) => {
             datashown.push(element.split("--").at(0));
             datahidden.push(element.split("--").at(1));
