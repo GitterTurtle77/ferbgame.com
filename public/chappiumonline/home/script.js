@@ -15,6 +15,7 @@ firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 const database = firebase.database();
 
+var data;
 var data7;
 var data8;
 var OSid;
@@ -86,7 +87,7 @@ auth.onAuthStateChanged((user) => {
         if (data != snapshot.val()) {
           document.getElementById("list").innerHTML = "";
         }
-        const data = snapshot.val();
+        data = snapshot.val();
         if (data != undefined && data.length != 0) {
           data.forEach((element) => {
             datashown.push(element.split("--").at(0));
