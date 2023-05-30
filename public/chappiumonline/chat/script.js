@@ -22,6 +22,7 @@ var name = urlParams.get("name");
 document.getElementById("name").innerText = name;
 
 var el;
+var executed
 
 var run = true;
 var options = {};
@@ -53,9 +54,9 @@ setTimeout(function () {
               li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
-                '" alt="Avatar"/></div><div class="message"><p>' +
+                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' +
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
                 "</span></div></div>";
@@ -63,10 +64,10 @@ setTimeout(function () {
               li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
-                '</span></div><div class="imagediv"><img class="right" src="' +
+                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div></div>';
             }
@@ -214,6 +215,7 @@ document.addEventListener("contextmenu", function (e) {
 
 function showMenu(taskItem) {
   if (taskItem) {
+    executed = false;
     taskItemInContext = taskItem;
     if (taskItem.className == "message darker") {
       document.getElementById("deleteItem").style.display = "block";
@@ -238,7 +240,7 @@ var id;
 function deleteMessage() {
   taskItemInContext = el;
   console.log(el);
-  id = taskItemInContext.firstChild.getAttribute("data-id");
+  id = taskItemInContext.parentElement.getAttribute("data-id");
   console.log(id);
   var user = auth.currentUser;
   var postsref = database.ref("Chapp/" + chat);
@@ -249,7 +251,7 @@ function deleteMessage() {
 }
 
 var something = (function () {
-  var executed = false;
+  executed = false;
   return function () {
     if (!executed) {
       executed = true;
@@ -258,7 +260,6 @@ var something = (function () {
       data.splice(data.length - id - 1, 1);
       console.log(data);
       database.ref("Chapp/" + chat).set(data);
-      window.setTimeout(function(){executed = false;}, 1000)
     }
   };
 })();
