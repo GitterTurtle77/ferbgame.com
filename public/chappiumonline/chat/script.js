@@ -19,7 +19,7 @@ const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
 var OSid = urlParams.get("id");
 var name = urlParams.get("name");
-document.getElementById("name").innerText = name
+document.getElementById("name").innerText = name;
 
 var el;
 
@@ -37,11 +37,10 @@ setTimeout(function () {
 
       var postsref = database.ref("Chapp/" + chat);
       postsref.on("value", (snapshot) => {
-        var data = snapshot.val();
+        var data = snapshot.val().reverse();
         if (data == null) {
           data = [];
         }
-        data = data.reverse();
 
         document.getElementById("list").innerHTML = "";
 
@@ -52,7 +51,9 @@ setTimeout(function () {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               li.innerHTML =
-                '<div ontouchstart="down(this.parentElement)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div><div class="message"><p>' +
                 item.split("-->").at(1) +
@@ -60,7 +61,9 @@ setTimeout(function () {
                 "</span></div></div>";
             } else {
               li.innerHTML =
-                '<div ontouchstart="down(this.parentElement)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
+                '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this)" ontouchend="up()" onmousedown="down(this)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
                 '</span></div><div class="imagediv"><img class="right" src="' +
@@ -100,29 +103,29 @@ setTimeout(function () {
                 .set(data);
             });
             options = {
-                method: "POST",
-                headers: {
-                  accept: "application/json",
-                  Authorization:
-                    "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
-                  "content-type": "application/json",
-                },
-                body: JSON.stringify({
-                  app_id: "62886539-65fb-497a-9377-a74d6316df99",
-                  include_player_ids: [OSid],
-                  contents: {en: document.getElementById("chat").value},
-                  headings: {en: user.displayName},
-                  name: "message",
-                  small_icon: "message_icon.png",
-                  url: location.href
-                }),
-              };
-              console.log(options);
-              console.log("hello world");
-              fetch("https://onesignal.com/api/v1/notifications", options)
-                .then((response) => response.json())
-                .then((response) => console.log(response))
-                .catch((err) => console.error(err));
+              method: "POST",
+              headers: {
+                accept: "application/json",
+                Authorization:
+                  "Basic ZDZmN2UyNTEtOTU2Ni00ZmY0LWFmNjMtZWY4ZDA4NWFkZmFk",
+                "content-type": "application/json",
+              },
+              body: JSON.stringify({
+                app_id: "62886539-65fb-497a-9377-a74d6316df99",
+                include_player_ids: [OSid],
+                contents: { en: document.getElementById("chat").value },
+                headings: { en: user.displayName },
+                name: "message",
+                small_icon: "message_icon.png",
+                url: location.href,
+              }),
+            };
+            console.log(options);
+            console.log("hello world");
+            fetch("https://onesignal.com/api/v1/notifications", options)
+              .then((response) => response.json())
+              .then((response) => console.log(response))
+              .catch((err) => console.error(err));
             setTimeout(function () {
               document.getElementById("chat").value = "";
             }, 200);
@@ -161,122 +164,125 @@ function loadDoc() {
   };
 }
 
+function clickInsideElement(e, className, className2) {
+  el = e.srcElement || e.target;
 
-  function clickInsideElement(e, className) {
-    el = e.srcElement || e.target;
-
-    if (el.classList.contains(className)) {
-      return el;
-    } else {
-      while ((el = el.parentNode)) {
-        if (el.classList && el.classList.contains(className)) {
-          return el;
-        }
+  if (el.classList.contains(className) || el.classList.contains(className2)) {
+    return el;
+  } else {
+    while ((el = el.parentNode)) {
+      if (el.classList && el.classList.contains(className)) {
+        return el;
       }
     }
-
-    return false;
   }
 
-  
-  var contextMenuClassName = "context-menu";
-  var contextMenuItemClassName = "context-menu__item";
-  var contextMenuLinkClassName = "context-menu__link";
-  var contextMenuActive = "context-menu--active";
+  return false;
+}
 
-  var taskItemClassName = "listitem";
-  var taskItemInContext;
+var contextMenuClassName = "context-menu";
+var contextMenuItemClassName = "context-menu__item";
+var contextMenuLinkClassName = "context-menu__link";
+var contextMenuActive = "context-menu--active";
 
-  var clickCoords;
-  var clickCoordsX;
-  var clickCoordsY;
+var taskItemClassName = "message";
+var taskItemInContext;
 
-  var menu = document.querySelector("#context-menu");
-  var menuItems = menu.querySelectorAll(".context-menu__item");
-  var menuState = 0;
-  var menuWidth;
-  var menuHeight;
-  var menuPosition;
-  var menuPositionX;
-  var menuPositionY;
+var clickCoords;
+var clickCoordsX;
+var clickCoordsY;
 
-  var windowWidth;
-  var windowHeight;
+var menu = document.querySelector("#context-menu");
+var menuItems = menu.querySelectorAll(".context-menu__item");
+var menuState = 0;
+var menuWidth;
+var menuHeight;
+var menuPosition;
+var menuPositionX;
+var menuPositionY;
 
-  
-    document.addEventListener("contextmenu", function (e) {
-      taskItemInContext = clickInsideElement(e, taskItemClassName);
-      if (taskItemInContext) {
-        e.preventDefault();
-        showMenu(taskItemInContext)
-      }
-    });
+var windowWidth;
+var windowHeight;
+
+document.addEventListener("contextmenu", function (e) {
+  taskItemInContext = clickInsideElement(e, taskItemClassName);
+  if (taskItemInContext) {
+    e.preventDefault();
+    showMenu(taskItemInContext);
+  }
+});
 
 function showMenu(taskItem) {
-      if (taskItem) {
-        taskItemInContext = taskItem
-        el = taskItem
-        console.log(taskItemInContext)
-        menu.style.display = "flex"
-        document.getElementById("bg").style.display = "flex"
-        document.getElementById("item-container").innerHTML = taskItem.firstChild.innerHTML
-      } else {
-        taskItemInContext = null;
-        console.log("off")
-      //  toggleMenuOff();
-      }
+  if (taskItem) {
+    taskItemInContext = taskItem;
+    if (taskItem.className == "message darker") {
+      document.getElementById("deleteItem").style.display = "block";
+    } else {
+      document.getElementById("deleteItem").style.display = "none";
+    }
+    el = taskItem;
+    console.log(taskItem);
+    menu.style.display = "flex";
+    document.getElementById("bg").style.display = "flex";
+    document.getElementById("item-container").innerHTML =
+      taskItem.parentElement.innerHTML;
+  } else {
+    taskItemInContext = null;
+    //  toggleMenuOff();
+  }
 }
+
+var data;
+var id;
 
 function deleteMessage() {
   taskItemInContext = el;
-  console.log(el)
-  var id = taskItemInContext.getAttribute("data-id")
+  console.log(el);
+  id = taskItemInContext.firstChild.getAttribute("data-id");
+  console.log(id);
   var user = auth.currentUser;
-  var postsref = database.ref(
-    "ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")
-  );
-  var data;
+  var postsref = database.ref("Chapp/" + chat);
   postsref.on("value", (snapshot) => {
     data = snapshot.val();
-    console.log(data.findIndex(element => element.includes(datahidden[id - 1])) != -1)
-    if (data.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
-      data.splice(data.findIndex(element => element.includes(datahidden[id - 1])), 1)
-      database.ref("ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")).set(data);
-    }
-    console.log(data)
-  });
-  var postsref2 = database.ref(
-    "ChappFriends/" + user.uid
-  );
-  var data2;
-  postsref2.on("value", (snapshot) => {
-    data2 = snapshot.val();
-    if (data2.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
-      data2.splice(data2.findIndex(element => element.includes(datahidden[id - 1])), 1)
-      database.ref().child("ChappFriends/" + user.uid).set(data2);
-    }
+    something()
   });
 }
 
+var something = (function () {
+  var executed = false;
+  return function () {
+    if (!executed) {
+      executed = true;
+      console.log(data);
+      console.log(data.length - id - 1);
+      data.splice(data.length - id - 1, 1);
+      console.log(data);
+      database.ref("Chapp/" + chat).set(data);
+      window.setTimeout(function(){executed = false;}, 1000)
+    }
+  };
+})();
+
 function copyMessage() {
-  console.log(taskItemInContext.firstChild.firstChild.firstChild.innerText)
-  navigator.clipboard.writeText(taskItemInContext.firstChild.firstChild.firstChild.innerText);
+  console.log(taskItemInContext.firstChild.innerText);
+  navigator.clipboard.writeText(
+    taskItemInContext.firstChild.innerText
+  );
 }
 
 function hideMenu() {
-  menu.style.display = 'none';
-  document.getElementById('bg').style.display = 'none';
+  menu.style.display = "none";
+  document.getElementById("bg").style.display = "none";
 }
 
-function menu_toggle() {
-  
-}
-var timeout_id
+function menu_toggle() {}
+var timeout_id;
 function down(e) {
-  timeout_id = setTimeout(function() {showMenu(e)}, 1000);
+  timeout_id = setTimeout(function () {
+    showMenu(e);
+  }, 1000);
 }
 
 function up() {
   clearTimeout(timeout_id);
 }
-
