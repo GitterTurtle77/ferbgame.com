@@ -49,34 +49,37 @@ setTimeout(function () {
         document.getElementById("list").innerHTML = "";
 
         let list = document.getElementById("list");
-
+        console.log(data)
         data.forEach((item, index) => {
           if (item != "") {
             let li = document.createElement("div");
+            console.log(JSON.parse(item.split("-->").at(4))[0])
+            console.log(Object.keys(JSON.parse(item.split("-->").at(4))[0]))
             if (item.split("-->").at(2) != user.uid) {
               if (item.split("-->").length == 5) {
-                console.log(JSON.parse(item.split("-->").at(4))[index].values)
-                  if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
+                  if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
+                    console.log("vid")
                 '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[index].video +
+                JSON.parse(item.split("-->").at(4))[0].video +
                 '"/><span class="time-right">' +
                 "</span></div></div>";
                 } else {
+                  console.log("img")
                   '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
-                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[index].image +
+                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[0].image +
                 '"/><span class="time-right">' +
                 "</span></div></div>";
                 }
                 } else {
-                  if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
+                  if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
               li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
@@ -90,23 +93,24 @@ setTimeout(function () {
                 }
             } else {
               if (item.split("-->").length == 5) {
-                if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
-                  console.log("hello")
+                if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
+                  console.log("vid")
                   li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><video controls style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[index].video +
+                JSON.parse(item.split("-->").at(4))[0].video +
                 '"/><span class="time-right">' +
                 '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div></div>';
                 } else {
+                  console.log("img")
                   li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[index].image +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[0].image +
                 '"/><span class="time-right">' +
                 '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                 item.split("-->").at(3) +
