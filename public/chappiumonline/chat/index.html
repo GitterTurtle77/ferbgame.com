@@ -138,7 +138,17 @@
         position: absolute;
         top: 20px;       
       }
-
+      
+      .progress-bar {
+  width: 100%;
+  height: 20px;
+  background-color: #ddd;
+}
+#progress {
+  width: 0%;
+  height: 100%;
+  background-color: #4CAF50;
+}
     </style>
   </head>
   <body>
@@ -154,7 +164,7 @@
           <h2 id="name"></h2>
         </div>
         <a
-          href=""
+          href="#"
           style="-webkit-user-drag: none; float: right; height: 100%"
           id="call"
           ><span class="material-icons">call</span></a
@@ -172,6 +182,18 @@
           <span class="material-icons">send</span>
         </button>
       </div>
+      <div class="bottombar">
+        <button style="height: 100%" id="voice">
+          <span class="material-icons">mic</span>
+        </button>
+        <button style="height: 100%" id="pic" for="file">
+          <span class="material-icons">image</span>
+        </button>
+        <input id="file" type="file" accept="image/*, video/*" style="display: none;" multiple/>
+      </div>
+      <div class="progress-bar">
+    <div id="progress"></div>
+  </div>
     </div>
     <div id="chatdiv"></div>
     <div class="background"  id="bg" onclick="hideMenu()">
@@ -182,14 +204,14 @@
         
       </div>
     <ol class="context-menu__items">
-      <li class="context-menu__item" onclick="deleteMessage(this)">
+      <li id="deleteItem" class="context-menu__item" onclick="deleteMessage(this)">
         <a href="#" class="context-menu__link" data-action="delete">
-          <i class="fa fa-eye"></i> <span style="color: red;">Delete</span>
+          <span style="color: red;">Delete</span>
         </a>
       </li>
       <li class="context-menu__item" onclick="copyMessage(this)">
         <a href="#" class="context-menu__link" data-action="copy">
-          <i class="fa fa-edit"></i> Copy
+          Copy
         </a>
       </li>
     </ol>
@@ -202,7 +224,7 @@
          https://firebase.google.com/docs/web/setup#available-libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
-
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
   <!-- Our script must be loaded after firebase references -->
   <script src="script.js"></script>
 </html>

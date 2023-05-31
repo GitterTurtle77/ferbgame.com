@@ -14,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
 // Initialize variables
 const auth = firebase.auth();
 const database = firebase.database();
+const storage = firebase.storage();
 
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
@@ -22,7 +23,8 @@ var name = urlParams.get("name");
 document.getElementById("name").innerText = name;
 
 var el;
-var executed
+var executed;
+var images = {};
 
 var run = true;
 var options = {};
@@ -38,19 +40,43 @@ setTimeout(function () {
 
       var postsref = database.ref("Chapp/" + chat);
       postsref.on("value", (snapshot) => {
-        var data = snapshot.val().reverse();
+        var data = snapshot.val();
         if (data == null) {
           data = [];
         }
+        data = data.reverse()
 
         document.getElementById("list").innerHTML = "";
 
         let list = document.getElementById("list");
 
-        data.forEach((item) => {
+        data.forEach((item, index) => {
           if (item != "") {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
+              if (item.split("-->").length == 5) {
+                console.log(JSON.parse(item.split("-->").at(4))[index].values)
+                  if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
+                '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                item.split("-->").at(3) +
+                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[index].video +
+                '"/><span class="time-right">' +
+                "</span></div></div>";
+                } else {
+                  '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                item.split("-->").at(3) +
+                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="width: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[index].image +
+                '"/><span class="time-right">' +
+                "</span></div></div>";
+                }
+                } else {
+                  if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
               li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
@@ -60,7 +86,33 @@ setTimeout(function () {
                 item.split("-->").at(1) +
                 '</p><span class="time-right">' +
                 "</span></div></div>";
+                  }
+                }
             } else {
+              if (item.split("-->").length == 5) {
+                if (Object.keys(JSON.parse(item.split("-->").at(4))[index])[0] == "video") {
+                  console.log("hello")
+                  li.innerHTML =
+                '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><video controls style="width: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[index].video +
+                '"/><span class="time-right">' +
+                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
+                item.split("-->").at(3) +
+                '" alt="Avatar"/></div></div>';
+                } else {
+                  li.innerHTML =
+                '<div data-id="' +
+                list.childNodes.length +
+                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="width: 200px;" src="' +
+                JSON.parse(item.split("-->").at(4))[index].image +
+                '"/><span class="time-right">' +
+                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
+                item.split("-->").at(3) +
+                '" alt="Avatar"/></div></div>';
+                }
+                } else {
               li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
@@ -70,6 +122,7 @@ setTimeout(function () {
                 '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                 item.split("-->").at(3) +
                 '" alt="Avatar"/></div></div>';
+            }
             }
             li.classList.add("listitem");
             list.appendChild(li);
@@ -81,12 +134,14 @@ setTimeout(function () {
         }
 
         function sndBtnClicked() {
-          if (document.getElementById("chat").value != "") {
+          if (images == {} && document.getElementById("chat").value == "") {
+          } else {
             var postsref2 = database.ref(
               "ChappUsers/" + user.email.split("@")[0].replaceAll(".", "*")
             );
             postsref2.on("value", (snapshot) => {
               var data2 = snapshot.val();
+              if (Object.keys(images).length === 0 && images.constructor === Object) {
               data
                 .reverse()
                 .push(
@@ -98,6 +153,21 @@ setTimeout(function () {
                     "-->" +
                     data2[3]
                 );
+              } else {
+                data
+                .reverse()
+                .push(
+                  user.displayName +
+                    "-->" +
+                    document.getElementById("chat").value +
+                    "-->" +
+                    user.uid +
+                    "-->" +
+                    data2[3] +
+                    "-->" +
+                    JSON.stringify(images)
+                );
+              }
               database
                 .ref()
                 .child("Chapp/" + chat)
@@ -121,8 +191,6 @@ setTimeout(function () {
                 url: location.href,
               }),
             };
-            console.log(options);
-            console.log("hello world");
             fetch("https://onesignal.com/api/v1/notifications", options)
               .then((response) => response.json())
               .then((response) => console.log(response))
@@ -149,14 +217,10 @@ function loadDoc() {
     document.getElementById("chatdiv").innerHTML = this.responseText;
 
     document.getElementById("chatdiv").style.width = "100%";
-    console.log(
-      document.getElementById("content").getElementsByTagName("button")
-    );
     var collection = document
       .getElementById("content")
       .getElementsByTagName("button");
     for (let i = 0; i < collection.length; i++) {
-      console.log(collection[i]);
       collection[i].style.border = "2px solid #111111";
     }
     window.setTimeout(function () {
@@ -223,7 +287,6 @@ function showMenu(taskItem) {
       document.getElementById("deleteItem").style.display = "none";
     }
     el = taskItem;
-    console.log(taskItem);
     menu.style.display = "flex";
     document.getElementById("bg").style.display = "flex";
     document.getElementById("item-container").innerHTML =
@@ -239,9 +302,7 @@ var id;
 
 function deleteMessage() {
   taskItemInContext = el;
-  console.log(el);
   id = taskItemInContext.parentElement.getAttribute("data-id");
-  console.log(id);
   var user = auth.currentUser;
   var postsref = database.ref("Chapp/" + chat);
   postsref.on("value", (snapshot) => {
@@ -255,17 +316,13 @@ var something = (function () {
   return function () {
     if (!executed) {
       executed = true;
-      console.log(data);
-      console.log(data.length - id - 1);
       data.splice(data.length - id - 1, 1);
-      console.log(data);
       database.ref("Chapp/" + chat).set(data);
     }
   };
 })();
 
 function copyMessage() {
-  console.log(taskItemInContext.firstChild.innerText);
   navigator.clipboard.writeText(
     taskItemInContext.firstChild.innerText
   );
@@ -287,3 +344,47 @@ function down(e) {
 function up() {
   clearTimeout(timeout_id);
 }
+
+document.getElementById('pic').onclick = function() {
+  document.getElementById('file').click();
+};
+
+const fileInput = document.getElementById('file');
+fileInput.onchange = () => {
+  Array.from(document.getElementById("file").files).forEach(uploadImage)
+}
+
+function uploadImage(item) {
+  const file = item;
+      const name = chat + "/" + file.name.split(".")[0] + Math.random().toString().split(".")[1] + "." + file.name.split(".")[1]
+      const metadata = {
+         contentType: file.type
+      };
+      const ref = storage.ref();
+      const task = ref.child(name).put(file, metadata);
+      task
+      .then(snapshot => snapshot.ref.getDownloadURL())
+      .then(url => {
+      images[Object.keys(images).length] = {[file.type.toString().split("/")[0]]: url}
+    })
+}
+
+const progressBar = document.getElementById('progress');
+
+fileInput.addEventListener('change', e => {
+  e.preventDefault();
+
+  const file = fileInput.files[0];
+  const formData = new FormData();
+  formData.append('file', file);
+
+  const xhr = new XMLHttpRequest();
+  xhr.open('POST', '#', true);
+  xhr.upload.onprogress = e => {
+    if (e.lengthComputable) {
+      const percentComplete = (e.loaded / e.total) * 100;
+      progressBar.style.width = `${percentComplete}%`;
+    }
+  };
+  xhr.send(formData);
+});
