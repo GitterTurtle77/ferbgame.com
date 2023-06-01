@@ -55,8 +55,10 @@ setTimeout(function () {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               if (item.split("-->").length == 5) {
+                console.log(item)
                   if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
                     console.log("vid")
+                    li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
@@ -67,7 +69,7 @@ setTimeout(function () {
                 "</span></div></div>";
                 } else {
                   console.log("img")
-                  '<div data-id="' +
+                  li.innerHTML = '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
@@ -77,20 +79,17 @@ setTimeout(function () {
                 "</span></div></div>";
                 }
                 } else {
-                  if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
-              li.innerHTML =
+                  li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
                 '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
-                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' +
-                item.split("-->").at(1) +
-                '</p><span class="time-right">' +
+                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' + item.split("-->").at(1) + '<span class="time-right">' +
                 "</span></div></div>";
-                  }
                 }
             } else {
               if (item.split("-->").length == 5) {
+                console.log(item)
                 if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
                   console.log("vid")
                   li.innerHTML =
