@@ -53,8 +53,6 @@ setTimeout(function () {
         data.forEach((item, index) => {
           if (item != "") {
             let li = document.createElement("div");
-            console.log(JSON.parse(item.split("-->").at(4))[0])
-            console.log(Object.keys(JSON.parse(item.split("-->").at(4))[0]))
             if (item.split("-->").at(2) != user.uid) {
               if (item.split("-->").length == 5) {
                   if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
