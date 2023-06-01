@@ -61,7 +61,7 @@ setTimeout(function () {
                     li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
                 JSON.parse(item.split("-->").at(4))[0].video +
@@ -71,7 +71,7 @@ setTimeout(function () {
                   console.log("img")
                   li.innerHTML = '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
                 JSON.parse(item.split("-->").at(4))[0].image +
@@ -82,7 +82,7 @@ setTimeout(function () {
                   li.innerHTML =
                 '<div data-id="' +
                 list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
                 item.split("-->").at(3) +
                 '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' + item.split("-->").at(1) + '<span class="time-right">' +
                 "</span></div></div>";
@@ -280,6 +280,7 @@ document.addEventListener("contextmenu", function (e) {
 
 function showMenu(taskItem) {
   if (taskItem) {
+    console.log(taskItem)
     executed = false;
     taskItemInContext = taskItem;
     if (taskItem.className == "message darker") {
@@ -324,6 +325,7 @@ var something = (function () {
 })();
 
 function copyMessage() {
+  console.log(taskItemInContext)
   navigator.clipboard.writeText(
     taskItemInContext.firstChild.innerText
   );
