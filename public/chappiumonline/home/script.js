@@ -17,7 +17,7 @@ const database = firebase.database();
 
 var data;
 var data7;
-var data8;
+var data8 = [];
 var OSid;
 var el;
 
@@ -25,7 +25,7 @@ var datashown = [];
 var datahidden = [];
 var dataimage = [];
 var dataid = [];
-var datauid = []
+var datauid = [];
 
 var run = false;
 
@@ -52,14 +52,19 @@ function loadDoc(site) {
 auth.onAuthStateChanged((user) => {
   var user = auth.currentUser;
   OneSignal.getUserId(function (userId) {
-  OSid = userId;
-});
+    OSid = userId;
+  });
 
-  var postsref8 = database.ref(
-    "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
-  );
+  var postsref8 = database.ref("ChappUsers/" + user.uid);
   postsref8.on("value", (snapshot) => {
     data8 = snapshot.val();
+    if (data8 == null || data8 == undefined) {
+      var postsref10 = database.ref("ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*"));
+      postsref10.on("value", (snapshot) => {
+        data8 = snapshot.val();
+        database.ref().child("ChappUsers/" + user.uid).set(data8)
+      });
+    }
 
     document.getElementById("profileicon").src = data8[3];
 
@@ -73,147 +78,161 @@ auth.onAuthStateChanged((user) => {
           database
             .ref()
             .child("ChappiumUsers/" + data8[2])
-            .set(data7); 
+            .set(data7);
         } else if (!data7.includes(OSid)) {
           data7.push(OSid);
           database
             .ref()
             .child("ChappiumUsers/" + data8[2])
             .set(data7);
-      }
-    })
+        }
+      });
 
       var postsref = database.ref("ChappFriends/" + user.uid);
       postsref.on("value", (snapshot) => {
         data = snapshot.val();
         if (data != undefined && data.length != 0) {
           document.getElementById("list").innerHTML = "";
-          datashown = []
-          datahidden = []
-          dataid = []
-          dataimage = []
+          datashown = [];
+          datahidden = [];
+          dataid = [];
+          dataimage = [];
+          datauid = [];
+          console.log(data);
           data.forEach((element) => {
-            datashown.push(element.split("--").at(0));
-            datahidden.push(element.split("--").at(1));
-            dataid.push(element.split("--").at(3));
-            dataimage.push(element.split("--").at(2));
-            datauid.push(element.split("--").at(4));
+            console.log(element.split("--").at(1));
+            var postsref9 = database.ref(
+              "ChappUsers/" + element.split("--").at(1)
+            );
+            var data9;
+            postsref9.on("value", (snapshot) => {
+              data9 = snapshot.val();
+              console.log(data9);
+              datashown.push(data9[0]);
+            datahidden.push(element.split("--").at(0));
+            dataimage.push(data9[3]);
+            datauid.push(data9[1]);
+              complete()
+            });
           });
-
+        function complete() {
           let list = document.getElementById("list");
           let enable = true;
-          list.innerHTML =
-            '';
+          list.innerHTML = "";
+          console.log(datashown)
           datashown.forEach((item, index) => {
+            console.log(item)
             let li = document.createElement("li");
             li.innerHTML =
-              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' + datahidden[index] + '&name='+datashown[index]+'&id='+dataid[index]+'&uid='+datauid[index]+'`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' +
+              datahidden[index] +
+              "&name=" +
+              datashown[index] +
+              "&uid=" +
+              datauid[index] +
+              '`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
               '</p></div><button class="material-icons" onclick="showMenu(this.parentElement)">more_vert</button>';
-            li.setAttribute("data-id", list.children.length)
+            li.setAttribute("data-id", list.children.length);
             li.className = "chatElement";
             list.appendChild(li);
           });
+        }
         } else {
           let list = document.getElementById("list");
-          list.innerHTML =
-            '';
-          list.innerHTML =
-            `<li class="chatElement">There's no one here! Get started by adding friends.</li>`;
+          list.innerHTML = "";
+          list.innerHTML = `<li class="chatElement">There's no one here! Get started by adding friends.</li>`;
         }
       });
       var data4;
       var postsref4 = database.ref("ChappReceived/" + data8[1]);
-            postsref4.on("value", (snapshot) => {
-              data4 = snapshot.val();
-              if (data4 == null) {
-                data4 = [];
-              }
-              if (data4.length != 0) {
-                document.getElementById("notificationCount").style.display = "inline";
-              } else {
-                document.getElementById("notificationCount").style.display = "none";
-              }
-            })
-      
+      postsref4.on("value", (snapshot) => {
+        data4 = snapshot.val();
+        if (data4 == null) {
+          data4 = [];
+        }
+        if (data4.length != 0) {
+          document.getElementById("notificationCount").style.display = "inline";
+        } else {
+          document.getElementById("notificationCount").style.display = "none";
+        }
+      });
     } else {
       location.href = "/chappiumonline/createprofile/";
     }
   });
 });
 
+function clickInsideElement(e, className) {
+  el = e.srcElement || e.target;
 
-  function clickInsideElement(e, className) {
-    el = e.srcElement || e.target;
-
-    if (el.classList.contains(className)) {
-      return el;
-    } else {
-      while ((el = el.parentNode)) {
-        if (el.classList && el.classList.contains(className)) {
-          return el;
-        }
+  if (el.classList.contains(className)) {
+    return el;
+  } else {
+    while ((el = el.parentNode)) {
+      if (el.classList && el.classList.contains(className)) {
+        return el;
       }
     }
-
-    return false;
   }
 
-  
-  var contextMenuClassName = "context-menu";
-  var contextMenuItemClassName = "context-menu__item";
-  var contextMenuLinkClassName = "context-menu__link";
-  var contextMenuActive = "context-menu--active";
+  return false;
+}
 
-  var taskItemClassName = "chatElement";
-  var taskItemInContext;
+var contextMenuClassName = "context-menu";
+var contextMenuItemClassName = "context-menu__item";
+var contextMenuLinkClassName = "context-menu__link";
+var contextMenuActive = "context-menu--active";
 
-  var clickCoords;
-  var clickCoordsX;
-  var clickCoordsY;
+var taskItemClassName = "chatElement";
+var taskItemInContext;
 
-  var menu = document.querySelector("#context-menu");
-  var menuItems = menu.querySelectorAll(".context-menu__item");
-  var menuState = 0;
-  var menuWidth;
-  var menuHeight;
-  var menuPosition;
-  var menuPositionX;
-  var menuPositionY;
+var clickCoords;
+var clickCoordsX;
+var clickCoordsY;
 
-  var windowWidth;
-  var windowHeight;
+var menu = document.querySelector("#context-menu");
+var menuItems = menu.querySelectorAll(".context-menu__item");
+var menuState = 0;
+var menuWidth;
+var menuHeight;
+var menuPosition;
+var menuPositionX;
+var menuPositionY;
 
-  
-    document.addEventListener("contextmenu", function (e) {
-      taskItemInContext = clickInsideElement(e, taskItemClassName);
-      if (taskItemInContext) {
-        e.preventDefault();
-        showMenu(taskItemInContext)
-      }
-    });
+var windowWidth;
+var windowHeight;
+
+document.addEventListener("contextmenu", function (e) {
+  taskItemInContext = clickInsideElement(e, taskItemClassName);
+  if (taskItemInContext) {
+    e.preventDefault();
+    showMenu(taskItemInContext);
+  }
+});
 
 function showMenu(taskItem) {
-      if (taskItem) {
-        taskItemInContext = taskItem
-        el = taskItem
-        console.log(taskItemInContext)
-        menu.style.display = "flex"
-        document.getElementById("bg").style.display = "flex"
-        document.getElementById("item-container").innerHTML = taskItem.firstChild.innerHTML
-      } else {
-        taskItemInContext = null;
-        console.log("off")
-      //  toggleMenuOff();
-      }
+  if (taskItem) {
+    taskItemInContext = taskItem;
+    el = taskItem;
+    console.log(taskItemInContext);
+    menu.style.display = "flex";
+    document.getElementById("bg").style.display = "flex";
+    document.getElementById("item-container").innerHTML =
+      taskItem.firstChild.innerHTML;
+  } else {
+    taskItemInContext = null;
+    console.log("off");
+    //  toggleMenuOff();
+  }
 }
 
 function removeFriend() {
   taskItemInContext = el;
-  console.log(el)
-  var id = taskItemInContext.getAttribute("data-id")
+  console.log(el);
+  var id = taskItemInContext.getAttribute("data-id");
   var user = auth.currentUser;
   var postsref = database.ref(
     "ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")
@@ -221,27 +240,45 @@ function removeFriend() {
   var data;
   postsref.on("value", (snapshot) => {
     data = snapshot.val();
-    console.log(data.findIndex(element => element.includes(datahidden[id - 1])) != -1)
-    if (data.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
-      data.splice(data.findIndex(element => element.includes(datahidden[id - 1])), 1)
-      database.ref("ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")).set(data);
+    console.log(
+      data.findIndex((element) => element.includes(datahidden[id - 1])) != -1
+    );
+    if (
+      data.findIndex((element) => element.includes(datahidden[id - 1])) != -1
+    ) {
+      data.splice(
+        data.findIndex((element) => element.includes(datahidden[id - 1])),
+        1
+      );
+      database
+        .ref(
+          "ChappFriends/" +
+            datahidden[id - 1].replace(user.uid, "").replace("->", "")
+        )
+        .set(data);
     }
-    console.log(data)
+    console.log(data);
   });
-  var postsref2 = database.ref(
-    "ChappFriends/" + user.uid
-  );
+  var postsref2 = database.ref("ChappFriends/" + user.uid);
   var data2;
   postsref2.on("value", (snapshot) => {
     data2 = snapshot.val();
-    if (data2.findIndex(element => element.includes(datahidden[id - 1])) != -1) {
-      data2.splice(data2.findIndex(element => element.includes(datahidden[id - 1])), 1)
-      database.ref().child("ChappFriends/" + user.uid).set(data2);
+    if (
+      data2.findIndex((element) => element.includes(datahidden[id - 1])) != -1
+    ) {
+      data2.splice(
+        data2.findIndex((element) => element.includes(datahidden[id - 1])),
+        1
+      );
+      database
+        .ref()
+        .child("ChappFriends/" + user.uid)
+        .set(data2);
     }
   });
 }
 
 function hideMenu() {
-  menu.style.display = 'none';
-  document.getElementById('bg').style.display = 'none';
+  menu.style.display = "none";
+  document.getElementById("bg").style.display = "none";
 }

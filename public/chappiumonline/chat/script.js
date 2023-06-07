@@ -18,7 +18,7 @@ const storage = firebase.storage();
 
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
-var OSid = urlParams.get("id");
+var OSid;
 var name = urlParams.get("name");
 var uid = urlParams.get("uid");
 document.getElementById("name").innerText = name;
@@ -38,6 +38,23 @@ setTimeout(function () {
       }, 500);
     } else {
       var user = auth.currentUser;
+      
+      var postsref4 = database.ref("ChappUsers/" + uid);
+      postsref4.on("value", (snapshot) => {
+        var data4 = snapshot.val();
+        if (data4 == null) {
+          data4 = [];
+        }
+        var postsref5 = database.ref("ChappiumUsers/" + data4[2]);
+      postsref5.on("value", (snapshot) => {
+        var data5 = snapshot.val();
+        if (data5 == null) {
+          data5 = [];
+        }
+        console.log("ChappiumUsers/" + data4[2])
+      })
+      })
+      
 
       var postsref = database.ref("Chapp/" + chat);
       postsref.on("value", (snapshot) => {
@@ -165,7 +182,7 @@ setTimeout(function () {
           if (images == {} && document.getElementById("chat").value == "") {
           } else {
             var postsref2 = database.ref(
-              "ChappUsers/" + user.email.split("@")[0].replaceAll(".", "*")
+              "ChappUsers/" + user.uid
             );
             postsref2.on("value", (snapshot) => {
               var data2 = snapshot.val();
@@ -202,7 +219,7 @@ setTimeout(function () {
               database
                 .ref()
                 .child("Chapp/" + chat)
-                .set(data);
+                .set(data).then(() => {
             });
             options = {
               method: "POST",
@@ -224,11 +241,9 @@ setTimeout(function () {
             };
             fetch("https://onesignal.com/api/v1/notifications", options)
               .then((response) => response.json())
-              .then((response) => console.log(response))
+              .then((response) => document.getElementById("chat").value = "")
               .catch((err) => console.error(err));
-            setTimeout(function () {
-              document.getElementById("chat").value = "";
-            }, 200);
+              })
           }
         }
         document
@@ -421,8 +436,11 @@ fileInput.addEventListener("change", (e) => {
   xhr.open("POST", "#", true);
   xhr.upload.onprogress = (e) => {
     if (e.lengthComputable) {
-      const percentComplete = (e.loaded / e.total) * 100;
-      progressBar.style.width = `${percentComplete}%`;
+      var percentComplete = (e.loaded / e.total) * 100;
+      console.log(`${percentComplete}%`)
+      document.getElementById("progress-bar").style.setProperty('--progress', percentComplete + "%")
+      document.getElementById("progress-bar").style.setProperty('--progress-text', `${percentComplete}%`)
+
     }
   };
   xhr.send(formData);

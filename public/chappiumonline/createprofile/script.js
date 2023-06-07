@@ -28,7 +28,7 @@ function wait() {
   if (auth.currentUser == null) {
     window.setTimeout(wait, 500);
   } else {
-    var postsref2 = database.ref("ChappUsers/" + auth.currentUser.email.split("@").at(0).replaceAll(".", "*"));
+    var postsref2 = database.ref("ChappUsers/" + auth.currentUser.uid);
     postsref2.on("value", (snapshot) => {
       data2 = snapshot.val();
     });
@@ -63,10 +63,9 @@ if (document.getElementById("username").value == null || document.getElementById
       .then(url => {
       document.querySelector("#image").src = url;
       imageUrl = url
-        
         database.ref().child("ChappiumUsers/" + document.getElementById("username").value).set([auth.currentUser.displayName, auth.currentUser.uid, url]);
         data2.push(document.getElementById("username").value, url)
-        database.ref().child("ChappUsers/" + auth.currentUser.email.split("@").at(0).replaceAll(".", "*")).set(data2);
+        database.ref().child("ChappUsers/" + auth.currentUser.uid).set(data2);
         location.href = "/chappiumonline/home"
         })
       }

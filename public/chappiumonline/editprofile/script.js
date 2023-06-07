@@ -23,14 +23,10 @@ var imageUrl;
 
 var run = false;
 
-function wait() {
-  if (auth.currentUser == null) {
-    window.setTimeout(wait, 500);
-  } else {
-    var user = auth.currentUser;
+auth.onAuthStateChanged((user) => {
     
     var postsref2 = database.ref(
-      "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
+      "ChappUsers/" + user.uid
     );
     postsref2.on("value", (snapshot) => {
       data2 = snapshot.val();
@@ -40,15 +36,12 @@ function wait() {
     );
     postsref.on("value", (snapshot) => {
       data = snapshot.val();
-    })
-      
       document.getElementById("profileicon").src = data2[3]
       document.getElementById("displayname").innerText = data2[0]
       document.getElementById("username").innerText = data2[2]
+      })
     });
-  }
-}
-wait();
+  })
 
 function editDisplayName() {
   document.getElementById("displayname").contentEditable = true;
@@ -77,11 +70,12 @@ function saveProfile() {
   var displayName = document.getElementById("displayname").innerText;
     data[0] = displayName
     data2[0] = displayName
+  console.log(data)
     database.ref().child("ChappiumUsers/" + document.getElementById("username").innerText).set(data);
-    database.ref().child("ChappUsers/" + auth.currentUser.email.split("@").at(0).replaceAll(".", "*")).set(data2);
+    database.ref().child("ChappUsers/" + auth.currentUser.uid).set(data2);
   
   if (document.getElementById("imgupload").files.length != 0) {
-    
+    console.log('hello')
     const ref = storage.ref();
     const file = document.getElementById("imgupload").files[0];
     const name = data2[2];
@@ -98,19 +92,20 @@ function saveProfile() {
       data[2] = url
       database.ref().child("ChappiumUsers/" + data2[2]).set(data);
       data2[3] = url
-      database.ref().child("ChappUsers/" + auth.currentUser.email.split("@").at(0).replaceAll(".", "*")).set(data2);
+      database.ref().child("ChappUsers/" + auth.currentUser.uid).set(data2);
     })
   }
   
     var userName = document.getElementById("username").innerText;
+  console.log(userName)
     document.getElementById("username").contentEditable = false;
     var prev = data2[2];
     data2[2] = userName
     database.ref().child("ChappiumUsers/" + userName).set(data);
-    database.ref().child("ChappUsers/" + auth.currentUser.email.split("@").at(0).replaceAll(".", "*")).set(data2);
+    database.ref().child("ChappUsers/" + auth.currentUser.uid).set(data2);
   
-  let chatRef = database.ref("/ChappiumUsers/"+ prev);
-  chatRef.remove();
-  
-  location.href = "/chappiumonline/home";
+    if (prev != userName) {
+    let chatRef = database.ref("/ChappiumUsers/"+ prev);
+      chatRef.remove();
+    }
 }
