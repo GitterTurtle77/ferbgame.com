@@ -1,50 +1,46 @@
-// Your web app's Firebase configuration
-var firebaseConfig = {
-  apiKey: "AIzaSyBfeywEPS4TMjovDiADBTg1alVUMsdzPTI",
-  authDomain: "sclauncher-6c284.firebaseapp.com",
-  databaseURL: "https://sclauncher-6c284-default-rtdb.firebaseio.com",
-  projectId: "sclauncher-6c284",
-  storageBucket: "sclauncher-6c284.appspot.com",
-  messagingSenderId: "794326267495",
-  appId: "1:794326267495:web:f2e628326b0d30215686c2",
-  measurementId: "G-CG0S6KTREB",
-};
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-// Initialize variables
-const auth = firebase.auth();
-const database = firebase.database();
-
-var run = false;
-
-var isIos;
-if (
-  navigator.userAgent.match(/iPhone/i) ||
-  navigator.userAgent.match(/iPad/i) ||
-  navigator.userAgent.match(/iPod/i) ||
-  navigator.userAgent.includes("Mac") && "ontouchend" in document
-) {
-  if ("standalone" in window.navigator && window.navigator.standalone) {
-    isIos = false;
-  } else {
-    isIos = true
-  }
-} else {
-  isIos = false;
-}
-
-var isAndroid = false;
-
-if (isIos) {
-    document.getElementById("iOS").style.display = "block";
-} else if (isAndroid) {
-    document.getElementById("Android").style.display = "block";
-} else {
-  auth.onAuthStateChanged((user) => {
-  if (user) {
-    location.href = "/chappiumonline/home";
-  } else {
-    document.getElementById("Account").style.display = "block";
-  }
-})
-}
+firebase.auth().onAuthStateChanged((user) => {
+    var uid = firebase.auth().currentUser.uid;
+    
+    // Create a reference to this user's specific status node.
+    // This is where we will store data about being online/offline.
+    var userStatusDatabaseRef = firebase.database().ref('/status/' + uid);
+    const d = new Date();
+    
+    // We'll create two constants which we will write to 
+    // the Realtime database when this device is offline
+    // or online.
+    var isOfflineForDatabase = {
+        state: 'offline',
+        last_changed: d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + ", " + d.toLocaleTimeString(),
+    };
+    
+    var isOnlineForDatabase = {
+        state: 'online',
+        last_changed: d.getDate() + "/" + d.getMonth() + "/" + d.getFullYear() + ", " + d.toLocaleTimeString(),
+    };
+    
+    // Create a reference to the special '.info/connected' path in 
+    // Realtime Database. This path returns `true` when connected
+    // and `false` when disconnected.
+    firebase.database().ref('info/connected').on('value', function(snapshot) {
+        // If we're not currently connected, don't do anything.
+        if (snapshot.val() == false) {
+            return;
+        };
+    
+        // If we are currently connected, then use the 'onDisconnect()' 
+        // method to add a set which will only trigger once this 
+        // client has disconnected by closing the app, 
+        // losing internet, or any other means.
+        userStatusDatabaseRef.onDisconnect().set(isOfflineForDatabase).then(function() {
+            // The promise returned from .onDisconnect().set() will
+            // resolve as soon as the server acknowledges the onDisconnect() 
+            // request, NOT once we've actually disconnected:
+            // https://firebase.google.com/docs/reference/js/firebase.database.OnDisconnect
+    
+            // We can now safely set ourselves as 'online' knowing that the
+            // server will mark us as offline once we lose connection.
+            userStatusDatabaseRef.set(isOnlineForDatabase);
+        });
+    });
+    })

@@ -20,6 +20,7 @@ const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
 var OSid = urlParams.get("id");
 var name = urlParams.get("name");
+var uid = urlParams.get("uid");
 document.getElementById("name").innerText = name;
 
 var el;
@@ -44,86 +45,112 @@ setTimeout(function () {
         if (data == null) {
           data = [];
         }
-        data = data.reverse()
+        data = data.reverse();
+
+        var postsref3 = database.ref("status/" + uid);
+        var data3;
+        postsref3.on("value", (snapshot) => {
+          data3 = snapshot.val();
+          if (data3 == null) {
+            console.log(null);
+            data3 = {};
+          }
+          var array = Object.values(data3)
+          if (array[1] == "offline") {
+            var lastSeen = array[0]
+            console.log(lastSeen)
+          }
+          document.getElementById("status").innerText =
+            array[1].charAt(0).toUpperCase() + array[1].slice(1);
+        });
 
         document.getElementById("list").innerHTML = "";
 
         let list = document.getElementById("list");
-        console.log(data)
+        console.log(data);
         data.forEach((item, index) => {
           if (item != "") {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               if (item.split("-->").length == 5) {
-                console.log(item)
-                  if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
-                    console.log("vid")
-                    li.innerHTML =
-                '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
-                item.split("-->").at(3) +
-                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[0].video +
-                '"/><span class="time-right">' +
-                "</span></div></div>";
-                } else {
-                  console.log("img")
-                  li.innerHTML = '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
-                item.split("-->").at(3) +
-                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[0].image +
-                '"/><span class="time-right">' +
-                "</span></div></div>";
-                }
-                } else {
+                console.log(item);
+                if (
+                  Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
+                  "video"
+                ) {
+                  console.log("vid");
                   li.innerHTML =
-                '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
-                item.split("-->").at(3) +
-                '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' + item.split("-->").at(1) + '<span class="time-right">' +
-                "</span></div></div>";
+                    '<div data-id="' +
+                    list.childNodes.length +
+                    '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                    item.split("-->").at(3) +
+                    '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
+                    JSON.parse(item.split("-->").at(4))[0].video +
+                    '"/><span class="time-right">' +
+                    "</span></div></div>";
+                } else {
+                  console.log("img");
+                  li.innerHTML =
+                    '<div data-id="' +
+                    list.childNodes.length +
+                    '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                    item.split("-->").at(3) +
+                    '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
+                    JSON.parse(item.split("-->").at(4))[0].image +
+                    '"/><span class="time-right">' +
+                    "</span></div></div>";
                 }
+              } else {
+                li.innerHTML =
+                  '<div data-id="' +
+                  list.childNodes.length +
+                  '" ontouchstart="down(this.lastChild)" ontouchend="up()" onmousedown="down(this.lastChild)" onmouseup="up()" class="messageleft"><div class="imagediv"><img src="' +
+                  item.split("-->").at(3) +
+                  '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' +
+                  item.split("-->").at(1) +
+                  '<span class="time-right">' +
+                  "</span></div></div>";
+              }
             } else {
               if (item.split("-->").length == 5) {
-                console.log(item)
-                if (Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] == "video") {
-                  console.log("vid")
+                console.log(item);
+                if (
+                  Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
+                  "video"
+                ) {
+                  console.log("vid");
                   li.innerHTML =
-                '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><video controls style="width: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[0].video +
-                '"/><span class="time-right">' +
-                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
-                item.split("-->").at(3) +
-                '" alt="Avatar"/></div></div>';
+                    '<div data-id="' +
+                    list.childNodes.length +
+                    '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><video controls style="width: 200px;" src="' +
+                    JSON.parse(item.split("-->").at(4))[0].video +
+                    '"/><span class="time-right">' +
+                    '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
+                    item.split("-->").at(3) +
+                    '" alt="Avatar"/></div></div>';
                 } else {
-                  console.log("img")
+                  console.log("img");
                   li.innerHTML =
-                '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
-                JSON.parse(item.split("-->").at(4))[0].image +
-                '"/><span class="time-right">' +
-                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
-                item.split("-->").at(3) +
-                '" alt="Avatar"/></div></div>';
+                    '<div data-id="' +
+                    list.childNodes.length +
+                    '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
+                    JSON.parse(item.split("-->").at(4))[0].image +
+                    '"/><span class="time-right">' +
+                    '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
+                    item.split("-->").at(3) +
+                    '" alt="Avatar"/></div></div>';
                 }
-                } else {
-              li.innerHTML =
-                '<div data-id="' +
-                list.childNodes.length +
-                '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
-                item.split("-->").at(1) +
-                '</p><span class="time-right">' +
-                '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
-                item.split("-->").at(3) +
-                '" alt="Avatar"/></div></div>';
-            }
+              } else {
+                li.innerHTML =
+                  '<div data-id="' +
+                  list.childNodes.length +
+                  '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
+                  item.split("-->").at(1) +
+                  '</p><span class="time-right">' +
+                  '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
+                  item.split("-->").at(3) +
+                  '" alt="Avatar"/></div></div>';
+              }
             }
             li.classList.add("listitem");
             list.appendChild(li);
@@ -142,32 +169,35 @@ setTimeout(function () {
             );
             postsref2.on("value", (snapshot) => {
               var data2 = snapshot.val();
-              if (Object.keys(images).length === 0 && images.constructor === Object) {
-              data
-                .reverse()
-                .push(
-                  user.displayName +
-                    "-->" +
-                    document.getElementById("chat").value +
-                    "-->" +
-                    user.uid +
-                    "-->" +
-                    data2[3]
-                );
+              if (
+                Object.keys(images).length === 0 &&
+                images.constructor === Object
+              ) {
+                data
+                  .reverse()
+                  .push(
+                    user.displayName +
+                      "-->" +
+                      document.getElementById("chat").value +
+                      "-->" +
+                      user.uid +
+                      "-->" +
+                      data2[3]
+                  );
               } else {
                 data
-                .reverse()
-                .push(
-                  user.displayName +
-                    "-->" +
-                    document.getElementById("chat").value +
-                    "-->" +
-                    user.uid +
-                    "-->" +
-                    data2[3] +
-                    "-->" +
-                    JSON.stringify(images)
-                );
+                  .reverse()
+                  .push(
+                    user.displayName +
+                      "-->" +
+                      document.getElementById("chat").value +
+                      "-->" +
+                      user.uid +
+                      "-->" +
+                      data2[3] +
+                      "-->" +
+                      JSON.stringify(images)
+                  );
               }
               database
                 .ref()
@@ -280,7 +310,7 @@ document.addEventListener("contextmenu", function (e) {
 
 function showMenu(taskItem) {
   if (taskItem) {
-    console.log(taskItem)
+    console.log(taskItem);
     executed = false;
     taskItemInContext = taskItem;
     if (taskItem.className == "message darker") {
@@ -309,7 +339,7 @@ function deleteMessage() {
   var postsref = database.ref("Chapp/" + chat);
   postsref.on("value", (snapshot) => {
     data = snapshot.val();
-    something()
+    something();
   });
 }
 
@@ -325,10 +355,8 @@ var something = (function () {
 })();
 
 function copyMessage() {
-  console.log(taskItemInContext)
-  navigator.clipboard.writeText(
-    taskItemInContext.firstChild.innerText
-  );
+  console.log(taskItemInContext);
+  navigator.clipboard.writeText(taskItemInContext.firstChild.innerText);
 }
 
 function hideMenu() {
@@ -348,42 +376,50 @@ function up() {
   clearTimeout(timeout_id);
 }
 
-document.getElementById('pic').onclick = function() {
-  document.getElementById('file').click();
+document.getElementById("pic").onclick = function () {
+  document.getElementById("file").click();
 };
 
-const fileInput = document.getElementById('file');
+const fileInput = document.getElementById("file");
 fileInput.onchange = () => {
-  Array.from(document.getElementById("file").files).forEach(uploadImage)
-}
+  Array.from(document.getElementById("file").files).forEach(uploadImage);
+};
 
 function uploadImage(item) {
   const file = item;
-      const name = chat + "/" + file.name.split(".")[0] + Math.random().toString().split(".")[1] + "." + file.name.split(".")[1]
-      const metadata = {
-         contentType: file.type
+  const name =
+    chat +
+    "/" +
+    file.name.split(".")[0] +
+    Math.random().toString().split(".")[1] +
+    "." +
+    file.name.split(".")[1];
+  const metadata = {
+    contentType: file.type,
+  };
+  const ref = storage.ref();
+  const task = ref.child(name).put(file, metadata);
+  task
+    .then((snapshot) => snapshot.ref.getDownloadURL())
+    .then((url) => {
+      images[Object.keys(images).length] = {
+        [file.type.toString().split("/")[0]]: url,
       };
-      const ref = storage.ref();
-      const task = ref.child(name).put(file, metadata);
-      task
-      .then(snapshot => snapshot.ref.getDownloadURL())
-      .then(url => {
-      images[Object.keys(images).length] = {[file.type.toString().split("/")[0]]: url}
-    })
+    });
 }
 
-const progressBar = document.getElementById('progress');
+const progressBar = document.getElementById("progress");
 
-fileInput.addEventListener('change', e => {
+fileInput.addEventListener("change", (e) => {
   e.preventDefault();
 
   const file = fileInput.files[0];
   const formData = new FormData();
-  formData.append('file', file);
+  formData.append("file", file);
 
   const xhr = new XMLHttpRequest();
-  xhr.open('POST', '#', true);
-  xhr.upload.onprogress = e => {
+  xhr.open("POST", "#", true);
+  xhr.upload.onprogress = (e) => {
     if (e.lengthComputable) {
       const percentComplete = (e.loaded / e.total) * 100;
       progressBar.style.width = `${percentComplete}%`;
