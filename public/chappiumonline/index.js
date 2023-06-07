@@ -17,12 +17,15 @@ const database = firebase.database();
 
 var run = false;
 
+var standalone = window.navigator.standalone,
+    userAgent = window.navigator.userAgent.toLowerCase(),
+    safari = /safari/.test( userAgent )
+
 var isIos;
 if (
   navigator.userAgent.match(/iPhone/i) ||
   navigator.userAgent.match(/iPad/i) ||
-  navigator.userAgent.match(/iPod/i) ||
-  navigator.userAgent.includes("Mac") && "ontouchend" in document
+  navigator.userAgent.match(/iPod/i)
 ) {
   if ("standalone" in window.navigator && window.navigator.standalone) {
     isIos = false;
