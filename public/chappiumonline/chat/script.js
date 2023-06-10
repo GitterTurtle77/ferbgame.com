@@ -90,12 +90,10 @@ setTimeout(function () {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
               if (item.split("-->").length == 5) {
-                console.log(item);
                 if (
                   Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
                   "video"
                 ) {
-                  console.log("vid");
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -106,7 +104,6 @@ setTimeout(function () {
                     '"/><span class="time-right">' +
                     "</span></div></div>";
                 } else {
-                  console.log("img");
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -130,12 +127,10 @@ setTimeout(function () {
               }
             } else {
               if (item.split("-->").length == 5) {
-                console.log(item);
                 if (
                   Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
                   "video"
                 ) {
-                  console.log("vid");
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -146,7 +141,6 @@ setTimeout(function () {
                     item.split("-->").at(3) +
                     '" alt="Avatar"/></div></div>';
                 } else {
-                  console.log("img");
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -179,7 +173,7 @@ setTimeout(function () {
         }
 
         function sndBtnClicked() {
-          if (images == {} && document.getElementById("chat").value == "") {
+          if (Object.keys(images).length == 0 && document.getElementById("chat").value == "") {
           } else {
             var postsref2 = database.ref(
               "ChappUsers/" + user.uid
@@ -241,7 +235,7 @@ setTimeout(function () {
             };
             fetch("https://onesignal.com/api/v1/notifications", options)
               .then((response) => response.json())
-              .then((response) => document.getElementById("chat").value = "")
+              .then((response) => {document.getElementById("chat").value = ""; images = {}; document.getElementById("progressDiv").style.display = "flex"})
               .catch((err) => console.error(err));
               })
           }
@@ -414,34 +408,21 @@ function uploadImage(item) {
   };
   const ref = storage.ref();
   const task = ref.child(name).put(file, metadata);
+  document.getElementById("progressImage").src = URL.createObjectURL(file)
+  task
+    .on('state_changed', (data) => {
+        document.getElementById("progressDiv").style.display = "flex"
+        var percent = (data.bytesTransferred/data.totalBytes) * 100  
+        document.documentElement.style.setProperty('--progress', percent + "%")
+    })
   task
     .then((snapshot) => snapshot.ref.getDownloadURL())
     .then((url) => {
+    document.getElementById("progressBlur").style.opacity = 0
+    document.getElementById("progress-bar").style.opacity = 0
       images[Object.keys(images).length] = {
         [file.type.toString().split("/")[0]]: url,
       };
+    console.log(Object.values(images)[0])
     });
 }
-
-const progressBar = document.getElementById("progress");
-
-fileInput.addEventListener("change", (e) => {
-  e.preventDefault();
-
-  const file = fileInput.files[0];
-  const formData = new FormData();
-  formData.append("file", file);
-
-  const xhr = new XMLHttpRequest();
-  xhr.open("POST", "#", true);
-  xhr.upload.onprogress = (e) => {
-    if (e.lengthComputable) {
-      var percentComplete = (e.loaded / e.total) * 100;
-      console.log(`${percentComplete}%`)
-      document.getElementById("progress-bar").style.setProperty('--progress', percentComplete + "%")
-      document.getElementById("progress-bar").style.setProperty('--progress-text', `${percentComplete}%`)
-
-    }
-  };
-  xhr.send(formData);
-});
