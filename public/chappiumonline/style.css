@@ -1,6 +1,5 @@
 :root {
   --progress: 0%;
-  --progress-text: "0%";
 }
 
 *,
@@ -334,8 +333,4 @@ input {
         background:
           radial-gradient(closest-side, #222222 79%, transparent 80% 100%),
           conic-gradient(white var(--progress), grey 0);
-      }
-
-      .progress-bar::before {
-        content: var(--progress-text);
       }

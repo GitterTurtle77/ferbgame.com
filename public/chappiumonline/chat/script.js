@@ -229,13 +229,12 @@ setTimeout(function () {
                 contents: { en: document.getElementById("chat").value },
                 headings: { en: user.displayName },
                 name: "message",
-                small_icon: "message_icon.png",
                 url: location.href,
               }),
             };
             fetch("https://onesignal.com/api/v1/notifications", options)
               .then((response) => response.json())
-              .then((response) => {document.getElementById("chat").value = ""; images = {}; document.getElementById("progressDiv").style.display = "flex"})
+              .then(() => {document.getElementById("chat").value = ""; images = {}; document.getElementById("progressDiv").style.display = "none"})
               .catch((err) => console.error(err));
               })
           }
