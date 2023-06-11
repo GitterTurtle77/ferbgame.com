@@ -51,7 +51,7 @@ setTimeout(function () {
         if (data5 == null) {
           data5 = [];
         }
-        console.log("ChappiumUsers/" + data4[2])
+        OSid = data5[3]
       })
       })
       
