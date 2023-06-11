@@ -91,7 +91,7 @@ auth.onAuthStateChanged((user) => {
         if (data5 == null) {
           data5 = [];
         }
-        OSid  = data5[3]
+        OSid = data5[3]
       })
       })
       
