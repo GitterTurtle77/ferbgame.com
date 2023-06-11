@@ -40,6 +40,7 @@ firebase.database().ref('info/connected').on('value', function(snapshot) {
 
         // We can now safely set ourselves as 'online' knowing that the
         // server will mark us as offline once we lose connection.
+        d = new Date()
         userStatusDatabaseRef.set(isOnlineForDatabase);
     });
 });
