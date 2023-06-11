@@ -30,13 +30,53 @@ var images = {};
 var run = true;
 var options = {};
 
-setTimeout(function () {
-  function wait() {
-    if (auth.currentUser == null) {
-      window.setTimeout(function () {
-        wait();
-      }, 500);
-    } else {
+wait()
+function wait() {
+  window.setTimeout(function() { 
+    var postsref3 = database.ref("status/" + uid);
+        var data3;
+        postsref3.on("value", (snapshot) => {
+          data3 = snapshot.val();
+          if (data3 == null) {
+            console.log(null);
+            data3 = {};
+          }
+          var array = Object.values(data3)
+          if (array[1] == "offline") {
+            var d = new Date()
+            var lastSeen = array[0]
+            console.log(d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear())
+            if (d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() == lastSeen.split(" ")[0] && lastSeen.split(" ")[1] >= d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0')) {
+              lastSeen = "a moment ago"
+            }
+            if (d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() == lastSeen.split(" ")[0] && lastSeen.split(/[: ]/)[1] == d.getHours()) {
+              lastSeen = d.getMinutes() - lastSeen.split(/[: ]/)[2] + " minutes ago"
+            }
+            if (d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() == lastSeen.split(" ")[0] && lastSeen.split(/[: ]/)[0] != d.getHours()) {
+              lastSeen = lastSeen = (d.getHours() - lastSeen.split(/[: ]/)[1]) + " hours ago"
+            }
+            if (lastSeen.includes("1 minutes ago")) {
+              lastSeen = "1 minute ago"
+            }
+            if (lastSeen.includes("1 hours ago")) {
+              lastSeen = "1 hour ago"
+            }
+            if (!lastSeen.includes("ago") && lastSeen.includes(" ")) {
+                lastSeen = lastSeen.split(" ")[0] + " at " + lastSeen.split(" ")[1]
+            }
+            console.log(lastSeen)
+            document.getElementById("status").innerText =
+            "Last seen " + lastSeen
+          } else {
+          document.getElementById("status").innerText =
+            "Online"
+        }
+        })
+    wait()
+  }, 1000)
+}
+
+auth.onAuthStateChanged((user) => {
       var user = auth.currentUser;
       
       var postsref4 = database.ref("ChappUsers/" + uid);
@@ -51,7 +91,7 @@ setTimeout(function () {
         if (data5 == null) {
           data5 = [];
         }
-        console.log("ChappiumUsers/" + data4[2])
+        OSid  = data5[3]
       })
       })
       
@@ -63,23 +103,6 @@ setTimeout(function () {
           data = [];
         }
         data = data.reverse();
-
-        var postsref3 = database.ref("status/" + uid);
-        var data3;
-        postsref3.on("value", (snapshot) => {
-          data3 = snapshot.val();
-          if (data3 == null) {
-            console.log(null);
-            data3 = {};
-          }
-          var array = Object.values(data3)
-          if (array[1] == "offline") {
-            var lastSeen = array[0]
-            console.log(lastSeen)
-          }
-          document.getElementById("status").innerText =
-            array[1].charAt(0).toUpperCase() + array[1].slice(1);
-        });
 
         document.getElementById("list").innerHTML = "";
 
@@ -102,6 +125,7 @@ setTimeout(function () {
                     '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><video controls style="width: 200px;" src="' +
                     JSON.parse(item.split("-->").at(4))[0].video +
                     '"/><span class="time-right">' +
+                    item.split("-->").at(5) + 
                     "</span></div></div>";
                 } else {
                   li.innerHTML =
@@ -112,6 +136,7 @@ setTimeout(function () {
                     '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
                     JSON.parse(item.split("-->").at(4))[0].image +
                     '"/><span class="time-right">' +
+                    item.split("-->").at(5) + 
                     "</span></div></div>";
                 }
               } else {
@@ -123,6 +148,7 @@ setTimeout(function () {
                   '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' +
                   item.split("-->").at(1) +
                   '<span class="time-right">' +
+                  item.split("-->").at(5) + 
                   "</span></div></div>";
               }
             } else {
@@ -137,6 +163,7 @@ setTimeout(function () {
                     '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><video controls style="width: 200px;" src="' +
                     JSON.parse(item.split("-->").at(4))[0].video +
                     '"/><span class="time-right">' +
+                    item.split("-->").at(5) + 
                     '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                     item.split("-->").at(3) +
                     '" alt="Avatar"/></div></div>';
@@ -147,6 +174,7 @@ setTimeout(function () {
                     '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><img style="object-fit: contain; width: 200px; min-height: 200px;" src="' +
                     JSON.parse(item.split("-->").at(4))[0].image +
                     '"/><span class="time-right">' +
+                    item.split("-->").at(5) + 
                     '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                     item.split("-->").at(3) +
                     '" alt="Avatar"/></div></div>';
@@ -158,6 +186,7 @@ setTimeout(function () {
                   '" ontouchstart="down(this.firstChild)" ontouchend="up()" onmousedown="down(this.firstChild)" onmouseup="up()" class="messageright"><div class="message darker"><p>' +
                   item.split("-->").at(1) +
                   '</p><span class="time-right">' +
+                  item.split("-->").at(5) +
                   '</span></div><div class="imagediv"><img style="height: 50px; width: 50px;" class="right" src="' +
                   item.split("-->").at(3) +
                   '" alt="Avatar"/></div></div>';
@@ -180,22 +209,7 @@ setTimeout(function () {
             );
             postsref2.on("value", (snapshot) => {
               var data2 = snapshot.val();
-              if (
-                Object.keys(images).length === 0 &&
-                images.constructor === Object
-              ) {
-                data
-                  .reverse()
-                  .push(
-                    user.displayName +
-                      "-->" +
-                      document.getElementById("chat").value +
-                      "-->" +
-                      user.uid +
-                      "-->" +
-                      data2[3]
-                  );
-              } else {
+              var d = new Date();
                 data
                   .reverse()
                   .push(
@@ -207,9 +221,10 @@ setTimeout(function () {
                       "-->" +
                       data2[3] +
                       "-->" +
-                      JSON.stringify(images)
+                      JSON.stringify(images) +
+                      "-->" +
+                      d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0')
                   );
-              }
               database
                 .ref()
                 .child("Chapp/" + chat)
@@ -229,12 +244,13 @@ setTimeout(function () {
                 contents: { en: document.getElementById("chat").value },
                 headings: { en: user.displayName },
                 name: "message",
+                small_icon: "message_icon.png",
                 url: location.href,
               }),
             };
             fetch("https://onesignal.com/api/v1/notifications", options)
               .then((response) => response.json())
-              .then(() => {document.getElementById("chat").value = ""; images = {}; document.getElementById("progressDiv").style.display = "none"})
+              .then((response) => {document.getElementById("chat").value = ""; images = {}; document.getElementById("progressDiv").style.display = "none"})
               .catch((err) => console.error(err));
               })
           }
@@ -243,10 +259,7 @@ setTimeout(function () {
           .getElementById("send")
           .addEventListener("click", sndBtnClicked);
       });
-    }
-  }
-  wait();
-}, 500);
+    })
 
 function loadDoc() {
   const xhttp = new XMLHttpRequest();
