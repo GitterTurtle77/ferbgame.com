@@ -14,6 +14,7 @@ firebase.initializeApp(firebaseConfig);
 // Initialize variables
 const auth = firebase.auth();
 const database = firebase.database();
+const db = firebase.database
 const storage = firebase.storage();
 
 const urlParams = new URLSearchParams(window.location.search);
@@ -91,8 +92,27 @@ auth.onAuthStateChanged((user) => {
         if (data5 == null) {
           data5 = [];
         }
-        OSid = data5[3]
+        OSid  = data5[3]
       })
+      })
+  
+  var postsref6 = database.ref("status/Chats/" + chat);
+  var data6
+      postsref6.on("value", (snapshot) => {
+        data6 = snapshot.val();
+        if (data6 == null) {
+          data6 = {};
+        }
+        if (data6[user.uid].status == 'New Message') {
+          data6 = {"last_changed": db.ServerValue.TIMESTAMP}
+          data6[user.uid] = {"status": "Opened"}
+          data6[uid] = {"status": "Seen"}
+          console.log(data6)
+          database
+            .ref()
+            .child("status/Chats/" + chat)
+            .set(data6)
+        }
       })
       
 
@@ -229,6 +249,14 @@ auth.onAuthStateChanged((user) => {
                 .ref()
                 .child("Chapp/" + chat)
                 .set(data).then(() => {
+            });
+              data6 = {"last_changed": db.ServerValue.TIMESTAMP}
+              data6[user.uid] = {"status": "Delivered"}
+              data6[uid] = {"status": "New Message"}
+              database
+                .ref()
+                .child("status/Chats/" + chat)
+                .set(data6).then(() => {
             });
             options = {
               method: "POST",
