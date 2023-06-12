@@ -130,7 +130,7 @@ auth.onAuthStateChanged((user) => {
               datashown[index] +
               "&uid=" +
               datauid[index] +
-              '`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+              '`);" style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 50px; width: 50px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
               dataimage[index] +
               '"/><p style="user-select: none;">' +
               item +
