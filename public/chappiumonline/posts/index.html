@@ -159,53 +159,21 @@
     />
   </head>
   <body>
-    <div id="content">
-      <div class="homebuttons">
-        <div style="width: 50%; display: flex; justify-content: flex-start">
-          <a
-            style="-webkit-user-drag: none"
-            onclick="loadDoc('/chappiumonline/editprofile')"
-            ><img
-              id="profileicon"
-              style="
-                width: 60px;
-                height: 60px;
-                object-fit: cover;
-                border-radius: 15px;
-                pointer-events: none;
-            margin: 0;
-            padding: 0;
-              "
-          /></a>
-        </div>
-        <div style="width: 50%; display: flex; justify-content: flex-end">
-          <a
-            style="-webkit-user-drag: none"
-            class="material-icons"
-            onclick="loadDoc('/chappiumonline/addfriend/')"
-            >person_add <span class="notification-badge" id="notificationCount"></span></a
-          >
-          <a
-            style="-webkit-user-drag: none"
-            class="material-icons"
-            onclick="loadDoc('/chappiumonline/creategroup/')"
-            >group_add</a
-          >
-        </div>
+    <div class="postsContainer">
+      <div id="posts" class="postsContent">
       </div>
-      <div id="list"></div>
+    </div>
       <div class="navbar">
-        <a href="#">
+        <a href="home">
           <span class="material-icons">forum</span>
         </a>
         <a href="post">
           <span class="material-icons">photo_camera</span>
         </a>
-        <a href="posts">
+        <a href="#">
           <span class="material-icons">portrait</span>
         </a>
       </div>
-    </div>
     <div id="chatdiv"></div>
     <div class="background"  id="bg" onclick="hideMenu()">
       
@@ -242,6 +210,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
 
   <!-- Our script must be loaded after firebase references -->
-  <script src="/chappiumonline/home/script.js"></script>
+  <script src="/chappiumonline/posts/script.js"></script>
   <script src="/chappiumonline/script.js"></script>
 </html>

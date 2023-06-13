@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+   
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+    />
+    <title>Chappium Online Beta</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Chappium Online Beta" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/chappiumonline/style.css" />
+    <link rel="stylesheet" href="/chappiumonline/post/style.css" />
+  </head>
+
+  <body>
+    <div class="navbar" id="topnav" style="visibility: hidden;">
+      <a href="post">
+        <span class="material-icons">close</span>
+      </a>
+      <div style="width: 100%;">
+        
+      </div>
+      <a href="#" onclick="send()">
+        <span class="material-icons">send</span>
+      </a>
+    </div>
+    <div
+      style="
+        height: 80%;
+        width: 100vw;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+      "
+    >
+      <div class="camera">
+        <video style="width: 100vw" id="video" playsinline muted></video>
+        <img id="photo" style="display: none" />
+        <button id="startbutton">
+          <span class="material-icons" style="font-size: 100px;">radio_button_unchecked</span>
+        </button>
+      </div>
+
+      <canvas id="canvas"></canvas>
+    </div>
+    <div class="navbar">
+      <a href="home">
+        <span class="material-icons">forum</span>
+      </a>
+      <a href="#">
+        <span class="material-icons">photo_camera</span>
+      </a>
+      <a href="posts">
+        <span class="material-icons">portrait</span>
+      </a>
+    </div>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+  <script src="/chappiumonline/post/script.js"></script>
+  <script src="/chappiumonline/script.js"></script>
+</html>
