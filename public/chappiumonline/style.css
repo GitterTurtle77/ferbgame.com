@@ -1,5 +1,6 @@
 :root {
   --progress: 0%;
+  --progress-text: "0%";
 }
 
 *,
@@ -31,15 +32,17 @@ html, body {
   -webkit-tap-highlight-color: transparent;
   -webkit-user-select: none;
   user-select: none;
+  margin: 0;
+  padding: 0;
 }
 
 h1 {
-  font-size: 20px;
+  font-size: 30px;
   pointer-events: none;
 }
 
 p {
-  font-size: 15px;
+  font-size: 20px;
 }
 
 button, a {
@@ -82,8 +85,8 @@ input {
 }
 
 .homebuttons {
-  padding: 0px;
-  margin: 0px;
+  padding: 0;
+  margin: 0;
   height: 12vh;
   display: flex;
   width: 100%;
@@ -91,16 +94,16 @@ input {
 }
 
 .chatElement {
-  margin-left: -40px;
-  list-style: none;
+  list-style: inside;
   color: #FFFFFF;
   font-size: 30px;
-  border-bottom: 2px solid #222222;
   text-decoration: none;
-  display: flex;
   cursor: pointer;
+  display: flex;
   flex-direction: row;
-  padding: 10px;
+  padding: 5px 20px;
+  align-items: center;
+  width:100%;
 }
 
 .chatList {
@@ -110,6 +113,11 @@ input {
   height: 65%;
   overflow-y: scroll;
   margin: 0 auto;
+}
+
+#list {
+  margin: 20px 0px;
+  width:100%;
 }
 
 .listElement {
@@ -247,11 +255,13 @@ input {
 }
 
 .profileicon {
-  width: 15vw;
-  height: 15vw;
+  width: 150px;
+  height: 150px;
   object-fit: cover;
   border-radius: 25px;
   margin-right: 20px;
+  min-width: 150px;
+  max-width: 150px;
 }
 
 .profiledisplayname {
@@ -303,7 +313,7 @@ input {
   cursor: pointer;
 }
   .material-icons {
-    font-size: 20px;
+    font-size: 30px;
   }
   
   #friendname {
@@ -337,4 +347,8 @@ input {
         background:
           radial-gradient(closest-side, #222222 79%, transparent 80% 100%),
           conic-gradient(white var(--progress), grey 0);
+      }
+
+      .progress-bar::before {
+        content: var(--progress-text);
       }

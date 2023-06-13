@@ -313,6 +313,12 @@ function removeFriend() {
   });
 }
 
+function viewProfile() {
+  taskItemInContext = el;
+  var id = taskItemInContext.getAttribute("data-id");
+  location.href = "/chappiumonline/profile?uid=" + keys[id].split("--")[1]
+}
+
 function hideMenu() {
   menu.style.display = "none";
   document.getElementById("bg").style.display = "none";

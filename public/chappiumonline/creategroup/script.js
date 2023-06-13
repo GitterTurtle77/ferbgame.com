@@ -30,7 +30,7 @@ function wait() {
     var user = auth.currentUser;
 
     var postsref8 = database.ref(
-      "ChappUsers/" + user.email.split("@").at(0).replaceAll(".", "*")
+      "ChappUsers/" + user.uid
     );
     postsref8.on("value", (snapshot) => {
       data8 = snapshot.val();
@@ -58,20 +58,33 @@ var postsref7 = database.ref("ChappiumUsers/" + data8[2]);
         const datashown = [];
         const datahidden = [];
         const dataimage = [];
-        data8.forEach((element) => {
-          datashown.push(element.split("--").at(0));
-          datahidden.push(element.split("--").at(1));
-          dataimage.push(element.split("--").at(2));
-        });
-
+          var datauid = [];
+          document.getElementById("list").innerHTML = "";
+        data8.forEach((item, index) => {
+          var postsref10 = database.ref("ChappUsers/" + item.split("--")[1])
+      var data10;
+      postsref10.on("value", (snapshot) => {
+        data10 = snapshot.val();
+        console.log(data10)
+          datashown.push(data10[0]);
+            datahidden.push(item.split("--").at(0));
+            dataimage.push(data10[3]);
+            datauid.push(data10[1]);
+        load(item, index)
+      })
+      })
+          function load(item, index) {
         let list = document.getElementById("list");
-          list.innerHTML = "";
-        datashown.forEach((item, index) => {
           let li = document.createElement("li");
-          li.innerHTML = '<img style="pointer-events: none; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' + dataimage[index] + '"/><p style="user-select: none; width: 100%; text-align: start;">' + item + '</p><div style="display: flex; justify-content: flex-end;"><button><span class="material-icons">add</span></button></div>'
+          li.innerHTML = '<div style="width: 100%; display: flex; flex-direction: row; justify-content: flex-start;"><img style="pointer-events: none; height: 60px; width: 60px; object-fit: cover; margin-right: 15px; border-radius: 15px;" src="' +
+              dataimage[index] +
+              '"/><p style="user-select: none;">' +
+              datashown[index] +
+              '</p></div><div style="display: flex; justify-content: flex-end;"><button><span class="material-icons">add</span></button></div>'
           li.onclick = function() {li.style.display = "none"; if (datahidden[index].split("->").indexOf(user.uid) == 0) {groupmembers.push(datahidden[index].split("->")[1])} else {groupmembers.push(datahidden[index].split("->")[0])} console.log(groupmembers)}
-          list.appendChild(li);
-        });
+        li.className = "chatElement";
+        list.appendChild(li);
+          }
         } else {
           let list = document.getElementById("list");
           list.innerHTML = "";

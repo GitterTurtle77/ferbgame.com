@@ -20,14 +20,16 @@
       You can write text in a comment and the content won't be visible in the page
     -->
 
-    <title>Chappium</title>
+    <title>Chappium Online Beta</title>
 
     <!-- Meta tags for SEO and social sharing -->
-    <meta name="description" content="Chappium" />
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
     <meta name="robots" content="index,follow" />
-    <meta property="og:title" content="Chappium" />
+    <meta property="og:title" content="Chappium Online Beta" />
     <meta property="og:type" content="article" />
-    <meta property="og:description" content="Chappium" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
     <meta
       property="og:image"
       content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
@@ -37,7 +39,7 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link
       rel="stylesheet"
-      href="https://www.ferbgame.com/chappiumonline/style.css"
+      href="/chappiumonline/style.css"
     />
   </head>
   <body style="display: flex; flex-direction: column; justify-content: flex-start;">
@@ -49,8 +51,8 @@
     <input type="file" id="upload" style="display: none;"/>
     <button id="create" onclick="createGroup()">Create</button>
     <p id="error" style="color: red;"></p>
-    <ul id="list">
-    </ul>
+    <div id="list">
+    </div>
   </body>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
@@ -62,6 +64,6 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
 
   <!-- Our script must be loaded after firebase references -->
-  <script src="https://www.ferbgame.com/chappiumonline/creategroup/script.js"></script>
+  <script src="/chappiumonline/creategroup/script.js"></script>
   <script src="/chappiumonline/script.js"></script>
 </html>

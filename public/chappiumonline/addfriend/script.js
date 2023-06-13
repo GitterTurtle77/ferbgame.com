@@ -318,7 +318,7 @@ auth.onAuthStateChanged((user) => {
       postsref10.on("value", (snapshot) => {
         data10 = snapshot.val();
         console.log(data10)
-      li.className = "listElement";
+      li.className = "chatElement";
       li.innerHTML =
         '<div style="float: left; display: flex; flex-direction: row;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
         data10[3] +
