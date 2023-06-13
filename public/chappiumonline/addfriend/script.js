@@ -90,7 +90,7 @@ function addBtnClicked() {
                       app_id: "62886539-65fb-497a-9377-a74d6316df99",
                       include_player_ids: [data[3]],
                       contents: {
-                        en: user.displayName + "wants to be your friend",
+                        en: user.displayName + " wants to be your friend",
                       },
                       headings: { en: "Friend Request" },
                       name: "message",
@@ -313,21 +313,20 @@ auth.onAuthStateChanged((user) => {
     let li = document.createElement("div");
     list.innerHTML = "";
     data6.forEach((item, index) => {
-      console.log(
-        item.split("--")[0],
-        item.split("--")[1],
-        item.split("--")[2],
-        item.split("--")[3]
-      );
-      li.innerHTML =
-        '<div style="float: left; width: 50%; display: flex; flex-direction: row;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
-        item.split("--")[2] +
-        '"/><p>' +
-        item.split("--")[0] +
-        "</p></div>";
+      var postsref10 = database.ref("ChappUsers/" + item.split("--")[1])
+      var data10;
+      postsref10.on("value", (snapshot) => {
+        data10 = snapshot.val();
+        console.log(data10)
       li.className = "listElement";
+      li.innerHTML =
+        '<div style="float: left; display: flex; flex-direction: row;"><img style="float: left; height: 90px; width: 90px; object-fit: cover; margin-right: 20px; border-radius: 20px;" src="' +
+        data10[3] +
+        '"/><p style="text-align: left; width: 100%; font-size: 20px;">' +
+        data10[0] +
+        '</p></div>';
       list.appendChild(li);
-      console.log(list.firstChild);
+    });
     });
     function getEventTarget(e) {
       e = e || window.event;
