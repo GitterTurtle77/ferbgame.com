@@ -100,6 +100,9 @@ auth.onAuthStateChanged((user) => {
             );
         postsref11.on("value", (snapshot) => {
         data11 = snapshot.val();
+          if (data11 == null || data11 == undefined) {
+            data11 = {}
+          }
         update()
             })
           });
@@ -112,7 +115,8 @@ auth.onAuthStateChanged((user) => {
           datauid = [];
           datasort = {}
           if (data != undefined && data.length != 0) {
-            console.log(data)
+            if (data11 != undefined && data11 != null) {
+              console.log("data", data11)
           data.forEach((item) => {
               datasort[item] = data11[item.split("--").at(0)].last_changed
               });
@@ -141,8 +145,8 @@ auth.onAuthStateChanged((user) => {
           list.innerHTML = "";
           keys.forEach((item, index) => {
             let li = document.createElement("li");
-            console.log(data11[datahidden[index]])
-            if (data11[datahidden[index]] != undefined && data11[datahidden[index]] != null) {
+            console.log("d11", data11[datahidden[index]])
+            if (data11[datahidden[index]][user.uid] != undefined && data11[datahidden[index]][user.uid] != null) {
               console.log(datashown[index])
               li.innerHTML =
               '<div onclick="loadDoc(`/chappiumonline/chat/?chat=' +
@@ -182,6 +186,7 @@ auth.onAuthStateChanged((user) => {
           list.innerHTML = "";
           list.innerHTML = `<li class="chatElement">There's no one here! Get started by adding friends.</li>`;
         }
+          }
         }
       var data4;
       var postsref4 = database.ref("ChappReceived/" + data8[1]);

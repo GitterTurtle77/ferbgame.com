@@ -20,6 +20,7 @@ var data2;
 var data3;
 var data4 = [];
 var data5 = [];
+var db = firebase.database
 
 var executed = false;
 
@@ -171,7 +172,7 @@ function acceptBtnClick(data) {
     var postsref9 = database.ref("ChappSent/" + otherUID);
     postsref9.on("value", (snapshot) => {
       var data9 = snapshot.val();
-      console.log(data9);
+      console.log(data.split("--")[0])
 
       data9.forEach((item, index) => {
         if (item.includes(user.uid)) {
@@ -186,6 +187,10 @@ function acceptBtnClick(data) {
         data9.splice(data, 1);
         console.log(data9);
         console.log(data8);
+        database
+          .ref()
+          .child("status/Chats/" + data.split("--")[0])
+          .set({last_changed: [db.ServerValue.TIMESTAMP]});
 
         database
           .ref()
