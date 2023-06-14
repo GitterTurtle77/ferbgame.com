@@ -339,6 +339,9 @@ input {
   min-width: 40vw;
   max-width: 40vw;
   max-height: 90vw;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
@@ -457,4 +460,9 @@ input {
   width: 40px;
   will-change: transform;
   display: none;
+}
+
+.title {
+  position: relative;
+  font-size: 18px;
 }
