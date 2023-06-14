@@ -101,18 +101,6 @@
       font-size: 20px;
     }
       
-    .background {
-      display: none;
-      position: absolute;
-      margin: 0px;
-      padding: 0px;
-      width: 100%;
-      height: 100%;
-      top: 0;
-      left: 0;
-      background-color: rgba(0,0,0,0.7)
-    }
-      
       #item-container {
         width: 100%;
         display: flex;
@@ -198,10 +186,10 @@
         <a href="#">
           <span class="material-icons">forum</span>
         </a>
-        <a href="/chappiumonline/post">
+        <a href="post">
           <span class="material-icons">photo_camera</span>
         </a>
-        <a href="/chappiumonline/posts">
+        <a href="posts">
           <span class="material-icons">portrait</span>
         </a>
       </div>
@@ -220,7 +208,7 @@
           <i class="fa fa-eye"></i> <span style="color: red;">Remove Friend</span>
         </a>
       </li>
-      <li class="context-menu__item" onclick="console.log('block')">
+      <li class="context-menu__item" onclick="block(this)">
         <a href="#" class="context-menu__link" data-action="block">
           <i class="fa fa-edit"></i> <span style="color: red;">Block</span>
         </a>

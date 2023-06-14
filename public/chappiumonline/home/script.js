@@ -270,46 +270,54 @@ function showMenu(taskItem) {
 }
 
 function removeFriend() {
+  console.log(el)
   taskItemInContext = el;
   var id = taskItemInContext.getAttribute("data-id");
   var user = auth.currentUser;
   var postsref = database.ref(
-    "ChappFriends/" + datahidden[id - 1].replace(user.uid, "").replace("->", "")
+    "ChappFriends/" + keys[id].split("--")[1]
   );
   var data;
-  postsref.on("value", (snapshot) => {
+  postsref.get().then((snapshot) => {
     data = snapshot.val();
+    console.log(data)
     if (
-      data.findIndex((element) => element.includes(datahidden[id - 1])) != -1
+      data.findIndex((element) => element.includes(keys[id].split("--")[1])) != -1
     ) {
       data.splice(
-        data.findIndex((element) => element.includes(datahidden[id - 1])),
+        data.findIndex((element) => element.includes(keys[id].split("--")[1])),
         1
       );
+      console.log(keys[id].split("--")[1])
+      console.log("ChappFriends/" + keys[id].split("--")[1])
       database
         .ref(
           "ChappFriends/" +
-            datahidden[id - 1].replace(user.uid, "").replace("->", "")
+            keys[id].split("--")[1]
         )
-        .set(data);
-    }
-  });
+        .set(data).then(() => {
+      
   var postsref2 = database.ref("ChappFriends/" + user.uid);
   var data2;
-  postsref2.on("value", (snapshot) => {
+  postsref2.get().then((snapshot) => {
     data2 = snapshot.val();
+    console.log(keys[id])
     if (
-      data2.findIndex((element) => element.includes(datahidden[id - 1])) != -1
+      data2.findIndex((element) => element.includes(keys[id])) != -1
     ) {
       data2.splice(
-        data2.findIndex((element) => element.includes(datahidden[id - 1])),
+        data2.findIndex((element) => element.includes(keys[id])),
         1
       );
+      console.log(data2)
       database
         .ref()
         .child("ChappFriends/" + user.uid)
         .set(data2);
     }
+  });
+        })
+      }
   });
 }
 
@@ -317,6 +325,21 @@ function viewProfile() {
   taskItemInContext = el;
   var id = taskItemInContext.getAttribute("data-id");
   location.href = "/chappiumonline/profile?uid=" + keys[id].split("--")[1]
+}
+
+function block() {
+  taskItemInContext = el;
+  var id = taskItemInContext.getAttribute("data-id");
+  database.ref().child("ChappBlocked/" + auth.currentUser.uid).get().then((snapshot) => {
+    var data12 = snapshot.val()
+    if (data12 == null) {
+      data12 = []
+    }
+    data12.push(keys[id].split("--")[1])
+    database.ref().child("ChappBlocked/" + auth.currentUser.uid).set(data12).then(() => {
+      removeFriend()
+    })
+  })
 }
 
 function hideMenu() {
