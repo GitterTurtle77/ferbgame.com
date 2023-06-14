@@ -129,6 +129,8 @@ auth.onAuthStateChanged((user) => {
         let list = document.getElementById("list");
         console.log(data);
         data.forEach((item, index) => {
+          alert(atob(item))
+          item = atob(item)
           if (item != "") {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
@@ -232,7 +234,7 @@ auth.onAuthStateChanged((user) => {
               var d = new Date();
                 data
                   .reverse()
-                  .push(
+                  .push(btoa(
                     user.displayName +
                       "-->" +
                       document.getElementById("chat").value +
@@ -243,7 +245,7 @@ auth.onAuthStateChanged((user) => {
                       "-->" +
                       JSON.stringify(images) +
                       "-->" +
-                      d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0')
+                      d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0'))
                   );
               database
                 .ref()
