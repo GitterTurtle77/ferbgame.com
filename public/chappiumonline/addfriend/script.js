@@ -34,6 +34,18 @@ function addBtnClicked() {
       );
       postsref.on("value", (snapshot) => {
         data = snapshot.val();
+        var data11;        
+        var postsref11 = database.ref("ChappBlocked/" + data[1]);
+                postsref11.on("value", (snapshot) => {
+                  data11 = snapshot.val();
+                  if (data11 == null) {
+                    data11 = []
+                  }
+        if (data11.includes(user.uid)) {
+          document.getElementById("error").innerText =
+            "BLOCKED"
+        } else {
+                  
         if (data == null) {
           document.getElementById("error").innerText =
             "This user does not exist";
@@ -110,6 +122,8 @@ function addBtnClicked() {
             });
           });
         }
+        }
+        })
       });
     }
     executed = true;
