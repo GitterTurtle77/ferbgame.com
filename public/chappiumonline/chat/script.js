@@ -129,7 +129,6 @@ auth.onAuthStateChanged((user) => {
         let list = document.getElementById("list");
         console.log(data);
         data.forEach((item, index) => {
-          alert(atob(item))
           item = atob(item)
           if (item != "") {
             let li = document.createElement("div");
