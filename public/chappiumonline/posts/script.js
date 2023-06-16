@@ -37,13 +37,12 @@ auth.onAuthStateChanged((user) => {
             var data3 = snapshot.val();
             let post = document.createElement("div");
             post.innerHTML =
-              '<div class="postImage" style="background-image: url(' +
-              item2[0] +
-              ')"><img style=" width: 50px; height: 50px; object-fit: cover; border-radius: 15px; pointer-events: none; margin: 0; padding: 0;" src="' + data3[3] + '"><p class="title">' +
+              '<img style=" width: 50px; height: 50px; object-fit: cover; border-radius: 15px; pointer-events: none; margin: 0; padding: 0;" src="' + data3[3] + '"><p class="title">' +
               data3[0] +
               "</p></div>";
             post.setAttribute("data-id", list.children.length);
             post.className = "post";
+            post.style.backgroundImage = "url(" + item2[0] + ")"
             list.appendChild(post);
           });
         });
