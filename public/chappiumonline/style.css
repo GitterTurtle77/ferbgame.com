@@ -331,6 +331,8 @@ input {
   scroll-snap-align: start;
   overflow: hidden;
   object-fit: contain;
+  background-size: contain; 
+  background-repeat: no-repeat;
 }
 
 .postImage {
@@ -391,6 +393,8 @@ input {
   scroll-snap-align: start;
   overflow: hidden;
   object-fit: contain;
+  background-size: contain; 
+  background-repeat: no-repeat;
 }
 
 .postImage {
@@ -399,6 +403,8 @@ input {
   min-width: 100vw;
   max-width: 100vw;
   max-height: 90vw;
+  background-size: contain; 
+  background-repeat: no-repeat;
 }
 }
 
