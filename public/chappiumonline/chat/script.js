@@ -16,6 +16,7 @@ const auth = firebase.auth();
 const database = firebase.database();
 const db = firebase.database
 const storage = firebase.storage();
+const cryptojs = CryptoJS
 
 const urlParams = new URLSearchParams(window.location.search);
 var chat = urlParams.get("chat");
@@ -129,7 +130,8 @@ auth.onAuthStateChanged((user) => {
         let list = document.getElementById("list");
         console.log(data);
         data.forEach((item, index) => {
-          item = atob(item)
+          item = cryptojs.AES.decrypt(item, chat).toString(cryptojs.enc.Utf8)
+          console.log(item)
           if (item != "") {
             let li = document.createElement("div");
             if (item.split("-->").at(2) != user.uid) {
@@ -138,6 +140,7 @@ auth.onAuthStateChanged((user) => {
                   Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
                   "video"
                 ) {
+                  console.log("video")
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -149,6 +152,7 @@ auth.onAuthStateChanged((user) => {
                     item.split("-->").at(5) + 
                     "</span></div></div>";
                 } else {
+                  console.log("img")
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -161,6 +165,7 @@ auth.onAuthStateChanged((user) => {
                     "</span></div></div>";
                 }
               } else {
+                console.log("none")
                 li.innerHTML =
                   '<div data-id="' +
                   list.childNodes.length +
@@ -178,6 +183,7 @@ auth.onAuthStateChanged((user) => {
                   Object.keys(JSON.parse(item.split("-->").at(4))[0])[0] ==
                   "video"
                 ) {
+                  console.log("video")
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -189,6 +195,7 @@ auth.onAuthStateChanged((user) => {
                     item.split("-->").at(3) +
                     '" alt="Avatar"/></div></div>';
                 } else {
+                  console.log("img")
                   li.innerHTML =
                     '<div data-id="' +
                     list.childNodes.length +
@@ -201,6 +208,7 @@ auth.onAuthStateChanged((user) => {
                     '" alt="Avatar"/></div></div>';
                 }
               } else {
+                console.log("none")
                 li.innerHTML =
                   '<div data-id="' +
                   list.childNodes.length +
@@ -233,7 +241,7 @@ auth.onAuthStateChanged((user) => {
               var d = new Date();
                 data
                   .reverse()
-                  .push(btoa(
+                  .push(cryptojs.AES.encrypt(
                     user.displayName +
                       "-->" +
                       document.getElementById("chat").value +
@@ -244,7 +252,7 @@ auth.onAuthStateChanged((user) => {
                       "-->" +
                       JSON.stringify(images) +
                       "-->" +
-                      d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0'))
+                      d.getDate() + "/" + (d.getMonth() + 1) + "/" + d.getFullYear() + " " + d.getHours() + ":" + String(d.getMinutes()).padStart(2, '0'), chat).toString()
                   );
               database
                 .ref()
