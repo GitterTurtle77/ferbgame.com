@@ -173,9 +173,9 @@ auth.onAuthStateChanged((user) => {
                   item.split("-->").at(3) +
                   '" style="height: 50px; width: 50px;" alt="Avatar"/></div><div class="message"><p>' +
                   item.split("-->").at(1) +
-                  '<span class="time-right">' +
+                  '</p><span class="time-left">' +
                   item.split("-->").at(5) + 
-                  "</span></div></div>";
+                  "</span></div></div>";                
               }
             } else {
               if (item.split("-->").length == 5) {
