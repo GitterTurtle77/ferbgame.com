@@ -11,12 +11,12 @@
     />
     <link
       rel="icon"
-      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
     />
     <meta name="apple-mobile-web-app-capable" content="yes" />
     <link
       rel="apple-touch-icon"
-      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumX%20Logo.png?v=1643738262832"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
     />
     <!-- 
       This is an HTML comment
@@ -148,6 +148,7 @@
               align-items: center;
               bottom: 25%;
             }
+  
     </style>
   </head>
   <body>
@@ -211,8 +212,14 @@
         </button>
         <button style="height: 100%" id="pic" for="file">
           <span class="material-icons">image</span>
-        </button> 
-        <input id="file" type="file" name="imageinput" accept="image/*, video/*"  style="display: none;" multiple/>
+        </button>
+        <input
+          id="file"
+          type="file"
+          accept="image/*, video/*"
+          style="display: none"
+          multiple
+        />
       </div>
     </div>
     <div id="chatdiv"></div>
@@ -244,6 +251,7 @@
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-storage.js"></script>
   <!-- Our script must be loaded after firebase references -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js"></script>
   <script src="script.js"></script>
   <script src="/chappiumonline/script.js"></script>
 </html>
