@@ -4,5 +4,8 @@
   "display": "standalone",
   "start_url": "/chappiumonline",
   "theme_color": "#111111",
-  "orientation": "portrait"
+  "orientation": "landscape",
+  "background_color": "#111111",
+  "short_name": "Chappium",
+  "description": "Chappium is a Texting App!"
 }

@@ -69,6 +69,12 @@
         Tap "Add"
       </h2>
     </div>
+
+    <script>
+      if (typeof navigator.serviceWorker !== 'undefined') {
+        navigator.serviceWorker.register('/chappiumonline/sw.js')
+      }
+    </script>
   </body>
   <!-- The core Firebase JS SDK is always required and must be listed first -->
   <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
