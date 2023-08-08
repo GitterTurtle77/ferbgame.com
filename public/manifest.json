@@ -53,7 +53,7 @@
       "description":"Open the Camera",		
       "icons": [			
         {				
-          "src": "chappiumonline/icons/Camera.png",				
+          "src": "icons/Camera.png",				
           "type": "image/png",				
           "sizes": "96x96"			
         }		
