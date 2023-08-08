@@ -123,11 +123,15 @@ input {
 
 .navbar {
   height: 10%;
-  width: 100vw;
+  width: 35vw;
   display: flex;
   flex-direction: row;
   justify-content: center;
   align-items: center;
+}
+
+.navbar2 {
+  display: none;
 }
 
 .listElement {
@@ -308,10 +312,12 @@ input {
 }
 
 .postsContent {
-  height: 90vh;
-  width: 100vw;
+  min-height: 100vh;
+  max-height: 100vh;
+  width: 100%;
   overflow: auto;
   display: flex;
+  align-items: center;
   gap: 2em;
   flex-direction: column;
   scroll-snap-type: y mandatory;
@@ -323,32 +329,74 @@ input {
 
 .post {
   display: flex;
-  min-height: 90vh;
-  min-width: 40vw;
-  max-width: 40vw;
-  max-height: 90vw;
-  background-color: red;
+  min-height: 100vh;
+  max-height: 100vh;
+  width: 100%;
   scroll-snap-align: start;
   overflow: hidden;
-  object-fit: contain;
-  background-size: contain; 
+  gap: 10px;
+  padding: 10px;
   background-repeat: no-repeat;
+  flex-direction: column;
+  background-size: contain;
+  background-position: center;
 }
 
 .postImage {
-  object-fit: cover;
-  min-height: 90vh;
-  min-width: 40vw;
-  max-width: 40vw;
-  max-height: 90vw;
+  height: 100vh;
   display: flex;
   gap: 10px;
   padding: 10px;
-  background-size: contain; 
+  overflow: hidden;
   background-repeat: no-repeat;
+  background-size: cover; 
+  flex-direction: column;
+}
+
+.backButton {
+  display: none;
+}
+
+.postOpts {
+  width: 15%; 
+  height: 100%;  
+  align-self: flex-end;
+  display: flex; 
+  flex-direction: column;
+  justify-content: flex-end;
+  padding-bottom: 15%;
 }
 
 @media only screen and (min-device-width: 320px) and (max-device-width: 480px) {
+  .postOpts {
+    height: 15%; 
+    width: 100%; 
+    align-self: flex-end; 
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding-bottom: 0;
+  }
+  .backButton {
+    display: flex;
+  }
+  .navbar {
+  height: 10%;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+  
+  .navbar2 {
+  height: 10%;
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
   #chat {
     font-size: 15px;
   }  
@@ -383,29 +431,49 @@ input {
   .profileusername {
     font-size: 20px;
   }
-  .post {
+  
+  .postsContent {
+  min-height: 90vh;
+  max-height: 90vh;
+  width: 100%;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  gap: 2em;
+  flex-direction: column;
+  scroll-snap-type: y mandatory;
+}
+
+.postsContent::-webkit-scrollbar {
+  display: none;
+}
+
+.post {
   display: flex;
   min-height: 90vh;
-  min-width: 100vw;
-  max-width: 100vw;
-  max-height: 90vw;
-  background-color: red;
+  max-height: 90vh;
+  width: 100%;
   scroll-snap-align: start;
   overflow: hidden;
-  object-fit: contain;
-  background-size: contain; 
+  gap: 10px;
+  padding: 10px;
   background-repeat: no-repeat;
+  flex-direction: column;
+  background-size: contain;
+  background-position: center;
 }
 
 .postImage {
-  object-fit: cover;
-  min-height: 90vh;
-  min-width: 100vw;
-  max-width: 100vw;
-  max-height: 90vw;
-  background-size: contain; 
+  height: 90vh;
+  display: flex;
+  gap: 10px;
+  padding: 10px;
+  overflow: hidden;
   background-repeat: no-repeat;
+  background-size: cover; 
+  flex-direction: column;
 }
+  
 }
 
 .progress-bar {
@@ -473,4 +541,20 @@ input {
 .title {
   position: relative;
   font-size: 18px;
+}
+
+.leftPane {
+  width: 35%;
+}
+
+#iFrame {
+  float: right;
+  height: 100%;
+  width: 65%;
+  position: fixed;
+  z-index: 1;
+  top: 0;
+  right: 0;
+  border: none;
+  border-left: 2px solid #444444;
 }

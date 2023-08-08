@@ -1,0 +1,231 @@
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0"
+    />
+    <link
+      rel="icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+    />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta
+      name="apple-mobile-web-app-status-bar-style"
+      content="black-translucent"
+    />
+    <!-- 
+      This is an HTML comment
+      You can write text in a comment and the content won't be visible in the page
+    -->
+
+    <script
+      src="https://cdn.onesignal.com/sdks/OneSignalSDK.js"
+      async
+      defer
+    ></script>
+    <script>
+      window.OneSignal = window.OneSignal || [];
+      OneSignal.push(function () {
+        OneSignal.init({
+          appId: "abd561c7-2718-469c-a4bc-80c81bd33454",
+        });
+      });
+    </script>
+    <style>
+      /* tasks */
+
+      .tasks {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+      }
+
+      .task {
+        display: flex;
+        justify-content: space-between;
+        padding: 12px 0;
+        border-bottom: solid 1px #dfdfdf;
+      }
+
+      .task:last-child {
+        border-bottom: none;
+      }
+
+      .context-menu {
+        display: none;
+        position: absolute;
+        z-index: 10;
+        box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+          0 6px 20px 0 rgba(0, 0, 0, 0.19);
+        margin: 0px;
+        padding: 0px;
+        width: 85%;
+        height: 60%;
+        bottom: 0px;
+        left: 50%;
+        transform: translate(-50%, 0px);
+        flex-direction: column;
+        justify-content: flex-end;
+      }
+
+      .context-menu__items {
+        width: 100%;
+        list-style: none;
+        padding: 0px;
+        border: none;
+      }
+
+      .context-menu__item {
+        list-style: none;
+        margin: 5px 0px;
+        padding: 25px;
+        border-radius: 20px;
+        border: none;
+        background-color: #222222;
+      }
+
+      .context-menu__item:hover {
+        list-style: none;
+        background-color: #111111;
+      }
+
+      .context-menu__link {
+        text-decoration: none;
+        color: white;
+        font-weight: bold;
+        margin: 0px;
+        padding: 0px;
+        font-family: sans-serif;
+        font-size: 20px;
+      }
+
+      #item-container {
+        width: 100%;
+        display: flex;
+        flex-direction: row;
+      }
+      .notification-badge {
+        display: none;
+        background-color: white;
+        border-radius: 50%;
+        padding: 7px;
+        font-size: 0px;
+        position: absolute;
+        top: 20px;
+      }
+    </style>
+    <link
+      rel="apple-touch-icon"
+      href="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/ChappiumNew.png?v=1684659948613"
+    />
+    <title>Chappium Online Beta</title>
+
+    <!-- Meta tags for SEO and social sharing -->
+    <link rel="canonical" href="https://www.ferbgame.com/" />
+    <meta name="description" content="Chappium Online Beta" />
+    <meta name="robots" content="index,follow" />
+    <meta property="og:title" content="Chappium Online Beta" />
+    <meta property="og:type" content="article" />
+    <meta property="og:url" content="https://www.ferbgame.com/" />
+    <meta property="og:description" content="Chappium Online Beta" />
+    <meta
+      property="og:image"
+      content="https://cdn.glitch.global/622588a2-0031-4722-9f72-13355587a9a2/SC%20Logo.png?v=1643444246598"
+    />
+    <meta name="twitter:card" content="summary" />
+
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="/chappiumonline/style.css" />
+  </head>
+  <body>
+    <div id="content">
+      <div class="leftPane">
+        <div class="homebuttons">
+          <div style="width: 50%; display: flex; justify-content: flex-start">
+            <a
+              style="-webkit-user-drag: none"
+              onclick="loadDoc('/chappiumonline/editprofile')"
+              ><img
+                id="profileicon"
+                style="
+                  width: 60px;
+                  height: 60px;
+                  object-fit: cover;
+                  border-radius: 15px;
+                  pointer-events: none;
+                  margin: 0;
+                  padding: 0;
+                "
+            /></a>
+          </div>
+          <div style="width: 50%; display: flex; justify-content: flex-end">
+            <a
+              style="-webkit-user-drag: none"
+              class="material-icons"
+              onclick="loadDoc('/chappiumonline/addfriend/')"
+              >person_add
+              <span class="notification-badge" id="notificationCount"></span
+            ></a>
+            <a
+              style="-webkit-user-drag: none"
+              class="material-icons"
+              onclick="loadDoc('/chappiumonline/creategroup/')"
+              >group_add</a
+            >
+          </div>
+        </div>
+        <div id="list"></div>
+        <div class="navbar">
+          <a href="#">
+            <span class="material-icons">forum</span>
+          </a>
+          <a onclick="loadDoc('/chappiumonline/post')">
+            <span class="material-icons">photo_camera</span>
+          </a>
+          <a onclick="loadDoc('/chappiumonline/posts')">
+            <span class="material-icons">portrait</span>
+          </a>
+        </div>
+      </div>
+    </div>
+    <iframe id="iFrame"></iframe>
+    <div class="background" id="bg" onclick="hideMenu()"></div>
+    <nav id="context-menu" onclick="hideMenu()" class="context-menu">
+      <div id="item-container"></div>
+      <ol class="context-menu__items">
+        <li class="context-menu__item" onclick="removeFriend(this)">
+          <a href="#" class="context-menu__link" data-action="remove">
+            <i class="fa fa-eye"></i>
+            <span style="color: red">Remove Friend</span>
+          </a>
+        </li>
+        <li class="context-menu__item" onclick="block(this)">
+          <a href="#" class="context-menu__link" data-action="block">
+            <i class="fa fa-edit"></i> <span style="color: red">Block</span>
+          </a>
+        </li>
+        <li class="context-menu__item" onclick="viewProfile(this)">
+          <a href="#" class="context-menu__link" data-action="view">
+            <i class="fa fa-times"></i> View Profile
+          </a>
+        </li>
+      </ol>
+    </nav>
+  </body>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-app.js"></script>
+
+  <!-- TODO: Add SDKs for Firebase products that you want to use
+         https://firebase.google.com/docs/web/setup#available-libraries -->
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.6.8/firebase-database.js"></script>
+
+  <!-- Our script must be loaded after firebase references -->
+  <script src="/chappiumonline/home/desktop/script.js"></script>
+  <script src="/chappiumonline/script.js"></script>
+</html>
