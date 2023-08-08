@@ -48,9 +48,10 @@ auth.onAuthStateChanged((user) => {
             post.innerHTML =
               '<div style="align-self: flex-start; width: 100%; display: flex; gap: 10px;"><img style=" width: 50px; height: 50px; object-fit: cover; border-radius: 15px; pointer-events: none; margin: 0; padding: 0;" src="' + data3[3] + '"><p class="title">' +
               data3[0] +
-              `</p></div><div style="height: 100%;"></div><div class="postOpts"><button onclick="
-              like('` + 'ChappPosts/' + item + '/' + index2 + '/2' + `', this, this.lastChild)
-              " id="like ` + item  + " " + index2 + `"><span class="material-icons"> thumb_up </span><span class="notification-badge" id="notificationCount">1</span></button><button class="material-icons">comment</button><button class="material-icons">send</button></div>`
+              `</p></div><div style="height: 100%;">`
+              // </div><div class="postOpts"><button onclick="
+              // like('` + 'ChappPosts/' + item + '/' + index2 + '/2' + `', this, this.lastChild)
+              // " id="like ` + item  + " " + index2 + `"><span class="material-icons"> thumb_up </span><span class="notification-badge" id="notificationCount">1</span></button><button class="material-icons">comment</button><button class="material-icons">send</button></div>
             const button = post.lastChild.firstChild
             
             if (data4.likes.length != 0) {
