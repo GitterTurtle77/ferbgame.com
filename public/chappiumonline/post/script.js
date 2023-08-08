@@ -28,6 +28,8 @@ var data;
       var canvas = null;
       var photo = null;
       var startbutton = null;
+  
+      var facing = "user";
 
       function startup() {
         video = document.getElementById("video");
@@ -106,6 +108,44 @@ var data;
           clearphoto();
         }
       }
+  
+  function handleVideo(cameraFacing) {
+  const constraints = {
+    video: {
+      facingMode: {
+        exact: cameraFacing
+      }
+    }
+  }
+  return constraints
+};
+
+function turnVideo(constraints) {
+  navigator.mediaDevices.getUserMedia(constraints)
+    .then((stream) => {
+      var context = canvas.getContext("2d");
+      video.srcObject = stream
+      video.play()
+      video.onloadeddata = () => {
+        context.height = video.videoHeight
+      }
+    })
+
+}
+
+document.querySelector("#rotate").addEventListener("click", () => {
+  if (facing == "user") {
+    turnVideo(handleVideo("environment"));
+    facing = "environment"
+    video.style.webkitTransform = "scaleX(1)"
+    video.style.transform = "scaleX(1)"
+  } else {
+    turnVideo(handleVideo("user"));
+    facing = "user"
+    video.style.webkitTransform = "scaleX(-1)"
+    video.style.transform = "scaleX(-1)"
+  }
+})
 
       window.addEventListener("load", startup, false);
     })();
