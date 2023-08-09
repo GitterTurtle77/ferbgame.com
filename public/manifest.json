@@ -50,14 +50,7 @@
     {		
       "name":"Camera",
       "url":"/chappiumonline/post/",		
-      "description":"Open the Camera",		
-      "icons": [			
-        {				
-          "src": "icons/Camera.png",				
-          "type": "image/png",				
-          "sizes": "96x96"			
-        }		
-      ]	
+      "description":"Open the Camera"		
     }
   ] 
 ,
